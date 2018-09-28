@@ -1,4 +1,7 @@
 package cat.uab.idt.rightsapp.database;
 
-public class DataBaseHelper {
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class DataBaseHelper extends SQLiteOpenHelper {
+
 }
