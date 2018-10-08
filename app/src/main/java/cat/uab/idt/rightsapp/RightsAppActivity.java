@@ -22,23 +22,24 @@ public class RightsAppActivity extends AppCompatActivity {
         try{
             myDataBase.createDatabase();
         }catch (IOException e){
-            e.printStackTrace();
+            System.out.println("Error creating database");
             throw new Error("Unable to create database: " + e.getMessage());
         }
 
-       /* try{
+       try{
             myDataBase.openDataBase();
         }catch (SQLException e){
+            System.out.println("Error opening database");
             throw new Error("Unable to open database");
         }
 
-        ArrayList<AnswersModel> result = myDataBase.getAnswers(1);
+       /*ArrayList<AnswersModel> result = myDataBase.getAnswers(1);
         for(int i = 0; i< result.size(); i++){
 
         }
 
         System.out.println("Fin1. Size: " + result.size());*/
-
+        myDataBase.close();
 
     }
 }

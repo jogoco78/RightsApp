@@ -1,6 +1,7 @@
 package cat.uab.idt.rightsapp.database;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,12 +17,24 @@ import java.util.ArrayList;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
-    private String DB_PATH = "/data/data/cat.uab.idt.rightsapp/databases/";
-
+    /**
+     * Database name
+     */
     private static String DB_NAME = "rightsapp_v1_utf16.db";
 
+    /**
+     * Assets path for databases folder
+     */
+    private static String ASSETS_PATH = "databases/";
+
+    /**
+     * Database descriptor
+     */
     private SQLiteDatabase myDataBase = null;
 
+    /**
+     * Context of the app
+     */
     private Context myContext;
 
     /**
@@ -40,52 +53,40 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      */
     public void createDatabase() throws IOException {
         File dbFile = myContext.getDatabasePath(DB_NAME);
-        System.out.println("Database NOT exists: " + dbFile.getAbsolutePath());
+
         if(dbFile.exists()){
-            System.out.println("Database NOT exists: " + dbFile.getAbsolutePath());
-            myDataBase = myContext.openOrCreateDatabase(this.DB_NAME, myContext.MODE_PRIVATE, null);
-            myDataBase.close();
-
-            CopyDataBase(dbFile);
-
-        }else{
-            System.out.println("Database exists");
+            dbFile.delete();
         }
+        myDataBase = myContext.openOrCreateDatabase(dbFile.getName(), myContext.MODE_PRIVATE, null);
+        myDataBase.close();
+
+        CopyDataBase(dbFile);
     }
 
     /**
      * Copies the database from the assets folder to the default location in the app
      * @throws IOException
      */
-    private void CopyDataBase(File dbFile) {
-        System.out.println("INIT COPY DATABASE: " + dbFile.getAbsolutePath());
+    private void CopyDataBase(File dbFile) throws IOException{
 
-        try {
-            //open local db as input stream
-            System.out.println("Database1: " + myContext.databaseList()[0] + " " + myContext.getAssets().open(DB_NAME).toString());
-            InputStream myInput = myContext.getAssets().open(DB_NAME);
+        //open local db as input stream
+        InputStream myInput = myContext.getAssets().open(ASSETS_PATH + DB_NAME, AssetManager.ACCESS_STREAMING);
 
+        //Open the empty db as outputstream
+        OutputStream myOutput = new FileOutputStream(dbFile);
 
-            System.out.println("FINISH COPY DATABASE: " + dbFile.getAbsolutePath());
-            //Open the empty db as outputstream
-            OutputStream myOutput = new FileOutputStream(dbFile);
+        //transfer bytes from the inputfile to the outputfile
+        byte[] buffer = new byte[1024];
+        int length;
+        do {
+            length = myInput.read(buffer);
+            myOutput.write(buffer, 0, length);
+        } while (length > 0);
 
-            //transfer bytes from the inputfile to the outputfile
-            byte[] buffer = new byte[1024];
-            int length;
-            do {
-                length = myInput.read(buffer);
-                myOutput.write(buffer, 0, length);
-            } while (length > 0);
-
-            //close the streams
-            myOutput.flush();
-            myOutput.close();
-            myInput.close();
-        }catch (IOException e){
-            System.out.println("Error I/O: " + e.getMessage());
-            e.printStackTrace();
-        }
+        //close the streams
+        myOutput.flush();
+        myOutput.close();
+        myInput.close();
     }
 
     /**
@@ -94,8 +95,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      */
     public void openDataBase() throws SQLException {
         //open the database
-        String myPath = DB_PATH + DB_NAME;
-        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        myDataBase = SQLiteDatabase.openDatabase(myContext.getDatabasePath(DB_NAME).toString(), null, SQLiteDatabase.OPEN_READONLY);
     }
 
     @Override
