@@ -2,9 +2,9 @@ package cat.uab.idt.rightsapp.database;
 
 import android.provider.BaseColumns;
 
-public final class RightsAppDBContract {
+public final class DBContract {
 
-    private RightsAppDBContract() {}
+    private DBContract() {}
 
     /*Inner class that defines the table questions*/
     public static class Questions implements BaseColumns {

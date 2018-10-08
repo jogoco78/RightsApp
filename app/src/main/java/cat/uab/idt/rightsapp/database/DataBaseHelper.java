@@ -5,7 +5,6 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.File;
@@ -76,12 +75,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         OutputStream myOutput = new FileOutputStream(dbFile);
 
         //transfer bytes from the inputfile to the outputfile
-        byte[] buffer = new byte[1024];
-        int length;
-        do {
-            length = myInput.read(buffer);
-            myOutput.write(buffer, 0, length);
-        } while (length > 0);
+        byte[] buffer = new byte[8 * 1024];
+        int bytesRead;
+        while ( (bytesRead = myInput.read(buffer))!= -1){
+            myOutput.write(buffer, 0, bytesRead);
+        }
 
         //close the streams
         myOutput.flush();
@@ -118,35 +116,128 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     //Public helper methods to access and get content from the database
 
-    public ArrayList<AnswersModel> getAnswers(int id_question){
-        AnswersModel answersModel = new AnswersModel();
-        ArrayList<AnswersModel> result = new ArrayList<>();
-        //String query = new String("SELECT * FROM " + RightsAppDBContract.Answers.TABLE_NAME + " WHERE " + RightsAppDBContract.Answers.COLUMN_NAME_ID + " = 1");
-        String query = new String("SELECT name FROM sqlite_master WHERE type='table'");
-        System.out.println("Query1: " + query);
+    public ArrayList<AnswersModel> getAnswersForQuestion(int id_question){
+        String[] selectionArgs = new String[1];
+        selectionArgs[0] = String.valueOf(id_question);
+        String[] projection = new String[1];
+        projection[0] = new String(DBContract.Questions_Answers.COLUMN_NAME_ID_ANSWER);
 
-        Cursor cursor = myDataBase.rawQuery(query, null);
+        Cursor cursor = myDataBase.query(
+                DBContract.Questions_Answers.TABLE_NAME,
+                projection,
+                DBContract.Questions_Answers.COLUMN_NAME_ID_QUESTION,
+                selectionArgs,
+                null,
+                null,
+                null
+        );//TODO: Comprobar si se hacen bien las consultas
 
-        //System.out.println("Column count: " + cursor.getColumnCount());
+        int i = 0;
+        String[] id_answers = new String[cursor.getCount()];
 
         if(cursor.moveToFirst()){
             // Loop through cursor results if the query has rows
             do {
-                System.out.println("Table1: " + cursor.getString(0));
-                //answersModel.initialize();
-                //answersModel.setId(cursor.getInt(0));
-                //answersModel.setText_es(cursor.getString(1));
-                //answersModel.setText_en(cursor.getString(2));
-                //answersModel.setText_fr(cursor.getString(3));
-                //answersModel.setText_it(cursor.getString(4));
-                //answersModel.setNext_question_id(cursor.getInt(5));
+                id_answers[i] = String.valueOf(cursor.getInt(0));
+                i++;
 
-                //result.add(answersModel);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return this.getAnswers(id_answers);
+    }
+
+    public ArrayList<AnswersModel> getAnswers(String[] id_answers) {
+        AnswersModel answersModel = new AnswersModel();
+        ArrayList<AnswersModel> result = new ArrayList<>();
+
+        Cursor cursor = myDataBase.query(
+                DBContract.Answers.TABLE_NAME,
+                null,
+                DBContract.Answers.COLUMN_NAME_ID,
+                id_answers,
+                null,
+                null,
+                null
+        );
+
+        if(cursor.moveToFirst()){
+            // Loop through cursor results if the query has rows
+            do {
+                answersModel.initialize();
+                answersModel.setId(cursor.getInt(0));
+                answersModel.setText_es(cursor.getString(1));
+                answersModel.setText_en(cursor.getString(2));
+                answersModel.setText_fr(cursor.getString(3));
+                answersModel.setText_it(cursor.getString(4));
+                answersModel.setNext_question_id(cursor.getInt(5));
+
+                result.add(answersModel);
             } while (cursor.moveToNext());
 
         }
+        cursor.close();
 
         return result;
     }
+
+
+    public AnswersModel getAnswer(int id_answer) {
+        AnswersModel answersModel = new AnswersModel();
+        String query = "SELECT * FROM " + DBContract.Answers.TABLE_NAME + " WHERE "
+                + DBContract.Answers.COLUMN_NAME_ID + " = " + id_answer;
+
+        Cursor cursor = myDataBase.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            // Loop through cursor results if the query has rows
+            do {
+                answersModel.initialize();
+                answersModel.setId(cursor.getInt(0));
+                answersModel.setText_es(cursor.getString(1));
+                answersModel.setText_en(cursor.getString(2));
+                answersModel.setText_fr(cursor.getString(3));
+                answersModel.setText_it(cursor.getString(4));
+                answersModel.setNext_question_id(cursor.getInt(5));
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+
+        return answersModel;
+
+    }
+
+/*    public ArrayList<AnswersModel> getAnswersForQuestion(int id_question){
+        AnswersModel answersModel = new AnswersModel();
+        ArrayList<AnswersModel> result = new ArrayList<>();
+        String query = "SELECT * FROM " + DBContract.Answers.TABLE_NAME;
+        //String query = "SELECT * FROM " + DBContract.Answers.TABLE_NAME + " WHERE " + DBContract.Answers.COLUMN_NAME_ID + " = 1";
+
+        Cursor cursor = myDataBase.rawQuery(query, null);
+
+        System.out.println("Column count: " + cursor.getColumnCount());
+
+        if(cursor.moveToFirst()){
+            // Loop through cursor results if the query has rows
+            do {
+                System.out.println("Table1: " + cursor.getString(1));
+                answersModel.initialize();
+                answersModel.setId(cursor.getInt(0));
+                answersModel.setText_es(cursor.getString(1));
+                answersModel.setText_en(cursor.getString(2));
+                answersModel.setText_fr(cursor.getString(3));
+                answersModel.setText_it(cursor.getString(4));
+                answersModel.setNext_question_id(cursor.getInt(5));
+
+                result.add(answersModel);
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+
+        return result;
+    }*/
 
 }

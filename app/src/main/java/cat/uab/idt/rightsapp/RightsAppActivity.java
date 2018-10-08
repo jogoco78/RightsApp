@@ -30,15 +30,17 @@ public class RightsAppActivity extends AppCompatActivity {
             myDataBase.openDataBase();
         }catch (SQLException e){
             System.out.println("Error opening database");
-            throw new Error("Unable to open database");
-        }
-
-       /*ArrayList<AnswersModel> result = myDataBase.getAnswers(1);
+           // throw new Error("Unable to open database");
+        }catch (Exception e){
+           System.out.println("Error opening database 2");
+       }
+       ArrayList<AnswersModel> result = myDataBase.getAnswersForQuestion(1);
         for(int i = 0; i< result.size(); i++){
-
+            System.out.println("ID: " + result.get(i).getId());
+            System.out.println("ID: " + result.get(i).getText_es());
         }
 
-        System.out.println("Fin1. Size: " + result.size());*/
+        System.out.println("Fin1. Size: " + result.size());
         myDataBase.close();
 
     }
