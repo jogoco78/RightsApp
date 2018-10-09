@@ -37,7 +37,7 @@ public class RightsAppActivity extends AppCompatActivity {
        ArrayList<AnswersModel> result = myDataBase.getAnswersForQuestion(1);
         for(int i = 0; i< result.size(); i++){
             System.out.println("ID: " + result.get(i).getId());
-            System.out.println("ID: " + result.get(i).getText_es());
+            System.out.println("Text_es: " + result.get(i).getText_es());
         }
 
         System.out.println("Fin1. Size: " + result.size());

@@ -116,21 +116,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     //Public helper methods to access and get content from the database
 
+    /**
+     * Returns the answers from a specified question by its id into the database
+     * @param id_question the id of the question
+     * @return an ArrayList with all the answers related to the given question
+     */
     public ArrayList<AnswersModel> getAnswersForQuestion(int id_question){
-        String[] selectionArgs = new String[1];
-        selectionArgs[0] = String.valueOf(id_question);
-        String[] projection = new String[1];
-        projection[0] = new String(DBContract.Questions_Answers.COLUMN_NAME_ID_ANSWER);
+        String projection = DBContract.Questions_Answers.COLUMN_NAME_ID_ANSWER;
 
-        Cursor cursor = myDataBase.query(
-                DBContract.Questions_Answers.TABLE_NAME,
-                projection,
-                DBContract.Questions_Answers.COLUMN_NAME_ID_QUESTION,
-                selectionArgs,
-                null,
-                null,
-                null
-        );//TODO: Comprobar si se hacen bien las consultas
+        String query = "SELECT " + projection + " FROM " + DBContract.Questions_Answers.TABLE_NAME
+                + " WHERE " +  DBContract.Questions_Answers.COLUMN_NAME_ID_QUESTION + " = "
+                + String.valueOf(id_question);
+
+        Cursor cursor = myDataBase.rawQuery(query, null);
 
         int i = 0;
         String[] id_answers = new String[cursor.getCount()];
@@ -148,6 +146,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return this.getAnswers(id_answers);
     }
 
+    /**
+     * Returns the answers information into the database
+     * @param id_answers the ids of the answers into the database
+     * @return an ArrayList with all the information of the answers given by their id
+     */
     public ArrayList<AnswersModel> getAnswers(String[] id_answers) {
         AnswersModel answersModel = new AnswersModel();
         ArrayList<AnswersModel> result = new ArrayList<>();
@@ -208,36 +211,4 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return answersModel;
 
     }
-
-/*    public ArrayList<AnswersModel> getAnswersForQuestion(int id_question){
-        AnswersModel answersModel = new AnswersModel();
-        ArrayList<AnswersModel> result = new ArrayList<>();
-        String query = "SELECT * FROM " + DBContract.Answers.TABLE_NAME;
-        //String query = "SELECT * FROM " + DBContract.Answers.TABLE_NAME + " WHERE " + DBContract.Answers.COLUMN_NAME_ID + " = 1";
-
-        Cursor cursor = myDataBase.rawQuery(query, null);
-
-        System.out.println("Column count: " + cursor.getColumnCount());
-
-        if(cursor.moveToFirst()){
-            // Loop through cursor results if the query has rows
-            do {
-                System.out.println("Table1: " + cursor.getString(1));
-                answersModel.initialize();
-                answersModel.setId(cursor.getInt(0));
-                answersModel.setText_es(cursor.getString(1));
-                answersModel.setText_en(cursor.getString(2));
-                answersModel.setText_fr(cursor.getString(3));
-                answersModel.setText_it(cursor.getString(4));
-                answersModel.setNext_question_id(cursor.getInt(5));
-
-                result.add(answersModel);
-            } while (cursor.moveToNext());
-
-        }
-        cursor.close();
-
-        return result;
-    }*/
-
 }
