@@ -118,6 +118,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     // QUESTIONS & ANSWERS
 
+    /**
+     * Returns the question given by parameter
+     * @param id_questions an array with the id of the questions to be returned
+     * @return an ArrayList of QuestionModel given by parameter
+     */
     public ArrayList<QuestionModel> getQuestions(int[] id_questions){
         ArrayList<QuestionModel> result = new ArrayList<>();
         String query = "SELECT * FROM " + DBContract.Questions.TABLE_NAME
@@ -143,7 +148,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
                 result.add(questionModel);
             } while (cursor.moveToNext());
-
         }
 
         cursor.close();
@@ -219,6 +223,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     //PARTICLES & TAGS
 
+    public ArrayList<ParticleModel> getParticle(int[] id_particles){
+        ArrayList<ParticleModel> result = new ArrayList<>();
+
+        return result;
+    }
+    /**
+     * Returns the tags associated to a given particle
+     * @param id_particle the id of the particle
+     * @return a String array with the name of the tags associated with the given particle
+     */
     public String[] getTagsFromParticle(int id_particle){
         String query = "SELECT " + DBContract.Particles_Tags.COLUMN_NAME_ID_TAG
                 + " FROM " + DBContract.Particles_Tags.TABLE_NAME
@@ -243,8 +257,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return this.getTags(id_tags);
     }
 
+    /**
+     * Returns the tags given by the parameter
+     * @param id_tags an array with the id of the tags to be returned
+     * @return a String array with the name of the tags given by parameter
+     */
     public String[] getTags(String[] id_tags){
-        String query = "SELECT * FROM " + DBContract.Tags.TABLE_NAME
+        String query = "SELECT " + DBContract.Tags.COLUMN_NAME_TAG + " FROM " + DBContract.Tags.TABLE_NAME
                 + " WHERE " +  DBContract.Tags.COLUMN_NAME_ID + " IN (" + id_tags[0];
 
         for(int i = 1; i < id_tags.length; i++){
@@ -260,7 +279,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             // Loop through cursor results if the query has rows
             int i = 0;
             do {
-                tags[i] = cursor.getString(1);
+                tags[i] = cursor.getString(0);
                 i++;
             } while (cursor.moveToNext());
 
@@ -268,7 +287,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return tags;
-
     }
 
 }
