@@ -7,7 +7,7 @@ import android.os.Bundle;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import cat.uab.idt.rightsapp.database.AnswersModel;
+import cat.uab.idt.rightsapp.database.AnswerModel;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 
 public class RightsAppActivity extends AppCompatActivity {
@@ -34,9 +34,9 @@ public class RightsAppActivity extends AppCompatActivity {
         }catch (Exception e){
            System.out.println("Error opening database 2");
        }
-       ArrayList<AnswersModel> result = myDataBase.getAnswersForQuestion(1);
-        for(int i = 0; i< result.size(); i++){
-            System.out.println("ID: " + result.get(i).getId());
+       ArrayList<AnswerModel> result = myDataBase.getAnswersForQuestion(2);
+        for(int i = 0; i < result.size(); i++){
+            System.out.println("i: " + i + " ID: " + result.get(i).getId());
             System.out.println("Text_es: " + result.get(i).getText_es());
         }
 

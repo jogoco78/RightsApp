@@ -1,17 +1,16 @@
 package cat.uab.idt.rightsapp.database;
 
-public class AnswersModel {
+public class QuestionModel {
     private int id;
     private String text_es;
     private String text_en;
     private String text_fr;
     private String text_it;
-    private int next_question_id = 0;
 
     /**
      * Constructor
      */
-    public AnswersModel(){
+    public QuestionModel(){
         this.initialize();
     }
 
@@ -63,12 +62,6 @@ public class AnswersModel {
         this.text_it = text_it;
     }
 
-    public int getNext_question_id() {
-        return next_question_id;
-    }
 
-    public void setNext_question_id(int next_question_id) {
-        this.next_question_id = next_question_id;
-    }
 
 }
