@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RightsApp</string>
+    <string name="country">Pais</string>
+    <string name="terms_and_conditions">Términos y condiciones</string>
+    <string name="terms_and_conditions_title1">Título 1</string>
+    <string name="terms_and_conditions_body1">Cuerpo 1</string>
+    <string name="terms_and_conditions_title2">Título 1</string>
+    <string name="terms_and_conditions_body2">Cuerpo 2</string>
+</resources>

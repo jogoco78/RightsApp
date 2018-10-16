@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">RightsApp</string>
+    <string name="app_name" translatable="false">RightsApp</string>
+    <string name="country">Country</string>
+    <string name="preference_file_key" translatable="false">cat.uab.idt.rightsapp.preferences</string>
+
+    <!-- Terms and conditions -->
+    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="terms_and_conditions_title1">Title 1</string>
+    <string name="terms_and_conditions_body1">Body 1</string>
+    <string name="terms_and_conditions_title2">Title 2</string>
+    <string name="terms_and_conditions_body2">Body 2</string>
 </resources>
