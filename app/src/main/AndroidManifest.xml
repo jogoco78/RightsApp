@@ -17,9 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".TermsAndConditions" />
-        <activity android:name=".RightsAppActivity"/>
-
-
+        <activity android:name=".ExplanationActivity" />
+        <activity android:name=".RightsAppActivity"></activity>
     </application>
 
 </manifest>

@@ -5,12 +5,17 @@
 
     <!-- Terms and conditions -->
     <string name="terms_and_conditions">Terms and conditions</string>
-    <string name="terms_and_conditions_title1">Title 1</string>
-    <string name="terms_and_conditions_body1">Body 1</string>
-    <string name="terms_and_conditions_title2">Title 2</string>
-    <string name="terms_and_conditions_body2">Body 2</string>
+    <string name="terms_and_conditions_title">Title</string>
+    <string name="terms_and_conditions_body">Body</string>
 
     <!-- Buttons -->
     <string name="ok">Accept</string>
     <string name="cancel">Decline</string>
+    <string name="next">Continue</string>
+
+    <!-- explanation -->
+    <string name="explanation_title">Explanation</string>
+    <string name="explanation_body">Explanation Body</string>
+    <string name="do_not_show">Do not show this message again</string>
+
 </resources>
