@@ -11,4 +11,10 @@
     <string name="explanation_body">Cuerpo de la explicación</string>
     <string name="do_not_show">No volver a mostrar</string>
     <string name="next">Siguiente</string>
+    <string name="emergency_call">Llamada de emergencia</string>
+    <string name="get_information">Obtener información</string>
+    <string name="cruz_roja">Cruz roja</string>
+    <string name="emergency_112">112 Emergencias</string>
+    <string name="mossos">Mossos d\'Esquadra</string>
+    <string name="navigate_to">Ir a</string>
 </resources>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
@@ -23,7 +24,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme_Launcher);
         super.onCreate(savedInstanceState);
 
-        //Copy database from res folder to the app
+        // Copy database from res folder to the app
         DataBaseHelper myDataBase = new DataBaseHelper(this);
         try{
             myDataBase.createDatabase();
@@ -32,7 +33,17 @@ public class SplashScreenActivity extends AppCompatActivity {
             throw new Error("Unable to create database: " + e.getMessage());
         }
 
-        //Gets preferences file
+        // Sets a delay for the splashscreen
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Do something after 5s = 5000ms
+
+            }
+        }, 3000);
+
+        // Gets preferences file
         Context context = getApplicationContext();
         mSharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -81,7 +92,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
         }else{
-            // Starts next activity
+            // Starts next activity when agreed terms and conditions
             if(showExplanation) {
                 Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
                 startActivity(intent);
