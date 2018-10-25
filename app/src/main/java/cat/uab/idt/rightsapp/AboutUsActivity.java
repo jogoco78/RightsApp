@@ -3,49 +3,19 @@ package cat.uab.idt.rightsapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
-import android.support.v7.widget.Toolbar;
 
-public class RightsAppActivity extends AppCompatActivity {
+public class AboutUsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rights_app);
+        setContentView(R.layout.activity_about_us);
 
         Toolbar toolbarRightsApp = (Toolbar) findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
-
-        ImageButton button_emergency112 = findViewById(R.id.imageButton_emergency112);
-        button_emergency112.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Emergency112CallActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton button_redcross = findViewById(R.id.imageButton_redcross);
-        button_redcross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RedCrossCallActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton button_mossos = findViewById(R.id.imageButton_mossos);
-        button_mossos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MossosCallActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
     }
 
@@ -93,6 +63,6 @@ public class RightsAppActivity extends AppCompatActivity {
         }*/
 
         return super.onOptionsItemSelected(item);
-    }
 
+    }
 }

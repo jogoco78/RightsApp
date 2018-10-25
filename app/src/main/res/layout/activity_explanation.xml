@@ -6,67 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".ExplanationActivity">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_rights_app"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/explanation_title"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            tools:text="@string/explanation_title" />
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/explanation_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_rights_app"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_rights_app"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_rights_app"
+        tools:text="@string/explanation_title" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/explanation_body"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        tools:text="@string/explanation_body" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+    <Switch
+        android:id="@+id/switch_explanation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:checked="false"
+        android:text="@string/do_not_show"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        tools:text="@string/do_not_show" />
 
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/explanation_body"
-                    android:textSize="18sp"
-                    tools:text="@string/explanation_body" />
+    <Button
+        android:id="@+id/button_explanation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:text="@string/next"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_explanation"
+        tools:text="@string/next" />
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <Switch
-                        android:id="@+id/switch_explanation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:checked="false"
-                        android:text="@string/do_not_show"
-                        tools:text="@string/do_not_show" />
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/button_explanation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/next"
-                    tools:text="@string/next" />
-
-            </LinearLayout>
-        </ScrollView>
-
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

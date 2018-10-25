@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -34,16 +36,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             throw new Error("Unable to create database: " + e.getMessage());
         }
 
-        // Sets a delay for the splashscreen
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Do something after 5s = 5000ms
-
-            }
-        }, 3000);
-
         // Gets preferences file
         Context context = getApplicationContext();
         mSharedPreferences = context.getSharedPreferences(
@@ -51,6 +43,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         agreed = mSharedPreferences.getBoolean("agreed", false);
         showExplanation = mSharedPreferences.getBoolean("show_explanation", true);
+
         if(!agreed){
             System.out.println("Not agreed");
 
@@ -68,14 +61,22 @@ public class SplashScreenActivity extends AppCompatActivity {
                     editor.putBoolean("agreed", true);
                     editor.apply();
 
-                    // Starts next activity
-                    if(showExplanation) {
-                        Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
-                        startActivity(intent);
-                    }else{
-                        Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
-                        startActivity(intent);
-                    }
+                    // Sets a delay for the splashscreen
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Do something after 3s = 3000ms
+                            // Starts next activity
+                            if(showExplanation) {
+                                Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
+                                startActivity(intent);
+                            }else{
+                                Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    }, 3000);
                 }
             });
             builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -93,14 +94,21 @@ public class SplashScreenActivity extends AppCompatActivity {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
         }else{
-            // Starts next activity when agreed terms and conditions
-            if(showExplanation) {
-                Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
-                startActivity(intent);
-            }else{
-                Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
-                startActivity(intent);
-            }
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Do something after 3s = 3000ms
+                    // Starts next activity when agreed terms and conditions
+                    if(showExplanation) {
+                        Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
+                        startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
+                        startActivity(intent);
+                    }
+                }
+            }, 3000);
         }
     }
 }

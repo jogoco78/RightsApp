@@ -21,8 +21,8 @@
         <activity android:name=".RightsAppActivity" />
         <activity android:name=".Emergency112CallActivity" />
         <activity android:name=".RedCrossCallActivity" />
-        <activity android:name=".MossosCallActivity"></activity>
+        <activity android:name=".MossosCallActivity" />
+        <activity android:name=".AboutUsActivity"></activity>
     </application>
 
 </manifest>
-

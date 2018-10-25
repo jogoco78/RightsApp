@@ -18,4 +18,6 @@
     <string name="mossos">Mossos d\'Esquadra</string>
     <string name="navigate_to">Ir a</string>
     <string name="language">Idioma</string>
+    <string name="about">Acerca de</string>
+    <string name="about_us_body">Cuerpo acerca de...</string>
 </resources>

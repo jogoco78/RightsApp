@@ -3,19 +3,19 @@
 
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
-        android:id="@+id/action_favorite"
+        android:id="@+id/action_home"
         android:icon="@drawable/rightsapp_logo_50x84"
         android:title="@string/terms_and_conditions_title"
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/settings_language"
-        android:title="@string/language"
-        app:showAsAction="never"/>
     <item android:id="@+id/settings_explanation"
         android:title="@string/explanation_title"
         app:showAsAction="never"/>
     <item android:id="@+id/settings_terms_conditions"
-          android:title="@string/terms_and_conditions"
-          app:showAsAction="never"/>
+        android:title="@string/terms_and_conditions"
+        app:showAsAction="never"/>
+    <item android:id="@+id/settings_about_us"
+        android:title="@string/about"
+        app:showAsAction="never"/>
 </menu>
