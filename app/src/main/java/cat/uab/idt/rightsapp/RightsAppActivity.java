@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 public class RightsAppActivity extends AppCompatActivity {
 
@@ -53,7 +52,7 @@ public class RightsAppActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_rights_app, menu);
+        getMenuInflater().inflate(R.menu.menu_app_bar, menu);
         return true;
     }
 
@@ -64,11 +63,25 @@ public class RightsAppActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_favorite) {
+        switch (id) {
+            case R.id.settings_explanation:
+                Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.settings_language:
+                //do things
+                break;
+            case R.id.settings_terms_conditions:
+                //do things
+                break;
+            default:
+                //do default
+        }
+
+        /*if (id == R.id.action_favorite) {
             Toast.makeText(RightsAppActivity.this, "Action clicked", Toast.LENGTH_LONG).show();
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

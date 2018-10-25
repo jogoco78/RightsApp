@@ -17,11 +17,15 @@
     <string name="explanation_title">Explanation</string>
     <string name="explanation_body">Explanation Body</string>
     <string name="do_not_show">Do not show this message again</string>
+
+    <!-- activities -->
     <string name="emergency_call">Emergency call</string>
     <string name="get_information">Get information</string>
     <string name="cruz_roja">Red Cross</string>
     <string name="emergency_112">112 Emergency</string>
     <string name="mossos">Mossos\nd\'Esquadra</string>
     <string name="navigate_to">Navigate to</string>
+
+    <string name="language">Language</string>
 
 </resources>

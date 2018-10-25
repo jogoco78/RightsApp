@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 
