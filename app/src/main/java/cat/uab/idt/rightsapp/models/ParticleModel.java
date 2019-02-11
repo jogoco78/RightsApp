@@ -1,17 +1,13 @@
-package cat.uab.idt.rightsapp.database;
+package cat.uab.idt.rightsapp.models;
 
-public class AnswerModel {
+public class ParticleModel {
     private int id;
     private String text_es;
     private String text_en;
     private String text_fr;
     private String text_it;
-    private int next_question_id = 0;
 
-    /**
-     * Constructor
-     */
-    public AnswerModel(){
+    public ParticleModel(){
         this.initialize();
     }
 
@@ -62,13 +58,4 @@ public class AnswerModel {
     public void setText_it(String text_it) {
         this.text_it = text_it;
     }
-
-    public int getNext_question_id() {
-        return next_question_id;
-    }
-
-    public void setNext_question_id(int next_question_id) {
-        this.next_question_id = next_question_id;
-    }
-
 }

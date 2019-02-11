@@ -1,4 +1,4 @@
-package cat.uab.idt.rightsapp.database;
+package cat.uab.idt.rightsapp.models;
 
 public class QuestionModel {
     private int id;
