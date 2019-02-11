@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import cat.uab.idt.rightsapp.R;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
+import cat.uab.idt.rightsapp.QuestionnaireActivity;
 
 public class QuestionnaireFragment extends Fragment {
 
@@ -46,9 +48,6 @@ public class QuestionnaireFragment extends Fragment {
      */
     private DataBaseHelper mDataBaseHelper;
 
-    @Override
-    public void onAttach(Activity _activity){
-        super.onAttach(_activity);
 
     }
     @Override

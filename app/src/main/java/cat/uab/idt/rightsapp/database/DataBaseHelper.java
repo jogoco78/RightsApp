@@ -14,6 +14,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import cat.uab.idt.rightsapp.models.AnswerModel;
+import cat.uab.idt.rightsapp.models.QuestionModel;
+import cat.uab.idt.rightsapp.models.ParticleModel;
+
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     /**
