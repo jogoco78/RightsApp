@@ -118,6 +118,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //Nothing to do
     }
 
+    //SETTER AND GETTER
+
+    /**
+     * Sets the database descriptor into the class
+     * @param myDataBase database descriptor
+     */
+    public void setMyDataBase(SQLiteDatabase myDataBase){
+        this.myDataBase = myDataBase;
+
+    }
+
+    /**
+     * Return the database descriptor
+     * @return database descriptor
+     */
+    public SQLiteDatabase getMyDataBase(){
+        return myDataBase;
+    }
+
     //Public helper methods to access and get content from the database
 
     // QUESTIONS & ANSWERS
