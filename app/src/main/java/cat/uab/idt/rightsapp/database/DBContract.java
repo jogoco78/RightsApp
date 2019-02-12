@@ -12,8 +12,9 @@ public final class DBContract {
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_TEXT_ES = "text_es";
         public static final String COLUMN_NAME_TEXT_EN = "text_en";
-        public static final String COLUMN_NAME_TEXT_FR = "text_fr";
+        public static final String COLUMN_NAME_TEXT_PT= "text_pt";
         public static final String COLUMN_NAME_TEXT_IT = "text_it";
+        public static final String COLUMN_NAME_STATISTICAL = "statistical";
     }
 
     /*Inner class that defines the answers table*/
@@ -22,9 +23,8 @@ public final class DBContract {
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_TEXT_ES = "text_es";
         public static final String COLUMN_NAME_TEXT_EN = "text_en";
-        public static final String COLUMN_NAME_TEXT_FR = "text_fr";
+        public static final String COLUMN_NAME_TEXT_PT = "text_pt";
         public static final String COLUMN_NAME_TEXT_IT = "text_it";
-        public static final String COLUMN_NAME_NEXT_QUESTION_ID = "next_question_id";
     }
 
     /*Inner class that defines the questions_answers table */
@@ -32,6 +32,10 @@ public final class DBContract {
         public static final String TABLE_NAME = "questions_answers";
         public static final String COLUMN_NAME_ID_QUESTION = "id_question";
         public static final String COLUMN_NAME_ID_ANSWER = "id_answer";
+        public static final String COLUMN_NAME_ID_NEXT_QUESTION = "id_next_question";
+        public static final String COLUMN_NAME_ID_NEXT_QUESTION2 = "id_next_question2";
+        public static final String COLUMN_NAME_ID_TAG_RAISED = "id_tag_raised";
+
     }
 
     /*Inner class that defines the particles table*/
@@ -40,8 +44,12 @@ public final class DBContract {
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_TEXT_ES = "text_es";
         public static final String COLUMN_NAME_TEXT_EN = "text_en";
-        public static final String COLUMN_NAME_TEXT_FR = "text_fr";
+        public static final String COLUMN_NAME_TEXT_PT = "text_pt";
         public static final String COLUMN_NAME_TEXT_IT = "text_it";
+        public static final String COLUMN_NAME_SUBJECT_ES = "subject_es";
+        public static final String COLUMN_NAME_SUBJECT_EN = "subject_en";
+        public static final String COLUMN_NAME_SUBJECT_PT = "subject_pt";
+        public static final String COLUMN_NAME_SUBJECT_IT = "subject_it";
     }
 
     /*Inner class that defines the tags table*/
@@ -49,6 +57,7 @@ public final class DBContract {
         public static final String TABLE_NAME = "tags";
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_TAG = "tag";
+        public static final String COLUMN_NAME_DESCRIPTION_EN = "description_en";
     }
 
     /*Inner class that defines the particles_tags table */
@@ -65,7 +74,7 @@ public final class DBContract {
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_DESCRIPTION_ES = "description_es";
         public static final String COLUMN_NAME_DESCRIPTION_EN = "description_en";
-        public static final String COLUMN_NAME_DESCRIPTION_FR = "description_fr";
+        public static final String COLUMN_NAME_DESCRIPTION_PT = "description_pt";
         public static final String COLUMN_NAME_DESCRIPTION_IT = "description_it";
         public static final String COLUMN_NAME_ADDRESS = "address";
         public static final String COLUMN_NAME_LATITUDE = "latitude";
@@ -78,7 +87,7 @@ public final class DBContract {
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_CATEGORY_ES = "category_es";
         public static final String COLUMN_NAME_CATEGORY_EN = "category_en";
-        public static final String COLUMN_NAME_CATEGORY_FR = "category_fr";
+        public static final String COLUMN_NAME_CATEGORY_PT = "category_pt";
         public static final String COLUMN_NAME_CATEGORY_IT = "category_it";
     }
 

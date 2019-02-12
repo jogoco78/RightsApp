@@ -143,6 +143,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     /**
      * Returns the question given by parameter
+     * @param id_question an integer with the ID of the question
+     * @return a QuestionModel object
+     */
+    public QuestionModel getQuestions(int id_question){
+        return getQuestions(new int[] {id_question}).get(0);
+    }
+
+    /**
+     * Returns the questions given by parameter
      * @param id_questions an array with the id of the questions to be returned
      * @return an ArrayList of QuestionModel given by parameter
      */
@@ -166,7 +175,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 questionModel.setId(cursor.getInt(0));
                 questionModel.setText_es(cursor.getString(1));
                 questionModel.setText_en(cursor.getString(2));
-                questionModel.setText_fr(cursor.getString(3));
+                questionModel.setText_pt(cursor.getString(3));
                 questionModel.setText_it(cursor.getString(4));
 
                 result.add(questionModel);
@@ -177,13 +186,66 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         return result;
     }
+
+    /**
+     * Returns the ID of the answers for a given question ID
+     * @param id_question given question ID
+     * @return the IDs of the answers for a given question ID
+     */
+    public int[] getAnswersIDForQuestion(int id_question){
+        String query = "SELECT " + DBContract.Questions_Answers.COLUMN_NAME_ID_ANSWER
+                + " FROM " + DBContract.Questions_Answers.TABLE_NAME
+                + " WHERE " +  DBContract.Questions_Answers.COLUMN_NAME_ID_QUESTION + " = "
+                + String.valueOf(id_question);
+
+        Cursor cursor = myDataBase.rawQuery(query, null);
+
+        int i = 0;
+        int[] id_answers = new int[cursor.getCount()];
+
+        if(cursor.moveToFirst()){
+            // Loop through cursor results if the query has rows
+            do {
+                id_answers[i] = cursor.getInt(0);
+                //id_answers[i] = String.valueOf(cursor.getInt(0));
+                i++;
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return id_answers;
+    }
+
+    /**
+     * Returns the next question ID from question and answers IDs
+     * @param id_question ID of the question
+     * @param id_answer ID of the answer
+     * @return the ID of the next question
+     */
+    public int getNextQuestionID(int id_question, int id_answer){
+        String query = "SELECT " + DBContract.Questions_Answers.COLUMN_NAME_ID_NEXT_QUESTION
+                + " FROM " + DBContract.Questions_Answers.TABLE_NAME
+                + " WHERE " +  DBContract.Questions_Answers.COLUMN_NAME_ID_QUESTION + " = "
+                + String.valueOf(id_question) + " AND " + DBContract.Questions_Answers.COLUMN_NAME_ID_ANSWER
+                + " = " + String.valueOf(id_answer);
+
+        Cursor cursor = myDataBase.rawQuery(query, null);
+
+        int id_next_question = cursor.getInt(0);
+
+        cursor.close();
+
+        return id_next_question;
+    }
+
     /**
      * Returns the answers from a specified question by its id into the database
      * @param id_question the id of the question
      * @return an ArrayList with all the answers related to the given question
      */
     public ArrayList<AnswerModel> getAnswersForQuestion(int id_question){
-        String query = "SELECT " + DBContract.Questions_Answers.COLUMN_NAME_ID_ANSWER
+        /*String query = "SELECT " + DBContract.Questions_Answers.COLUMN_NAME_ID_ANSWER
                 + " FROM " + DBContract.Questions_Answers.TABLE_NAME
                 + " WHERE " +  DBContract.Questions_Answers.COLUMN_NAME_ID_QUESTION + " = "
                 + String.valueOf(id_question);
@@ -201,9 +263,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
             } while (cursor.moveToNext());
         }
-        cursor.close();
+        cursor.close();*/
 
-        return this.getAnswers(id_answers);
+        return this.getAnswers(getAnswersIDForQuestion(id_question));
     }
 
     /**
@@ -211,7 +273,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      * @param id_answers the ids of the answers into the database
      * @return an ArrayList with all the information of the answers given by their id
      */
-    public ArrayList<AnswerModel> getAnswers(String[] id_answers) {
+    public ArrayList<AnswerModel> getAnswers(int[] id_answers) {
         ArrayList<AnswerModel> result = new ArrayList<>();
         String query = "SELECT * FROM " + DBContract.Answers.TABLE_NAME
                 + " WHERE " +  DBContract.Answers.COLUMN_NAME_ID + " IN (" + id_answers[0];
@@ -226,14 +288,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             // Loop through cursor results if the query has rows
             do {
+                //TODO: Return only a given locale
                 AnswerModel answerModel = new AnswerModel();
                 answerModel.initialize();
                 answerModel.setId(cursor.getInt(0));
                 answerModel.setText_es(cursor.getString(1));
                 answerModel.setText_en(cursor.getString(2));
-                answerModel.setText_fr(cursor.getString(3));
+                answerModel.setText_pt(cursor.getString(3));
                 answerModel.setText_it(cursor.getString(4));
-                answerModel.setNext_question_id(cursor.getInt(5));
 
                 result.add(answerModel);
             } while (cursor.moveToNext());

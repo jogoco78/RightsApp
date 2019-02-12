@@ -4,8 +4,9 @@ public class QuestionModel {
     private int id;
     private String text_es;
     private String text_en;
-    private String text_fr;
+    private String text_pt;
     private String text_it;
+    private boolean statistical;
 
     /**
      * Constructor
@@ -18,8 +19,9 @@ public class QuestionModel {
         this.id = 0;
         this.text_es = null;
         this.text_en = null;
-        this.text_fr = null;
+        this.text_pt = null;
         this.text_it = null;
+        this.statistical = false;
     }
 
     public int getId() {
@@ -46,12 +48,12 @@ public class QuestionModel {
         this.text_en = text_en;
     }
 
-    public String getText_fr() {
-        return text_fr;
+    public String getText_pt() {
+        return text_pt;
     }
 
-    public void setText_fr(String text_fr) {
-        this.text_fr = text_fr;
+    public void setText_pt(String text_pt) {
+        this.text_pt = text_pt;
     }
 
     public String getText_it() {
@@ -62,6 +64,11 @@ public class QuestionModel {
         this.text_it = text_it;
     }
 
+    public boolean isStatistical() {
+        return statistical;
+    }
 
-
+    public void setStatistical(boolean statistical){
+        this.statistical = statistical;
+    }
 }
