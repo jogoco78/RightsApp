@@ -3,74 +3,75 @@ package cat.uab.idt.rightsapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.support.v7.widget.Toolbar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import cat.uab.idt.rightsapp.utils.LocaleUtils;
 
-public class RightsAppActivity extends AppCompatActivity {
+
+public class LanguageActivity extends AppCompatActivity {
+
+    private SharedPreferences mSharedPreferences;
+    private RadioGroup rg_answers;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rights_app);
+        setContentView(R.layout.activity_language);
 
         //Sets the toolbar
         Toolbar toolbarRightsApp = (Toolbar) findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
-        //Sets the language
-        Context context = getApplicationContext();
-        SharedPreferences mSharedPreferences = context.getSharedPreferences(
+        context = getApplicationContext();
+        mSharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        System.out.println("LANGUAGE RightsApp Activity: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,"en"));
 
-        LocaleUtils.setLocale(context, mSharedPreferences.getString(Constants.PREF_LANGUAGE,"en"));
+        TextView tv_selectLanguage = findViewById(R.id.textView_change_language);
+        rg_answers = findViewById(R.id.radioGroup_select_language);
+        Button btn_selectLanguage = findViewById(R.id.button_select_language);
 
-        //ImageButton Listeners
-        ImageButton button_emergency112 = findViewById(R.id.imageButton_emergency112);
-        button_emergency112.setOnClickListener(new View.OnClickListener() {
+        btn_selectLanguage.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Emergency112CallActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton button_redcross = findViewById(R.id.imageButton_redcross);
-        button_redcross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RedCrossCallActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton button_mossos = findViewById(R.id.imageButton_mossos);
-        button_mossos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MossosCallActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button button_information = findViewById(R.id.button_get_information);
-        button_information.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), QuestionnaireActivity.class);
+                int id_answer = rg_answers.getCheckedRadioButtonId();
+                LocaleUtils.setLocale(context, Constants.LANGUAGES[id_answer]);
+                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                editor.putString(Constants.PREF_LANGUAGE, Constants.LANGUAGES[id_answer]);
+                editor.apply();
+                System.out.println("LANGUAGE: " + Constants.LANGUAGES[id_answer]);
+
+                Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);
             }
         });
-
-
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        rg_answers.clearCheck();
+        rg_answers.removeAllViews();
+
+        for(int i=0; i<Constants.LANGUAGES.length; i++){
+            RadioButton rb = new RadioButton(this);
+            rb.setText(Constants.LANGUAGES[i]);
+            //rb.setLayoutParams(rg_answersParams);
+            rb.setId(i);
+            rg_answers.addView(rb);
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -121,5 +122,4 @@ public class RightsAppActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

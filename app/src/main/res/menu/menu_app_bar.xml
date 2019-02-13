@@ -9,6 +9,9 @@
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/settings_language"
+        android:title="@string/language"
+        app:showAsAction="never"/>
     <item android:id="@+id/settings_explanation"
         android:title="@string/explanation_title"
         app:showAsAction="never"/>

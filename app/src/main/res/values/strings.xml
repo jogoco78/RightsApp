@@ -27,11 +27,13 @@
     <string name="navigate_to">Navigate to</string>
 
     <string name="language">Language</string>
+    <string name="select_language">Select the current language</string>
     <string name="about">About us</string>
     <string name="about_us_body">About us body About us body About us body About us body About us body \n About us body About us body</string>
     <string name="title_activity_questionnaire">QuestionnaireActivity</string>
     <string name="questionnaire_title">Questionnaire</string>
     <string name="title_activity_questionnaire_fragment">QuestionnaireFragment</string>
     <string name="button_continue">Continue</string>
+    <string name="title_activity_language">LanguageActivity</string>
 
 </resources>

@@ -23,7 +23,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /**
      * Database name
      */
-    private static String DB_NAME = "rightsapp_v1_utf16.db";
+    private static String DB_NAME = "rightsapp_v3_utf16.db";
 
     /**
      * Assets path for databases folder
@@ -231,8 +231,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 + " = " + String.valueOf(id_answer);
 
         Cursor cursor = myDataBase.rawQuery(query, null);
-
+        cursor.moveToFirst();
         int id_next_question = cursor.getInt(0);
+        System.out.println("TEST: DB next question ID");
 
         cursor.close();
 

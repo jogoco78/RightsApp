@@ -20,4 +20,5 @@
     <string name="language">Idioma</string>
     <string name="about">Acerca de</string>
     <string name="about_us_body">Cuerpo acerca de...</string>
+    <string name="select_language">Selecciona el idioma</string>
 </resources>

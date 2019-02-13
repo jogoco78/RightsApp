@@ -8,14 +8,15 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.os.ConfigurationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.Locale;
 
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
+import cat.uab.idt.rightsapp.utils.LocaleUtils;
 
 public class SplashScreenActivity extends AppCompatActivity {
     boolean agreed;
@@ -32,7 +33,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         try{
             myDataBase.createDatabase();
         }catch (IOException e){
-            System.out.println("Error creating database");
+            System.out.println("ERROR: Error creating database");
             throw new Error("Unable to create database: " + e.getMessage());
         }
 
@@ -41,12 +42,31 @@ public class SplashScreenActivity extends AppCompatActivity {
         mSharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        agreed = mSharedPreferences.getBoolean("agreed", false);
-        showExplanation = mSharedPreferences.getBoolean("show_explanation", true);
+        agreed = mSharedPreferences.getBoolean(Constants.AGREED, false);
+        showExplanation = mSharedPreferences.getBoolean(Constants.SHOW_EXPLANATION, true);
+
+        //Sets the language
+        Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
+        String localeName = locale.getLanguage();
+
+        //Sets English by default
+        for (int i=0; i<Constants.LANGUAGES.length; i++){
+            if(Constants.LANGUAGES[i].equals(localeName)) break;
+            else if(i == Constants.LANGUAGES.length-1) localeName = Constants.LANGUAGE_EN;
+        }
+
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(Constants.DEVICE_LANGUAGE, locale.getLanguage());
+        editor.putString(Constants.PREF_LANGUAGE, localeName);
+        editor.apply();
+
+        //Sets the language for the app
+        LocaleUtils.setLocale(this, localeName);
+
+        System.out.println("LANGUAGE DEVICE: " + mSharedPreferences.getString(Constants.DEVICE_LANGUAGE,null));
+        System.out.println("LANGUAGE PREF: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));
 
         if(!agreed){
-            System.out.println("Not agreed");
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.terms_and_conditions_title)
                     .setTitle(R.string.terms_and_conditions_body);

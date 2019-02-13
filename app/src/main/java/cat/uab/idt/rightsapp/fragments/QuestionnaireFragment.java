@@ -90,8 +90,10 @@ public class QuestionnaireFragment extends Fragment {
                 }
 
                 int id_next_question = db.getNextQuestionID(currentQuestionID, id_answer);
+                System.out.println("TEST: ID NEXT QUESTION " + id_next_question);
                 if(id_next_question == 0){
                     //the questionnaire is over - loads the next activity
+                    System.out.println("TEST: Exit Questionnaire");
 
                 }else{
                     //updates the fragment to the new question
