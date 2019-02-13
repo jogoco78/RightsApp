@@ -48,7 +48,7 @@ public class LanguageActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = mSharedPreferences.edit();
                 editor.putString(Constants.PREF_LANGUAGE, Constants.LANGUAGES[id_answer]);
                 editor.apply();
-                System.out.println("LANGUAGE: " + Constants.LANGUAGES[id_answer]);
+                System.out.println("LANGUAGE SELECTED: " + Constants.LANGUAGES[id_answer]);
 
                 Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);

@@ -28,31 +28,26 @@ public class SplashScreenActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme_Launcher);
         super.onCreate(savedInstanceState);
 
-        // Copy database from res folder to the app
-        DataBaseHelper myDataBase = new DataBaseHelper(this);
-        try{
-            myDataBase.createDatabase();
-        }catch (IOException e){
-            System.out.println("ERROR: Error creating database");
-            throw new Error("Unable to create database: " + e.getMessage());
-        }
-
         // Gets preferences file
         Context context = getApplicationContext();
         mSharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        agreed = mSharedPreferences.getBoolean(Constants.AGREED, false);
-        showExplanation = mSharedPreferences.getBoolean(Constants.SHOW_EXPLANATION, true);
-
         //Sets the language
         Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
         String localeName = locale.getLanguage();
+        System.out.println("LocaleName: " + localeName);
 
         //Sets English by default
         for (int i=0; i<Constants.LANGUAGES.length; i++){
-            if(Constants.LANGUAGES[i].equals(localeName)) break;
-            else if(i == Constants.LANGUAGES.length-1) localeName = Constants.LANGUAGE_EN;
+            if(Constants.LANGUAGES[i].equals(localeName)){
+                System.out.println("Break: " + Constants.LANGUAGES[i]);
+                break;
+            }
+            else if(i == Constants.LANGUAGES.length-1) {
+                localeName = Constants.LANGUAGE_EN;
+                System.out.println("NoBreak: " + localeName);
+            }
         }
 
         SharedPreferences.Editor editor = mSharedPreferences.edit();
@@ -65,6 +60,23 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         System.out.println("LANGUAGE DEVICE: " + mSharedPreferences.getString(Constants.DEVICE_LANGUAGE,null));
         System.out.println("LANGUAGE PREF: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));
+
+        // Copy database from res folder to the app
+        DataBaseHelper myDataBase = new DataBaseHelper(this);
+        try{
+            myDataBase.createDatabase();
+        }catch (IOException e){
+            System.out.println("ERROR: Error creating database");
+            throw new Error("Unable to create database: " + e.getMessage());
+        }
+
+        // Gets preferences file
+    //    Context context = getApplicationContext();
+      //  mSharedPreferences = context.getSharedPreferences(
+        //        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        agreed = mSharedPreferences.getBoolean(Constants.AGREED, false);
+        showExplanation = mSharedPreferences.getBoolean(Constants.SHOW_EXPLANATION, true);
 
         if(!agreed){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

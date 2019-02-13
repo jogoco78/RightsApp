@@ -3,6 +3,9 @@ package cat.uab.idt.rightsapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.support.v4.os.ConfigurationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,26 +15,32 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.support.v7.widget.Toolbar;
 
+import java.util.Locale;
+
 import cat.uab.idt.rightsapp.utils.LocaleUtils;
 
 public class RightsAppActivity extends AppCompatActivity {
 
+    SharedPreferences mSharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Gets preferences file
+        Context context = getApplicationContext();
+        mSharedPreferences = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        //Sets language
+        System.out.println("RAA: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));
+        LocaleUtils.setLocale(this, mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));
+
         setContentView(R.layout.activity_rights_app);
 
         //Sets the toolbar
         Toolbar toolbarRightsApp = (Toolbar) findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
-
-        //Sets the language
-        Context context = getApplicationContext();
-        SharedPreferences mSharedPreferences = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        System.out.println("LANGUAGE RightsApp Activity: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,"en"));
-
-        LocaleUtils.setLocale(context, mSharedPreferences.getString(Constants.PREF_LANGUAGE,"en"));
 
         //ImageButton Listeners
         ImageButton button_emergency112 = findViewById(R.id.imageButton_emergency112);
@@ -68,8 +77,11 @@ public class RightsAppActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig){
+        System.out.println("On Configuration Changed");
     }
 
     @Override
