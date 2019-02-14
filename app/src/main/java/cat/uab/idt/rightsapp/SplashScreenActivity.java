@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -33,15 +34,18 @@ public class SplashScreenActivity extends AppCompatActivity {
         mSharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        //Sets the language
+        //Gets the language from the device
         Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
-        String localeName = locale.getLanguage();
-        System.out.println("LocaleName: " + localeName);
+        String deviceLocaleName = locale.getLanguage();
+        locale = null;
+        System.out.println("Device locale: " + deviceLocaleName);
 
         //Sets English by default
+        String localeName = null;
         for (int i=0; i<Constants.LANGUAGES.length; i++){
-            if(Constants.LANGUAGES[i].equals(localeName)){
-                System.out.println("Break: " + Constants.LANGUAGES[i]);
+            if(Constants.LANGUAGES[i].equals(deviceLocaleName)){
+                localeName = Constants.LANGUAGES[i];
+                System.out.println("Break: " + localeName);
                 break;
             }
             else if(i == Constants.LANGUAGES.length-1) {
@@ -50,13 +54,18 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         }
 
+        //Saves the device and pref locale
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(Constants.DEVICE_LANGUAGE, locale.getLanguage());
+        editor.putString(Constants.DEVICE_LANGUAGE, deviceLocaleName);
         editor.putString(Constants.PREF_LANGUAGE, localeName);
         editor.apply();
 
         //Sets the language for the app
-        LocaleUtils.setLocale(this, localeName);
+        locale = new Locale(localeName);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
         System.out.println("LANGUAGE DEVICE: " + mSharedPreferences.getString(Constants.DEVICE_LANGUAGE,null));
         System.out.println("LANGUAGE PREF: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));

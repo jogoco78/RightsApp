@@ -33,8 +33,8 @@ public class RightsAppActivity extends AppCompatActivity {
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         //Sets language
-        System.out.println("RAA: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));
-        LocaleUtils.setLocale(this, mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));
+       /* System.out.println("RAA: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));
+        LocaleUtils.setLocale(this, mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));*/
 
         setContentView(R.layout.activity_rights_app);
 

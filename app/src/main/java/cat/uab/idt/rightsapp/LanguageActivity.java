@@ -3,6 +3,7 @@ package cat.uab.idt.rightsapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 import cat.uab.idt.rightsapp.utils.LocaleUtils;
 
@@ -32,6 +35,7 @@ public class LanguageActivity extends AppCompatActivity {
         Toolbar toolbarRightsApp = (Toolbar) findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
+        //Gets preferences
         context = getApplicationContext();
         mSharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -44,11 +48,21 @@ public class LanguageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 int id_answer = rg_answers.getCheckedRadioButtonId();
-                LocaleUtils.setLocale(context, Constants.LANGUAGES[id_answer]);
+                String localeName = Constants.LANGUAGES[id_answer];
+
+                //Sets the language for the app
+                Locale locale = new Locale(localeName);
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+                //Updates preferences
                 SharedPreferences.Editor editor = mSharedPreferences.edit();
-                editor.putString(Constants.PREF_LANGUAGE, Constants.LANGUAGES[id_answer]);
+                editor.putString(Constants.PREF_LANGUAGE, localeName);
                 editor.apply();
-                System.out.println("LANGUAGE SELECTED: " + Constants.LANGUAGES[id_answer]);
+
+                System.out.println("LANGUAGE SELECTED: " + localeName);
 
                 Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);
