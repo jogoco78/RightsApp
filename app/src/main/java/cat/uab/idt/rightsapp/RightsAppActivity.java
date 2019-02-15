@@ -21,20 +21,28 @@ import cat.uab.idt.rightsapp.utils.LocaleUtils;
 
 public class RightsAppActivity extends AppCompatActivity {
 
-    SharedPreferences mSharedPreferences;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences mSharedPreferences;
 
         // Gets preferences file
         Context context = getApplicationContext();
         mSharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String localeName = mSharedPreferences.getString(Constants.PREF_LANGUAGE,null);
 
-        //Sets language
-       /* System.out.println("RAA: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));
-        LocaleUtils.setLocale(this, mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));*/
+        //Sets the language for the activity
+        Locale locale = new Locale("es", "ES");
+        //locale = Locale.ITALY;
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        //this.onConfigurationChanged(config);
+
+        System.out.println("RAA: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));
 
         setContentView(R.layout.activity_rights_app);
 
@@ -79,6 +87,12 @@ public class RightsAppActivity extends AppCompatActivity {
         });
     }
 
+    public void onResume(){
+        super.onResume();
+
+
+    }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig){
         System.out.println("On Configuration Changed");
@@ -102,6 +116,8 @@ public class RightsAppActivity extends AppCompatActivity {
         switch (id) {
             case R.id.settings_language:
                 intent = new Intent(getApplicationContext(), LanguageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 break;
             case R.id.action_home:

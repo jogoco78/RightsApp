@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,7 @@ public class LanguageActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
     private RadioGroup rg_answers;
     private Context context;
+    String localeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,18 @@ public class LanguageActivity extends AppCompatActivity {
         mSharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
+        String localeName = mSharedPreferences.getString(Constants.PREF_LANGUAGE,null);
+        //Sets the language for the activity
+        Locale locale = new Locale(localeName);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        //this.onConfigurationChanged(config);
+
+        System.out.println("LA: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));
+
+
         TextView tv_selectLanguage = findViewById(R.id.textView_change_language);
         rg_answers = findViewById(R.id.radioGroup_select_language);
         Button btn_selectLanguage = findViewById(R.id.button_select_language);
@@ -48,23 +62,17 @@ public class LanguageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 int id_answer = rg_answers.getCheckedRadioButtonId();
-                String localeName = Constants.LANGUAGES[id_answer];
 
-                //Sets the language for the app
-                Locale locale = new Locale(localeName);
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-                //Updates preferences
+                //Saves the device and pref locale
                 SharedPreferences.Editor editor = mSharedPreferences.edit();
-                editor.putString(Constants.PREF_LANGUAGE, localeName);
+                editor.putString(Constants.PREF_LANGUAGE, Constants.LANGUAGES[id_answer]);
                 editor.apply();
 
-                System.out.println("LANGUAGE SELECTED: " + localeName);
+                System.out.println("LANGUAGE SELECTED: " + Constants.LANGUAGES[id_answer]);
 
-                Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SplashScreenActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
