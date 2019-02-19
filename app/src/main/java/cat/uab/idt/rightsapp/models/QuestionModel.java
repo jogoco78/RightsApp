@@ -4,7 +4,7 @@ public class QuestionModel {
     private int id;
     private String text_es;
     private String text_en;
-    private String text_pt;
+    private String text_por;
     private String text_it;
     private boolean statistical;
 
@@ -19,7 +19,7 @@ public class QuestionModel {
         this.id = 0;
         this.text_es = null;
         this.text_en = null;
-        this.text_pt = null;
+        this.text_por = null;
         this.text_it = null;
         this.statistical = false;
     }
@@ -48,12 +48,12 @@ public class QuestionModel {
         this.text_en = text_en;
     }
 
-    public String getText_pt() {
-        return text_pt;
+    public String getText_por() {
+        return text_por;
     }
 
-    public void setText_pt(String text_pt) {
-        this.text_pt = text_pt;
+    public void setText_por(String text_por) {
+        this.text_por = text_por;
     }
 
     public String getText_it() {

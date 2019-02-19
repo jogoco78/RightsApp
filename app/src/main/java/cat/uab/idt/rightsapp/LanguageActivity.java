@@ -42,18 +42,7 @@ public class LanguageActivity extends AppCompatActivity {
         mSharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        String localeName = mSharedPreferences.getString(Constants.PREF_LANGUAGE,null);
-        //Sets the language for the activity
-        Locale locale = new Locale(localeName);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        //this.onConfigurationChanged(config);
-
-        System.out.println("LA: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));
-
-
+        //Gets the layout
         TextView tv_selectLanguage = findViewById(R.id.textView_change_language);
         rg_answers = findViewById(R.id.radioGroup_select_language);
         Button btn_selectLanguage = findViewById(R.id.button_select_language);
@@ -68,11 +57,16 @@ public class LanguageActivity extends AppCompatActivity {
                 editor.putString(Constants.PREF_LANGUAGE, Constants.LANGUAGES[id_answer]);
                 editor.apply();
 
-                System.out.println("LANGUAGE SELECTED: " + Constants.LANGUAGES[id_answer]);
+                //Sets the language for the app
+                Locale locale = new Locale(Constants.LANGUAGES[id_answer], Constants.REGIONS[id_answer]);
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
-                Intent intent = new Intent(getApplicationContext(), SplashScreenActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                System.out.println("LANGUAGE SELECTED: " + Constants.LANGUAGES[id_answer] + " " + Constants.REGIONS[id_answer]);
+
+                Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);
             }
         });

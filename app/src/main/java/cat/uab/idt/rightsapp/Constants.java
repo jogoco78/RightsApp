@@ -7,9 +7,10 @@ public class Constants {
     public static final String PREF_LANGUAGE = "pref_language";
     public static final String LANGUAGE_ES = "es";
     public static final String LANGUAGE_EN = "en";
-    public static final String LANGUAGE_PT = "pt";
+    public static final String LANGUAGE_PT = "por";
     public static final String LANGUAGE_IT = "it";
-    public static final String[] LANGUAGES = {"es","en","pt","it"};
+    public static final String[] LANGUAGES = {"es","en","por","it"};
+    public static final String[] REGIONS = {"ES","EN","PT","IT"};
 
 
 

@@ -22,56 +22,13 @@ import cat.uab.idt.rightsapp.utils.LocaleUtils;
 public class SplashScreenActivity extends AppCompatActivity {
     boolean agreed;
     boolean showExplanation;
+    String language;
     SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_Launcher);
         super.onCreate(savedInstanceState);
-
-        //Gets the language from the device
-        Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
-        String deviceLocaleName = String.valueOf(locale.getLanguage());
-
-        System.out.println("Device locale: " + deviceLocaleName);
-
-        //Sets English by default
-        String localeName = null;
-        for (int i=0; i<Constants.LANGUAGES.length; i++){
-            if(Constants.LANGUAGES[i].equals(deviceLocaleName)){
-                localeName = String.valueOf(Constants.LANGUAGES[i]);
-                System.out.println("Break: " + localeName);
-                break;
-            }
-            else if(i == Constants.LANGUAGES.length-1) {
-                localeName = String.valueOf(Constants.LANGUAGE_EN);
-                System.out.println("NoBreak: " + localeName);
-            }
-        }
-
-        // Gets preferences file
-        Context context = getApplicationContext();
-        mSharedPreferences = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
-        //Saves the device and pref locale
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(Constants.DEVICE_LANGUAGE, deviceLocaleName);
-        editor.putString(Constants.PREF_LANGUAGE, localeName);
-        editor.apply();
-
-        //Sets the language for the app
-        /*locale = new Locale(localeName);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        this.onConfigurationChanged(config);
-        Intent refresh = new Intent(SplashScreenActivity.this, SplashScreenActivity.class);
-        startActivity(refresh);*/
-
-        //System.out.println("LANGUAGE DEVICE: " + mSharedPreferences.getString(Constants.DEVICE_LANGUAGE,null));
-        //System.out.println("LANGUAGE PREF: " + mSharedPreferences.getString(Constants.PREF_LANGUAGE,null));
 
         // Copy database from res folder to the app
         DataBaseHelper myDataBase = new DataBaseHelper(this);
@@ -83,9 +40,25 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
 
         // Gets preferences file
-        //Context context = getApplicationContext();
-        //mSharedPreferences = context.getSharedPreferences(
-          //      getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        Context context = getApplicationContext();
+        mSharedPreferences = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        //Sets the language stored in Preferences for the app
+        language = mSharedPreferences.getString(Constants.PREF_LANGUAGE, null);
+        if(language != null){
+            int index = 0;
+            for( index = 0; index < Constants.LANGUAGES.length; index++){
+                if(Constants.LANGUAGES[index].equals(language)) break;
+            }
+
+            //Sets the language for the app
+            Locale locale = new Locale(Constants.LANGUAGES[index], Constants.REGIONS[index]);
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
 
         agreed = mSharedPreferences.getBoolean(Constants.AGREED, false);
         showExplanation = mSharedPreferences.getBoolean(Constants.SHOW_EXPLANATION, true);

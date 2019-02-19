@@ -126,7 +126,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      */
     public void setMyDataBase(SQLiteDatabase myDataBase){
         this.myDataBase = myDataBase;
-
     }
 
     /**
@@ -142,20 +141,82 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // QUESTIONS & ANSWERS
 
     /**
+     * Returns the text of the question given by parameter in the specified language
+     * @param id_question ID of the question
+     * @param language languge of the text to be returned
+     * @return the text of the given question in the text specified by parameter
+     */
+    public String getQuestion(int id_question, String language){
+        return getQuestions(new int[] {id_question}, language)[0];
+    }
+
+    /**
+     * Returns an array with the text of the questions given by parameters
+     * @param id_questions ID of the question
+     * @param language language of the text to be returned
+     * @return an array of texts of the given questions in the text specified by parameter
+     */
+    public String[] getQuestions(int[] id_questions, String language){
+        int index = 0;
+        String[] result = new String[id_questions.length];
+
+        //TODO: Order of the responses from the Database
+        String query = "SELECT * FROM " + DBContract.Questions.TABLE_NAME
+                + " WHERE " +  DBContract.Questions.COLUMN_NAME_ID + " IN (" + id_questions[0];
+
+        for(int i = 1; i < id_questions.length; i++){
+            query = query + "," + id_questions[i];
+        }
+        query = query + ")";
+
+        //Launch the query
+        Cursor cursor = myDataBase.rawQuery(query, null);
+
+        //Gets the results
+        if(cursor.moveToFirst()){
+            // Loop through cursor results if the query has rows
+            do {
+                switch (language){
+                    case "en":
+                        result[index] = cursor.getString(2);
+                        break;
+                    case "es":
+                        result[index] = cursor.getString(1);
+                        break;
+                    case "por":
+                        result[index] = cursor.getString(3);
+                        break;
+                    case "it":
+                        result[index] = cursor.getString(4);
+                        break;
+                    default:
+                        //do default
+                        break;
+                }
+                index++;
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        return result;
+    }
+
+    /**
      * Returns the question given by parameter
      * @param id_question an integer with the ID of the question
      * @return a QuestionModel object
      */
-    public QuestionModel getQuestions(int id_question){
+    /*public QuestionModel getQuestions(int id_question){
         return getQuestions(new int[] {id_question}).get(0);
-    }
+    }*/
 
     /**
      * Returns the questions given by parameter
      * @param id_questions an array with the id of the questions to be returned
      * @return an ArrayList of QuestionModel given by parameter
      */
-    public ArrayList<QuestionModel> getQuestions(int[] id_questions){
+    /*public ArrayList<QuestionModel> getQuestions(int[] id_questions){
         ArrayList<QuestionModel> result = new ArrayList<>();
         String query = "SELECT * FROM " + DBContract.Questions.TABLE_NAME
                 + " WHERE " +  DBContract.Questions.COLUMN_NAME_ID + " IN (" + id_questions[0];
@@ -175,7 +236,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 questionModel.setId(cursor.getInt(0));
                 questionModel.setText_es(cursor.getString(1));
                 questionModel.setText_en(cursor.getString(2));
-                questionModel.setText_pt(cursor.getString(3));
+                questionModel.setText_por(cursor.getString(3));
                 questionModel.setText_it(cursor.getString(4));
 
                 result.add(questionModel);
@@ -185,7 +246,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return result;
-    }
+    }*/
 
     /**
      * Returns the ID of the answers for a given question ID
