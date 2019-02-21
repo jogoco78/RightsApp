@@ -12,18 +12,21 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <TextView
         android:id="@+id/textView_emergency_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="110dp"
-        android:layout_marginLeft="110dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="@string/emergency_call"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_rights_app" />
 
@@ -31,13 +34,16 @@
         android:id="@+id/imageButton_emergency112"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:layout_marginLeft="43dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="14dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/cruz_roja"
         app:layout_constraintBottom_toTopOf="@+id/textView_emergency112"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_emergency_call"
         app:srcCompat="@drawable/cruzroja_50" />
@@ -52,76 +58,37 @@
         app:layout_constraintStart_toStartOf="@+id/imageButton_emergency112"
         app:layout_constraintTop_toBottomOf="@+id/imageButton_emergency112" />
 
-    <ImageButton
-        android:id="@+id/imageButton_redcross"
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="74dp"
-        android:layout_marginLeft="74dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="73dp"
-        android:layout_marginRight="73dp"
-        android:layout_marginBottom="14dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/cruz_roja"
-        app:layout_constraintBottom_toTopOf="@+id/textView_redcross"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton_mossos"
-        app:layout_constraintStart_toEndOf="@+id/imageButton_emergency112"
-        app:layout_constraintTop_toBottomOf="@+id/textView_emergency_call"
-        app:srcCompat="@drawable/cruzroja_50" />
-
-    <TextView
-        android:id="@+id/textView_redcross"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:text="@string/cruz_roja"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton_redcross"
-        app:layout_constraintStart_toStartOf="@+id/imageButton_redcross"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton_redcross" />
-
-    <ImageButton
-        android:id="@+id/imageButton_mossos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
-        android:layout_marginBottom="14dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/mossos"
-        app:layout_constraintBottom_toTopOf="@+id/textView_mossos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_emergency_call"
-        app:srcCompat="@drawable/cruzroja_50" />
-
-    <TextView
-        android:id="@+id/textView_mossos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:text="@string/mossos"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton_mossos"
-        app:layout_constraintStart_toStartOf="@+id/imageButton_mossos"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton_mossos" />
+        android:orientation="vertical" />
 
     <Button
         android:id="@+id/button_get_information"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="119dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/get_information"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton_redcross"
-        app:layout_constraintStart_toStartOf="@+id/imageButton_redcross"
-        app:layout_constraintTop_toBottomOf="@+id/textView_redcross" />
+        app:layout_constraintBottom_toTopOf="@+id/button_navigate_to"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/textView_emergency112"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
         android:id="@+id/button_navigate_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/navigate_to"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/button_get_information"
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="@+id/button_get_information"

@@ -1,10 +1,9 @@
 package cat.uab.idt.rightsapp.fragments;
 
 import android.app.Activity;
-import android.content.res.Resources;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.os.ConfigurationCompat;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +14,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
+import cat.uab.idt.rightsapp.LanguageActivity;
 import cat.uab.idt.rightsapp.R;
+import cat.uab.idt.rightsapp.RightsAppActivity;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 import cat.uab.idt.rightsapp.QuestionnaireActivity;
 import cat.uab.idt.rightsapp.models.AnswerModel;
@@ -29,6 +29,7 @@ public class QuestionnaireFragment extends Fragment {
 
     private int currentQuestionID;
     private int currentSelectionID = -1;
+    private String language;
     private DataBaseHelper db;
     private TextView tv_question;
     private RadioGroup rg_answers;
@@ -41,7 +42,6 @@ public class QuestionnaireFragment extends Fragment {
         super.onAttach(_activity);
 
         parentActivity = (QuestionnaireActivity) _activity;
-
     }
 
     @Override
@@ -50,7 +50,6 @@ public class QuestionnaireFragment extends Fragment {
 
         _outState.putInt(CURRENT_QUESTION_ID, currentQuestionID);
         _outState.putInt(CURRENT_SELECTION_ID, currentSelectionID);
-
     }
 
     @Override
@@ -63,6 +62,8 @@ public class QuestionnaireFragment extends Fragment {
             currentQuestionID = _savedInstanceState.getInt(CURRENT_QUESTION_ID);
             currentSelectionID = _savedInstanceState.getInt(CURRENT_SELECTION_ID);
         }
+
+        language = parentActivity.getLanguage();
     }
 
     @Override
@@ -89,11 +90,20 @@ public class QuestionnaireFragment extends Fragment {
                     db.openDataBase();
                 }
 
+                //Sets the question and answers parameters
+                //TODO: Sets question and answers paramenters - store the paramenters in a String in preferences
+
+                //Raise the tag, if any, in preferences
+                //TODO:raise the tag in preferences, if any
+
+                //Gets the next question ID and updates the fragment
                 int id_next_question = db.getNextQuestionID(currentQuestionID, id_answer);
                 System.out.println("TEST: ID NEXT QUESTION " + id_next_question);
                 if(id_next_question == 0){
                     //the questionnaire is over - loads the next activity
                     System.out.println("TEST: Exit Questionnaire");
+                    Intent intent = new Intent(parentActivity.getApplicationContext(), RightsAppActivity.class);
+                    startActivity(intent);
 
                 }else{
                     //updates the fragment to the new question
@@ -124,26 +134,28 @@ public class QuestionnaireFragment extends Fragment {
             db.openDataBase();
         }
 
-        //TODO: Select correct locale
-        tv_question.setText(db.getQuestions(currentQuestionID).getText_es());
+        //Sets the question text
+        tv_question.setText(db.getQuestionText(currentQuestionID, language));
 
+        //Clears the answers Radio Group
         rg_answers.clearCheck();
         rg_answers.removeAllViews();
-        ArrayList<AnswerModel> answers = db.getAnswersForQuestion(currentQuestionID);
 
-        for(int i=0; i<answers.size(); i++){
+        //Sets the answers texts
+        int[] answersID = db.getAnswersIDForQuestion(currentQuestionID);
+        String[] answersText = db.getAnswersText(answersID, language);
+
+        for(int i=0; i<answersID.length; i++){
             RadioButton rb = new RadioButton(parentActivity);
-            rb.setText(answers.get(i).getText_es());
+            rb.setText(answersText[i]);
             rb.setLayoutParams(rg_answersParams);
-            rb.setId(answers.get(i).getId());
+            rb.setId(answersID[i]);
             rg_answers.addView(rb);
         }
 
         if(currentSelectionID != -1){
             rg_answers.check(currentSelectionID);
         }
-
-        //Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
     }
 
     @Override

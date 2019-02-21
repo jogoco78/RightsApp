@@ -41,24 +41,6 @@ public class RightsAppActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton button_redcross = findViewById(R.id.imageButton_redcross);
-        button_redcross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RedCrossCallActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton button_mossos = findViewById(R.id.imageButton_mossos);
-        button_mossos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MossosCallActivity.class);
-                startActivity(intent);
-            }
-        });
-
         Button button_information = findViewById(R.id.button_get_information);
         button_information.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){

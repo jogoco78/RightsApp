@@ -1,6 +1,7 @@
 package cat.uab.idt.rightsapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +11,10 @@ import cat.uab.idt.rightsapp.fragments.QuestionnaireFragment;
 
 public class QuestionnaireActivity extends AppCompatActivity {
 
-    protected static Context mContext;
+    protected static Context context;
     private static String CURRENT_QUESTION_ID = "CURRENT_QUESTION_ID";
 
+    private String language;
     private int currentQuestionID = 1;
 
     private TextView mTextViewTitle;
@@ -22,7 +24,12 @@ public class QuestionnaireActivity extends AppCompatActivity {
         super.onCreate(_savedInstanceState);
         setContentView(R.layout.activity_questionnaire);
 
-        mContext = getApplicationContext();
+        context = getApplicationContext();
+
+        //Gets preference file
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
 
         if(_savedInstanceState == null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -59,6 +66,10 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
     public int getCurrentQuestionID() {
         return currentQuestionID;
+    }
+
+    public String getLanguage(){
+        return language;
     }
 
     public void setCurrentQuestionID(int _currentQuestionID) {

@@ -25,7 +25,6 @@ public class LanguageActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
     private RadioGroup rg_answers;
-    private Context context;
     String localeName;
 
     @Override
@@ -38,7 +37,7 @@ public class LanguageActivity extends AppCompatActivity {
         setSupportActionBar(toolbarRightsApp);
 
         //Gets preferences
-        context = getApplicationContext();
+        Context context = getApplicationContext();
         mSharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 

@@ -14,8 +14,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import cat.uab.idt.rightsapp.models.AnswerModel;
-import cat.uab.idt.rightsapp.models.QuestionModel;
 import cat.uab.idt.rightsapp.models.ParticleModel;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -146,8 +144,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      * @param language languge of the text to be returned
      * @return the text of the given question in the text specified by parameter
      */
-    public String getQuestion(int id_question, String language){
-        return getQuestions(new int[] {id_question}, language)[0];
+    public String getQuestionText(int id_question, String language){
+        return getQuestionsText(new int[] {id_question}, language)[0];
     }
 
     /**
@@ -156,7 +154,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      * @param language language of the text to be returned
      * @return an array of texts of the given questions in the text specified by parameter
      */
-    public String[] getQuestions(int[] id_questions, String language){
+    public String[] getQuestionsText(int[] id_questions, String language){
         int index = 0;
         String[] result = new String[id_questions.length];
 
@@ -203,52 +201,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Returns the question given by parameter
-     * @param id_question an integer with the ID of the question
-     * @return a QuestionModel object
-     */
-    /*public QuestionModel getQuestions(int id_question){
-        return getQuestions(new int[] {id_question}).get(0);
-    }*/
-
-    /**
-     * Returns the questions given by parameter
-     * @param id_questions an array with the id of the questions to be returned
-     * @return an ArrayList of QuestionModel given by parameter
-     */
-    /*public ArrayList<QuestionModel> getQuestions(int[] id_questions){
-        ArrayList<QuestionModel> result = new ArrayList<>();
-        String query = "SELECT * FROM " + DBContract.Questions.TABLE_NAME
-                + " WHERE " +  DBContract.Questions.COLUMN_NAME_ID + " IN (" + id_questions[0];
-
-        for(int i = 1; i < id_questions.length; i++){
-            query = query + "," + id_questions[i];
-        }
-        query = query + ")";
-
-        Cursor cursor = myDataBase.rawQuery(query, null);
-
-        if(cursor.moveToFirst()){
-            // Loop through cursor results if the query has rows
-            do {
-                QuestionModel questionModel = new QuestionModel();
-                questionModel.initialize();
-                questionModel.setId(cursor.getInt(0));
-                questionModel.setText_es(cursor.getString(1));
-                questionModel.setText_en(cursor.getString(2));
-                questionModel.setText_por(cursor.getString(3));
-                questionModel.setText_it(cursor.getString(4));
-
-                result.add(questionModel);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-
-        return result;
-    }*/
-
-    /**
      * Returns the ID of the answers for a given question ID
      * @param id_question given question ID
      * @return the IDs of the answers for a given question ID
@@ -261,15 +213,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = myDataBase.rawQuery(query, null);
 
-        int i = 0;
+        int index = 0;
         int[] id_answers = new int[cursor.getCount()];
 
         if(cursor.moveToFirst()){
             // Loop through cursor results if the query has rows
             do {
-                id_answers[i] = cursor.getInt(0);
-                //id_answers[i] = String.valueOf(cursor.getInt(0));
-                i++;
+                id_answers[index] = cursor.getInt(0);
+                index++;
 
             } while (cursor.moveToNext());
         }
@@ -294,7 +245,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Cursor cursor = myDataBase.rawQuery(query, null);
         cursor.moveToFirst();
         int id_next_question = cursor.getInt(0);
-        System.out.println("TEST: DB next question ID");
 
         cursor.close();
 
@@ -302,66 +252,70 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Returns the answers from a specified question by its id into the database
-     * @param id_question the id of the question
-     * @return an ArrayList with all the answers related to the given question
+     * Returns the next question ID from question and answers IDs
+     * @param id_question ID of the question
+     * @param id_answer ID of the answer
+     * @return the ID of the next question
      */
-    public ArrayList<AnswerModel> getAnswersForQuestion(int id_question){
-        /*String query = "SELECT " + DBContract.Questions_Answers.COLUMN_NAME_ID_ANSWER
+    public int getTagRaisedID(int id_question, int id_answer){
+        int id_tag_raised = 0;
+        String query = "SELECT " + DBContract.Questions_Answers.COLUMN_NAME_ID_TAG_RAISED
                 + " FROM " + DBContract.Questions_Answers.TABLE_NAME
                 + " WHERE " +  DBContract.Questions_Answers.COLUMN_NAME_ID_QUESTION + " = "
-                + String.valueOf(id_question);
+                + String.valueOf(id_question) + " AND " + DBContract.Questions_Answers.COLUMN_NAME_ID_ANSWER
+                + " = " + String.valueOf(id_answer);
 
         Cursor cursor = myDataBase.rawQuery(query, null);
 
-        int i = 0;
-        String[] id_answers = new String[cursor.getCount()];
-
         if(cursor.moveToFirst()){
-            // Loop through cursor results if the query has rows
-            do {
-                id_answers[i] = String.valueOf(cursor.getInt(0));
-                i++;
-
-            } while (cursor.moveToNext());
+            id_tag_raised = cursor.getInt(0);
         }
-        cursor.close();*/
 
-        return this.getAnswers(getAnswersIDForQuestion(id_question));
+        cursor.close();
+
+        return id_tag_raised;
     }
 
-    /**
-     * Returns the answers information into the database
-     * @param id_answers the ids of the answers into the database
-     * @return an ArrayList with all the information of the answers given by their id
-     */
-    public ArrayList<AnswerModel> getAnswers(int[] id_answers) {
-        ArrayList<AnswerModel> result = new ArrayList<>();
+    public String getAnswerText(int id_answer, String language){
+        return getAnswersText(new int[] {id_answer}, language)[0];
+    }
+
+    public String[] getAnswersText(int[] id_answers, String language) {
+        int index = 0;
+        String[] result = new String[id_answers.length];
+
         String query = "SELECT * FROM " + DBContract.Answers.TABLE_NAME
                 + " WHERE " +  DBContract.Answers.COLUMN_NAME_ID + " IN (" + id_answers[0];
 
         for(int i = 1; i < id_answers.length; i++){
             query = query + "," + id_answers[i];
         }
-        query = query + ")";
+        query = query + ") ORDER BY " + DBContract.Answers.COLUMN_NAME_ID + " ASC";
 
         Cursor cursor = myDataBase.rawQuery(query, null);
 
         if(cursor.moveToFirst()){
             // Loop through cursor results if the query has rows
             do {
-                //TODO: Return only a given locale
-                AnswerModel answerModel = new AnswerModel();
-                answerModel.initialize();
-                answerModel.setId(cursor.getInt(0));
-                answerModel.setText_es(cursor.getString(1));
-                answerModel.setText_en(cursor.getString(2));
-                answerModel.setText_pt(cursor.getString(3));
-                answerModel.setText_it(cursor.getString(4));
-
-                result.add(answerModel);
+                switch (language){
+                    case "es":
+                        result[index] = cursor.getString(1);
+                        break;
+                    case "en":
+                        result[index] = cursor.getString(2);
+                        break;
+                    case "por":
+                        result[index] = cursor.getString(3);
+                        break;
+                    case "it":
+                        result[index] = cursor.getString(4);
+                        break;
+                    default:
+                        //do default
+                        break;
+                }
+                index++;
             } while (cursor.moveToNext());
-
         }
         cursor.close();
 
