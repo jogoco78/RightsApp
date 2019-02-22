@@ -48,7 +48,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         language = mSharedPreferences.getString(Constants.PREF_LANGUAGE, null);
         if(language != null){
             int index = 0;
-            for( index = 0; index < Constants.LANGUAGES.length; index++){
+            for(index = 0; index < Constants.LANGUAGES.length; index++){
                 if(Constants.LANGUAGES[index].equals(language)) break;
             }
 

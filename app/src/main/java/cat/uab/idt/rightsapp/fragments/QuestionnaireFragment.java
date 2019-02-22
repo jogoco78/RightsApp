@@ -1,7 +1,9 @@
 package cat.uab.idt.rightsapp.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import cat.uab.idt.rightsapp.Constants;
 import cat.uab.idt.rightsapp.LanguageActivity;
 import cat.uab.idt.rightsapp.R;
 import cat.uab.idt.rightsapp.RightsAppActivity;
@@ -86,12 +89,33 @@ public class QuestionnaireFragment extends Fragment {
                 if(db == null){
                     //Opens DB
                     db = new DataBaseHelper(parentActivity);
-                    //db.createDatabase();
                     db.openDataBase();
                 }
 
+                //Gets preferences file
+                Context context = parentActivity.getApplicationContext();
+                SharedPreferences sharedPreferences = context.getSharedPreferences(
+                        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
                 //Sets the question and answers parameters
-                //TODO: Sets question and answers paramenters - store the paramenters in a String in preferences
+                //TODO: Sets questions and answers parameters - store the parameters in a String in preferences
+                String par_questionID = sharedPreferences.getString(Constants.PAR_QUESTIONS,null);
+                String par_answersID = sharedPreferences.getString(Constants.PAR_ANSWERS,null);
+
+                if(par_questionID == null){
+                    par_questionID = String.valueOf(currentQuestionID);
+                }else{
+                    par_questionID = par_questionID + "," + String.valueOf(currentQuestionID);
+                }
+
+                if(par_answersID == null){
+                    par_answersID = String.valueOf(id_answer);
+                }else{
+                    par_answersID = par_answersID + "," + id_answer;
+                }
+
+
+
 
                 //Raise the tag, if any, in preferences
                 //TODO:raise the tag in preferences, if any

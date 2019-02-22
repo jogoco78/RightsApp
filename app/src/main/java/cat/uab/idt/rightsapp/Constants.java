@@ -24,6 +24,10 @@ public class Constants {
     public static final String TAG_UE_RESIDENT = "tag_ue_resident";
     public static final String TAG_JUDICIAL_POCEDURE = "tag_judicial_procedure";
 
+    //Parameters
+    public static final String PAR_QUESTIONS = "par_questions";
+    public static final String PAR_ANSWERS = "par_answers";
+
 
 
 
