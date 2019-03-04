@@ -21,7 +21,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /**
      * Database name
      */
-    private static String DB_NAME = "rightsapp_v3_utf16.db";
+    private static String DB_NAME = "rightsapp_v4_utf16.db";
 
     /**
      * Assets path for databases folder
@@ -252,18 +252,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Returns the next question ID from question and answers IDs
+     * Returns the tag that a question and answer raises, if any
      * @param id_question ID of the question
      * @param id_answer ID of the answer
-     * @return the ID of the next question
+     * @return the ID of the tag raised - 0 if no tag is raised
      */
     public int getTagRaisedID(int id_question, int id_answer){
         int id_tag_raised = 0;
         String query = "SELECT " + DBContract.Questions_Answers.COLUMN_NAME_ID_TAG_RAISED
                 + " FROM " + DBContract.Questions_Answers.TABLE_NAME
                 + " WHERE " +  DBContract.Questions_Answers.COLUMN_NAME_ID_QUESTION + " = "
-                + String.valueOf(id_question) + " AND " + DBContract.Questions_Answers.COLUMN_NAME_ID_ANSWER
-                + " = " + String.valueOf(id_answer);
+                + id_question + " AND " + DBContract.Questions_Answers.COLUMN_NAME_ID_ANSWER
+                + " = " + id_answer;
 
         Cursor cursor = myDataBase.rawQuery(query, null);
 

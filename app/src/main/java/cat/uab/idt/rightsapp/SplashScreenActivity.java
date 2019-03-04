@@ -5,11 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.os.ConfigurationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
@@ -17,13 +15,12 @@ import java.io.IOException;
 import java.util.Locale;
 
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
-import cat.uab.idt.rightsapp.utils.LocaleUtils;
 
 public class SplashScreenActivity extends AppCompatActivity {
     boolean agreed;
     boolean showExplanation;
     String language;
-    SharedPreferences mSharedPreferences;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +38,18 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         // Gets preferences file
         Context context = getApplicationContext();
-        mSharedPreferences = context.getSharedPreferences(
+        sharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
+        //Remove previous questions, answers and tags parameters
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(Constants.PAR_QUESTIONS);
+        editor.remove(Constants.PAR_ANSWERS);
+        editor.remove(Constants.PAR_TAGS);
+        editor.apply();
+
         //Sets the language stored in Preferences for the app
-        language = mSharedPreferences.getString(Constants.PREF_LANGUAGE, null);
+        language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
         if(language != null){
             int index = 0;
             for(index = 0; index < Constants.LANGUAGES.length; index++){
@@ -60,8 +64,8 @@ public class SplashScreenActivity extends AppCompatActivity {
             getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         }
 
-        agreed = mSharedPreferences.getBoolean(Constants.AGREED, false);
-        showExplanation = mSharedPreferences.getBoolean(Constants.SHOW_EXPLANATION, true);
+        agreed = sharedPreferences.getBoolean(Constants.AGREED, false);
+        showExplanation = sharedPreferences.getBoolean(Constants.SHOW_EXPLANATION, true);
 
         if(!agreed){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -74,7 +78,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     // User clicked OK button
 
                     // Updates the agreed field in the preferences
-                    SharedPreferences.Editor editor = mSharedPreferences.edit();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("agreed", true);
                     editor.apply();
 

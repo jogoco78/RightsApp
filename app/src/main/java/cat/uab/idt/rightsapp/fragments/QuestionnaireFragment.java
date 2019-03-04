@@ -97,10 +97,10 @@ public class QuestionnaireFragment extends Fragment {
                 SharedPreferences sharedPreferences = context.getSharedPreferences(
                         getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-                //Sets the question and answers parameters
-                //TODO: Sets questions and answers parameters - store the parameters in a String in preferences
+                //Gets current questions, answers and tags parameters
                 String par_questionID = sharedPreferences.getString(Constants.PAR_QUESTIONS,null);
                 String par_answersID = sharedPreferences.getString(Constants.PAR_ANSWERS,null);
+                String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
 
                 if(par_questionID == null){
                     par_questionID = String.valueOf(currentQuestionID);
@@ -114,21 +114,33 @@ public class QuestionnaireFragment extends Fragment {
                     par_answersID = par_answersID + "," + id_answer;
                 }
 
-
-
-
                 //Raise the tag, if any, in preferences
-                //TODO:raise the tag in preferences, if any
+                int id_tag_raised = db.getTagRaisedID(currentQuestionID, id_answer);
+                if(id_tag_raised != 0){
+                    if(par_tag == null){
+                        par_tag = String.valueOf(id_tag_raised);
+                    }else{
+                        par_tag = par_tag + "," + id_tag_raised;
+                    }
+                }
+
+                //Stores the parameters
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(Constants.PAR_QUESTIONS, par_questionID);
+                editor.putString(Constants.PAR_ANSWERS, par_answersID);
+                if(id_tag_raised != 0) editor.putString(Constants.PAR_TAGS, par_tag);
+                editor.apply();
 
                 //Gets the next question ID and updates the fragment
                 int id_next_question = db.getNextQuestionID(currentQuestionID, id_answer);
                 System.out.println("TEST: ID NEXT QUESTION " + id_next_question);
                 if(id_next_question == 0){
                     //the questionnaire is over - loads the next activity
-                    System.out.println("TEST: Exit Questionnaire");
+                    System.out.println("TEST: Questions " + sharedPreferences.getString(Constants.PAR_QUESTIONS, null));
+                    System.out.println("TEST: Answers " + sharedPreferences.getString(Constants.PAR_ANSWERS,null));
+
                     Intent intent = new Intent(parentActivity.getApplicationContext(), RightsAppActivity.class);
                     startActivity(intent);
-
                 }else{
                     //updates the fragment to the new question
                     parentActivity.setCurrentQuestionID(id_next_question);
@@ -172,7 +184,9 @@ public class QuestionnaireFragment extends Fragment {
         for(int i=0; i<answersID.length; i++){
             RadioButton rb = new RadioButton(parentActivity);
             rb.setText(answersText[i]);
-            rb.setLayoutParams(rg_answersParams);
+            rb.setHorizontallyScrolling(false);
+
+            //rb.setLayoutParams(rg_answersParams);
             rb.setId(answersID[i]);
             rg_answers.addView(rb);
         }

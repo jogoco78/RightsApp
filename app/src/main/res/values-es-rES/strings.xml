@@ -22,4 +22,5 @@
     <string name="about_us_body">Cuerpo acerca de...</string>
     <string name="select_language">Selecciona el idioma</string>
     <string name="button_continue">Siguiente</string>
+    <string name="questionnaire_title">Cuestionario</string>
 </resources>

@@ -48,12 +48,12 @@ public class ExplanationActivity extends AppCompatActivity {
         });
 
         /*Context context = getApplicationContext();
-        SharedPreferences mSharedPreferences = context.getSharedPreferences(
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        boolean firstTime = mSharedPreferences.getBoolean("firstTime", true);
+        boolean firstTime = sharedPreferences.getBoolean("firstTime", true);
         if(firstTime){
-            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("firstTime", false);
             editor.apply();
 
@@ -117,6 +117,10 @@ public class ExplanationActivity extends AppCompatActivity {
         Intent intent;
 
         switch (id) {
+            case R.id.settings_language:
+                intent = new Intent(getApplicationContext(), LanguageActivity.class);
+                startActivity(intent);
+                break;
             case R.id.action_home:
                 intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);

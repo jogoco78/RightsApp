@@ -18,15 +18,17 @@ public class Constants {
     //Tags
     public static final String TAG_TERRORISM = "tag_terrorism";
     public static final String TAG_GENDER_VIOLENCE = "tag_gender_violence";
+    public static final String TAG_DOMESTIC_VIOLENCE = "tag_domestic_violence";
     public static final String TAG_COMMON = "tag_common";
-    public static final String TAG_VIOLENCE_SEXUAL = "tag_violence_sexual";
+    public static final String TAG_VIOLENCE_OR_SEXUAL = "tag_violence_or_sexual";
     public static final String TAG_SPANISH_RESDIDENT = "tag_spanish_resident";
     public static final String TAG_UE_RESIDENT = "tag_ue_resident";
-    public static final String TAG_JUDICIAL_POCEDURE = "tag_judicial_procedure";
+    public static final String TAG_POCEDURE = "tag_procedure";
 
     //Parameters
     public static final String PAR_QUESTIONS = "par_questions";
     public static final String PAR_ANSWERS = "par_answers";
+    public static final String PAR_TAGS = "par_tags";
 
 
 

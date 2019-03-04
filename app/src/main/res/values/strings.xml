@@ -35,5 +35,6 @@
     <string name="title_activity_questionnaire_fragment">QuestionnaireFragment</string>
     <string name="button_continue">Continue</string>
     <string name="title_activity_language">LanguageActivity</string>
+    <string name="title_activity_navigate">NavigateActivity</string>
 
 </resources>

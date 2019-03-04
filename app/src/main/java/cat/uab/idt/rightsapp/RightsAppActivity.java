@@ -28,11 +28,11 @@ public class RightsAppActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rights_app);
 
         //Sets the toolbar
-        Toolbar toolbarRightsApp = (Toolbar) findViewById(R.id.toolbar_rights_app);
+        Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
         //ImageButton Listeners
-        ImageButton button_emergency112 = findViewById(R.id.imageButton_emergency112);
+        ImageButton button_emergency112 = findViewById(R.id.ib_112);
         button_emergency112.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,10 +41,20 @@ public class RightsAppActivity extends AppCompatActivity {
             }
         });
 
-        Button button_information = findViewById(R.id.button_get_information);
+        ImageButton button_information = findViewById(R.id.ib_information);
         button_information.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v){
                 Intent intent = new Intent(getApplicationContext(), QuestionnaireActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton button_navigate = findViewById(R.id.ib_navigate);
+        button_navigate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getApplicationContext(), NavigateActivity.class);
                 startActivity(intent);
             }
         });

@@ -35,6 +35,10 @@ public class AboutUsActivity extends AppCompatActivity {
         Intent intent;
 
         switch (id) {
+            case R.id.settings_language:
+                intent = new Intent(getApplicationContext(), LanguageActivity.class);
+                startActivity(intent);
+                break;
             case R.id.action_home:
                 intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);

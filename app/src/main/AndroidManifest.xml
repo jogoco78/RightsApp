@@ -9,29 +9,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
+        <activity
+            android:name=".NavigateActivity"
+            android:label="@string/title_activity_navigate"
+            android:theme="@style/NoActionBar"></activity>
         <activity
             android:name=".QuestionnaireActivity"
             android:label="@string/title_activity_questionnaire"
-            android:theme="@style/NoActionBar">
-        </activity>
-
+            android:theme="@style/NoActionBar"></activity>
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".TermsAndConditions" />
         <activity android:name=".ExplanationActivity" />
-        <activity android:name=".RightsAppActivity"
-            android:configChanges="locale">
-        </activity>
+        <activity
+            android:name=".RightsAppActivity"
+            android:configChanges="locale"></activity>
         <activity android:name=".Emergency112CallActivity" />
         <activity android:name=".RedCrossCallActivity" />
         <activity android:name=".MossosCallActivity" />
         <activity android:name=".AboutUsActivity" />
-        <activity android:name=".LanguageActivity"/>
-
+        <activity android:name=".LanguageActivity" />
     </application>
+
 </manifest>
