@@ -23,4 +23,5 @@
     <string name="select_language">Selecciona el idioma</string>
     <string name="button_continue">Siguiente</string>
     <string name="questionnaire_title">Cuestionario</string>
+    <string name="no_answer">Debes seleccionar una respuesta</string>
 </resources>

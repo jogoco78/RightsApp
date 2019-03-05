@@ -2,10 +2,13 @@ package cat.uab.idt.rightsapp.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cat.uab.idt.rightsapp.Constants;
+import cat.uab.idt.rightsapp.ExplanationActivity;
 import cat.uab.idt.rightsapp.LanguageActivity;
 import cat.uab.idt.rightsapp.R;
 import cat.uab.idt.rightsapp.RightsAppActivity;
@@ -77,77 +81,95 @@ public class QuestionnaireFragment extends Fragment {
         rg_answersParams = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
         rg_answersParams.setMargins(0, 0, 0, marginInPixels);
 
-        tv_question = (TextView)fragmentView.findViewById(R.id.questionnaire_fragment_question);
-        rg_answers = (RadioGroup)fragmentView.findViewById(R.id.questionnaire_radio_group);
+        tv_question = fragmentView.findViewById(R.id.questionnaire_fragment_question);
+        rg_answers = fragmentView.findViewById(R.id.questionnaire_radio_group);
 
-        Button mButton = (Button) fragmentView.findViewById(R.id.button_questionnaire_fragment);
+        Button mButton = fragmentView.findViewById(R.id.button_questionnaire_fragment);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int id_answer = rg_answers.getCheckedRadioButtonId();
 
-                if(db == null){
-                    //Opens DB
-                    db = new DataBaseHelper(parentActivity);
-                    db.openDataBase();
-                }
+                if(id_answer == -1) {
+                    //No answer is set by the user
+                    AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity);
+                    builder.setMessage(R.string.no_answer);
 
-                //Gets preferences file
-                Context context = parentActivity.getApplicationContext();
-                SharedPreferences sharedPreferences = context.getSharedPreferences(
-                        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                    // Add the buttons
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked OK button - Do nothing
 
-                //Gets current questions, answers and tags parameters
-                String par_questionID = sharedPreferences.getString(Constants.PAR_QUESTIONS,null);
-                String par_answersID = sharedPreferences.getString(Constants.PAR_ANSWERS,null);
-                String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
-
-                if(par_questionID == null){
-                    par_questionID = String.valueOf(currentQuestionID);
-                }else{
-                    par_questionID = par_questionID + "," + String.valueOf(currentQuestionID);
-                }
-
-                if(par_answersID == null){
-                    par_answersID = String.valueOf(id_answer);
-                }else{
-                    par_answersID = par_answersID + "," + id_answer;
-                }
-
-                //Raise the tag, if any, in preferences
-                int id_tag_raised = db.getTagRaisedID(currentQuestionID, id_answer);
-                if(id_tag_raised != 0){
-                    if(par_tag == null){
-                        par_tag = String.valueOf(id_tag_raised);
-                    }else{
-                        par_tag = par_tag + "," + id_tag_raised;
+                        }
+                    });
+                    // Create the AlertDialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else {
+                    //One answer is set by the user
+                    if (db == null) {
+                        //Opens DB
+                        db = new DataBaseHelper(parentActivity);
+                        db.openDataBase();
                     }
-                }
 
-                //Stores the parameters
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(Constants.PAR_QUESTIONS, par_questionID);
-                editor.putString(Constants.PAR_ANSWERS, par_answersID);
-                if(id_tag_raised != 0) editor.putString(Constants.PAR_TAGS, par_tag);
-                editor.apply();
+                    //Gets preferences file
+                    Context context = parentActivity.getApplicationContext();
+                    SharedPreferences sharedPreferences = context.getSharedPreferences(
+                            getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-                //Gets the next question ID and updates the fragment
-                int id_next_question = db.getNextQuestionID(currentQuestionID, id_answer);
-                System.out.println("TEST: ID NEXT QUESTION " + id_next_question);
-                if(id_next_question == 0){
-                    //the questionnaire is over - loads the next activity
-                    System.out.println("TEST: Questions " + sharedPreferences.getString(Constants.PAR_QUESTIONS, null));
-                    System.out.println("TEST: Answers " + sharedPreferences.getString(Constants.PAR_ANSWERS,null));
+                    //Gets current questions, answers and tags parameters
+                    String par_questionID = sharedPreferences.getString(Constants.PAR_QUESTIONS, null);
+                    String par_answersID = sharedPreferences.getString(Constants.PAR_ANSWERS, null);
+                    String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
 
-                    Intent intent = new Intent(parentActivity.getApplicationContext(), RightsAppActivity.class);
-                    startActivity(intent);
-                }else{
-                    //updates the fragment to the new question
-                    parentActivity.setCurrentQuestionID(id_next_question);
-                    parentActivity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.questionnaire_activity_framelayout, new QuestionnaireFragment(), String.valueOf(id_answer))
-                            .addToBackStack(null)
-                            .commit();
+                    if (par_questionID == null) {
+                        par_questionID = String.valueOf(currentQuestionID);
+                    } else {
+                        par_questionID = par_questionID + "," + String.valueOf(currentQuestionID);
+                    }
+
+                    if (par_answersID == null) {
+                        par_answersID = String.valueOf(id_answer);
+                    } else {
+                        par_answersID = par_answersID + "," + id_answer;
+                    }
+
+                    //Raise the tag, if any, in preferences
+                    int id_tag_raised = db.getTagRaisedID(currentQuestionID, id_answer);
+                    if (id_tag_raised != 0) {
+                        if (par_tag == null) {
+                            par_tag = String.valueOf(id_tag_raised);
+                        } else {
+                            par_tag = par_tag + "," + id_tag_raised;
+                        }
+                    }
+
+                    //Stores the parameters
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(Constants.PAR_QUESTIONS, par_questionID);
+                    editor.putString(Constants.PAR_ANSWERS, par_answersID);
+                    if (id_tag_raised != 0) editor.putString(Constants.PAR_TAGS, par_tag);
+                    editor.apply();
+
+                    //Gets the next question ID and updates the fragment
+                    int id_next_question = db.getNextQuestionID(currentQuestionID, id_answer);
+                    System.out.println("TEST: ID NEXT QUESTION " + id_next_question);
+                    if (id_next_question == 0) {
+                        //the questionnaire is over - loads the next activity
+                        System.out.println("TEST: Questions " + sharedPreferences.getString(Constants.PAR_QUESTIONS, null));
+                        System.out.println("TEST: Answers " + sharedPreferences.getString(Constants.PAR_ANSWERS, null));
+
+                        Intent intent = new Intent(parentActivity.getApplicationContext(), RightsAppActivity.class);
+                        startActivity(intent);
+                    } else {
+                        //updates the fragment to the new question
+                        parentActivity.setCurrentQuestionID(id_next_question);
+                        parentActivity.getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.questionnaire_activity_framelayout, new QuestionnaireFragment(), String.valueOf(id_answer))
+                                .addToBackStack(null)
+                                .commit();
+                    }
                 }
             }
         });

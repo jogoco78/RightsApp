@@ -5,9 +5,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.os.ConfigurationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
@@ -41,16 +43,38 @@ public class SplashScreenActivity extends AppCompatActivity {
         sharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        //Remove previous questions, answers and tags parameters
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(Constants.PAR_QUESTIONS);
-        editor.remove(Constants.PAR_ANSWERS);
-        editor.remove(Constants.PAR_TAGS);
-        editor.apply();
-
         //Sets the language stored in Preferences for the app
         language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
-        if(language != null){
+        if(language == null){
+            //if language is not set, it takes the language of the device - English by default
+            Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
+
+            int index = 0;
+            for(index = 0; index < Constants.LANGUAGES.length; index++){
+                if(Constants.LANGUAGES[index].equals(locale.getLanguage())) break;
+            }
+
+            locale = null;
+            if(index == Constants.LANGUAGES.length){
+                //Language by default - not in the list
+                locale = new Locale(Constants.LANGUAGES[1], Constants.REGIONS[1]);
+                language = Constants.LANGUAGES[1];
+            }else{
+                //Sets the language as the device
+                locale = new Locale(Constants.LANGUAGES[index], Constants.REGIONS[index]);
+                language = Constants.LANGUAGES[index];
+            }
+            //Sets the language for the app
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+            //Stores the language
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(Constants.PREF_LANGUAGE, language);
+            editor.apply();
+        }else {
             int index = 0;
             for(index = 0; index < Constants.LANGUAGES.length; index++){
                 if(Constants.LANGUAGES[index].equals(language)) break;
@@ -66,6 +90,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         agreed = sharedPreferences.getBoolean(Constants.AGREED, false);
         showExplanation = sharedPreferences.getBoolean(Constants.SHOW_EXPLANATION, true);
+
+        //Test code
+        agreed = false;
+        showExplanation = true;
+        //End test code
 
         if(!agreed){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

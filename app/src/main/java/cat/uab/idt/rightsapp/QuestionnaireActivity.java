@@ -17,7 +17,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private String language;
     private int currentQuestionID = 1;
 
-    private TextView mTextViewTitle;
+    private TextView tv_title;
 
     @Override
     public void onCreate(Bundle _savedInstanceState){
@@ -39,14 +39,26 @@ public class QuestionnaireActivity extends AppCompatActivity {
             currentQuestionID = _savedInstanceState.getInt(CURRENT_QUESTION_ID);
         }
 
-        mTextViewTitle = (TextView) findViewById(R.id.questionnaire_activity_title);
+        tv_title = (TextView) findViewById(R.id.questionnaire_activity_title);
     }
 
     @Override
     protected void onResume(){
         super.onResume();
 
-        mTextViewTitle.setText(R.string.questionnaire_title);
+        // Gets preferences file
+        Context context = getApplicationContext();
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        //Remove previous questions, answers and tags parameters
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(Constants.PAR_QUESTIONS);
+        editor.remove(Constants.PAR_ANSWERS);
+        editor.remove(Constants.PAR_TAGS);
+        editor.apply();
+
+        tv_title.setText(R.string.questionnaire_title);
     }
 
     @Override
