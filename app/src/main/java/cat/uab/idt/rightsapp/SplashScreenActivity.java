@@ -92,8 +92,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         showExplanation = sharedPreferences.getBoolean(Constants.SHOW_EXPLANATION, true);
 
         //Test code
-        agreed = false;
-        showExplanation = true;
+        //agreed = false;
+        //showExplanation = true;
         //End test code
 
         if(!agreed){

@@ -37,5 +37,6 @@
     <string name="title_activity_language">LanguageActivity</string>
     <string name="title_activity_navigate">NavigateActivity</string>
     <string name="no_answer">You sould select one answer</string>
+    <string name="textview">TextView</string>
 
 </resources>
