@@ -18,12 +18,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
@@ -32,8 +37,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import cat.uab.idt.rightsapp.utils.GPSUtils;
 
-public class NavigateActivity extends AppCompatActivity implements LocationListener {
+
+public class NavigateActivity extends AppCompatActivity {
 
     private final static int REQUEST_PERMISSION_GET_COORDINATES = 101;
     private final static int REQUEST_PERMISSION_UPDATE_COORDINATES = 102;
@@ -43,7 +50,17 @@ public class NavigateActivity extends AppCompatActivity implements LocationListe
     private double longitude;
     private double latitude;
     private int coarseLocationPermission;
+    private int fineLocationPermission;
     private FusedLocationProviderClient fusedLocationClient;
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback;
+    private boolean isContinue = false;
+    private boolean isGPS = false;
+    private StringBuilder stringBuilder;
+    private TextView tv_lat;
+    private TextView tv_long;
+    private Button btn_location;
+
 
 
     @Override
@@ -55,21 +72,80 @@ public class NavigateActivity extends AppCompatActivity implements LocationListe
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
-        final TextView tv_lat = findViewById(R.id.tv_lat);
-        final TextView tv_long = findViewById(R.id.tv_long);
+        tv_lat = findViewById(R.id.tv_lat);
+        tv_long = findViewById(R.id.tv_long);
+        btn_location = findViewById(R.id.btn_location);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        coarseLocationPermission = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10 * 1000); // 10 seconds
+        locationRequest.setFastestInterval(5 * 1000); // 5 seconds
 
-        if(coarseLocationPermission != PackageManager.PERMISSION_GRANTED){
+        new GPSUtils(this).turnGPSOn(new GPSUtils.onGpsListener() {
+            @Override
+            public void gpsStatus(boolean isGPSEnabled) {
+                isGPS = isGPSEnabled;
+            }
+        });
+
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                System.out.println("CALLBACK");
+                if (locationResult == null) {
+                    System.out.println("NULL 1");
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    if (location != null) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                        System.out.println("GPS Latitude 1: " + latitude);
+                        System.out.println("GPS Longitude 1: " + longitude);
+                        if(!isContinue){
+                            tv_lat.setText(String.valueOf(location.getLatitude()));
+                            tv_long.setText(String.valueOf(location.getLongitude()));
+                        }else{
+                            stringBuilder.append(latitude);
+                            stringBuilder.append("-");
+                            stringBuilder.append(longitude);
+                            stringBuilder.append("\n\n");
+                            tv_lat.setText(stringBuilder.toString());
+                        }
+                        if(!isContinue && fusedLocationClient != null){
+                            fusedLocationClient.removeLocationUpdates(locationCallback);
+                        }
+                    }else{
+                        System.out.println("Location is NULL in CALLBACK");
+                    }
+                }
+            }
+        };
+
+        btn_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                isContinue = false;
+                getLocation();
+            }
+        });
+
+    }
+
+    private void getLocation() {
+        coarseLocationPermission = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        fineLocationPermission = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if (coarseLocationPermission != PackageManager.PERMISSION_GRANTED && fineLocationPermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_PERMISSION_GET_COORDINATES);
-        }else {
-            System.out.println("Success");
+
+        } else {
             fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    .addOnSuccessListener(NavigateActivity.this, new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
@@ -81,11 +157,30 @@ public class NavigateActivity extends AppCompatActivity implements LocationListe
                                 tv_lat.setText(String.valueOf(location.getLatitude()));
                                 tv_long.setText(String.valueOf(location.getLongitude()));
                                 System.out.println("GPS: Latitude " + location.getLatitude());
-                            }else{
-                                System.out.println("NULL");
+                            } else {
+                                System.out.println("NULL 2");
+                                tv_lat.setText("Latitude not available");
+                                tv_long.setText("Longitude not available");
+                                try {
+                                    System.out.println("NULL 3");
+                                    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
+                                } catch (SecurityException e) {
+                                    System.out.println("NULL Exception");
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constants.GPS_REQUEST) {
+                isGPS = true; // flag maintain before get location
+            }
         }
     }
 
@@ -98,6 +193,8 @@ public class NavigateActivity extends AppCompatActivity implements LocationListe
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the task you need to do.
+                    System.out.println("GRANTED");
+
 
                 } else {
                     // permission denied, boo! Disable the
@@ -123,35 +220,6 @@ public class NavigateActivity extends AppCompatActivity implements LocationListe
     protected void onPause() {
         super.onPause();
     }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-
-        System.out.println("GPS: Longitude " + longitude);
-        System.out.println("GPS: Latitude " + latitude);
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        Toast.makeText(this, "Enabled new provider " + provider,
-                Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Toast.makeText(this, "Disabled provider " + provider,
-                Toast.LENGTH_SHORT).show();
-    }
-
 
     /*public void getLocation(){
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)

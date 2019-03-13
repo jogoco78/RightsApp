@@ -30,6 +30,9 @@ public class Constants {
     public static final String PAR_ANSWERS = "par_answers";
     public static final String PAR_TAGS = "par_tags";
 
+    public static final int LOCATION_REQUEST = 1000;
+    public static final int GPS_REQUEST = 1001;
+
 
 
 
