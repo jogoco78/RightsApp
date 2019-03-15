@@ -21,7 +21,10 @@
     <string name="about">Acerca de</string>
     <string name="about_us_body">Cuerpo acerca de...</string>
     <string name="select_language">Selecciona el idioma</string>
-    <string name="button_continue">Siguiente</string>
     <string name="questionnaire_title">Cuestionario</string>
     <string name="no_answer">Debes seleccionar una respuesta</string>
+    <string name="select_entity_type">Selecciona el tipo de entidad</string>
+    <string name="select_entity_country">Selecciona el pais de la entidad</string>
+    <string name="select_entity_city">Selecciona la ciudad de la entidad</string>
+    <string name="select_entity_postal_code">Selecciona el  código postal de la entidad</string>
 </resources>

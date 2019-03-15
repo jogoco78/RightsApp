@@ -14,6 +14,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import cat.uab.idt.rightsapp.models.CityModel;
+import cat.uab.idt.rightsapp.models.CountryModel;
 import cat.uab.idt.rightsapp.models.ParticleModel;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -321,8 +323,106 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         return result;
     }
+    /*********************************************************************************************
+    **************************     ENTITIES AND CATEGORIES      **********************************
+    *********************************************************************************************/
 
-    //PARTICLES & TAGS
+    public ArrayList<CountryModel> getCountriesList(int[] id, String language){
+        ArrayList<CountryModel> results = new ArrayList<>();
+
+        String query = "SELECT * FROM " + DBContract.Countries.TABLE_NAME;
+
+        if(id != null){
+            query = query + " WHERE " + DBContract.Countries.COLUMN_NAME_ID + " IN (" + id[0];
+            for(int i = 1; i < id.length; i++){
+                query = query + "," + id[i];
+            }
+            query = query + ")";
+        }
+
+        Cursor cursor = myDataBase.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            // Loop through cursor results if the query has rows
+            do {
+                CountryModel cm = new CountryModel();
+                cm.setId(cursor.getInt(0));
+                cm.setLanguage(language);
+                switch (language){
+                    case "es":
+                        cm.setCountry_name(cursor.getString(1));
+                        break;
+                    case "en":
+                        cm.setCountry_name(cursor.getString(2));
+                        break;
+                    case "por":
+                        cm.setCountry_name(cursor.getString(3));
+                        break;
+                    case "it":
+                        cm.setCountry_name(cursor.getString(4));
+                        break;
+                    default:
+                        //do default
+                        break;
+                }
+                results.add(cm);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return results;
+    }
+
+    public ArrayList<CityModel> getCitiesList(int[] id_country, String language){
+        ArrayList<CityModel> results = new ArrayList<>();
+
+        String query = "SELECT * FROM " + DBContract.Cities.TABLE_NAME;
+
+        if(id_country != null){
+            query = query + " WHERE " + DBContract.Cities.COLUMN_NAME_ID_COUNTRY + " IN (" + id_country[0];
+            for(int i = 1; i < id_country.length; i++){
+                query = query + "," + id_country[i];
+            }
+            query = query + ")";
+        }
+
+        Cursor cursor = myDataBase.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            // Loop through cursor results if the query has rows
+            do {
+                CityModel cm = new CityModel();
+                cm.setId(cursor.getInt(0));
+                cm.setLanguage(language);
+                cm.setId_country(cursor.getInt(5));
+                switch (language){
+                    case "es":
+                        cm.setCity_name(cursor.getString(1));
+                        break;
+                    case "en":
+                        cm.setCity_name(cursor.getString(2));
+                        break;
+                    case "por":
+                        cm.setCity_name(cursor.getString(3));
+                        break;
+                    case "it":
+                        cm.setCity_name(cursor.getString(4));
+                        break;
+                    default:
+                        //do default
+                        break;
+                }
+                results.add(cm);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return results;
+    }
+
+    /********************************************************************************************
+     *************************     PARTICLES AND TAGS       *************************************
+     ********************************************************************************************/
 
     public ArrayList<ParticleModel> getParticle(int[] id_particles){
         ArrayList<ParticleModel> result = new ArrayList<>();

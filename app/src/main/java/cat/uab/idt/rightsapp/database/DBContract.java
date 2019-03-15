@@ -14,7 +14,6 @@ public final class DBContract {
         public static final String COLUMN_NAME_TEXT_EN = "text_en";
         public static final String COLUMN_NAME_TEXT_PT= "text_pt";
         public static final String COLUMN_NAME_TEXT_IT = "text_it";
-        public static final String COLUMN_NAME_STATISTICAL = "statistical";
     }
 
     /*Inner class that defines the answers table*/
@@ -33,7 +32,6 @@ public final class DBContract {
         public static final String COLUMN_NAME_ID_QUESTION = "id_question";
         public static final String COLUMN_NAME_ID_ANSWER = "id_answer";
         public static final String COLUMN_NAME_ID_NEXT_QUESTION = "id_next_question";
-        public static final String COLUMN_NAME_ID_NEXT_QUESTION2 = "id_next_question2";
         public static final String COLUMN_NAME_ID_TAG_RAISED = "id_tag_raised";
 
     }
@@ -79,6 +77,29 @@ public final class DBContract {
         public static final String COLUMN_NAME_ADDRESS = "address";
         public static final String COLUMN_NAME_LATITUDE = "latitude";
         public static final String COLUMN_NAME_LONGITUDE = "longitude";
+        public static final String COLUMN_NAME_ID_CITY = "id_city";
+        public static final String COLUMN_NAME_ID_COUNTRY = "id_country";
+        public static final String COLUMN_NAME_POSTAL_CODE = "postal_code";
+    }
+
+    /* Inner class that defines the cities table */
+    public static class Cities implements BaseColumns{
+        public static final String TABLE_NAME = "cities";
+        public static final String COLUMN_NAME_ID = "id";
+        public static final String COLUMN_NAME_CITY_ES = "city_es";
+        public static final String COLUMN_NAME_CITY_EN = "city_en";
+        public static final String COLUMN_NAME_CITY_PT = "city_pt";
+        public static final String COLUMN_NAME_CITY_IT = "city_it";
+        public static final String COLUMN_NAME_ID_COUNTRY = "id_country";
+    }
+
+    public static class Countries implements BaseColumns {
+        public static final String TABLE_NAME = "countries";
+        public static final String COLUMN_NAME_ID = "id";
+        public static final String COLUMN_NAME_COUNTRY_ES = "country_es";
+        public static final String COLUMN_NAME_COUNTRY_EN = "country_en";
+        public static final String COLUMN_NAME_COUNTRY_PT = "country_pt";
+        public static final String COLUMN_NAME_COUNTRY_IT = "country_it";
     }
 
     /*Inner class that defines the categories table*/
