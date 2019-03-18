@@ -31,6 +31,7 @@ public class EntityActivity extends AppCompatActivity {
     private String language;
     private ArrayList<CountryModel> countries_list;
     private ArrayList<CityModel> cities_list;
+    ArrayAdapter<CityModel> city_dataAdapter;
 
 
     protected void onCreate(Bundle savedInstance){
@@ -65,6 +66,11 @@ public class EntityActivity extends AppCompatActivity {
 
         //Set initial values for country spinner
         countries_list = dataBaseHelper.getCountriesList(null, language);
+        CountryModel all_countries_option = new CountryModel(
+                0,
+                getResources().getString(R.string.all_countries),
+                language);
+        countries_list.add(0, all_countries_option);
 
         ArrayAdapter<CountryModel> country_dataAdapter = new ArrayAdapter<CountryModel>(this, android.R.layout.simple_spinner_item, countries_list);
         sp_select_entity_country.setAdapter(country_dataAdapter);
@@ -72,8 +78,14 @@ public class EntityActivity extends AppCompatActivity {
 
         // Set initial values for cities spinner
         cities_list = dataBaseHelper.getCitiesList(null, language);
+        CityModel all_cities_option = new CityModel(
+                0,
+                getResources().getString(R.string.all_cities),
+                0,
+                language);
+        cities_list.add(0, all_cities_option);
 
-        ArrayAdapter<CityModel> city_dataAdapter = new ArrayAdapter<CityModel>(this, android.R.layout.simple_spinner_item, cities_list);
+        city_dataAdapter = new ArrayAdapter<CityModel>(this, android.R.layout.simple_spinner_item, cities_list);
         sp_select_entity_city.setAdapter(city_dataAdapter);
         city_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -81,11 +93,23 @@ public class EntityActivity extends AppCompatActivity {
         sp_select_entity_country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                cities_list.clear();
                 CountryModel cm = (CountryModel) parent.getSelectedItem();
-                cities_list = dataBaseHelper.getCitiesList(new int[] {cm.getId()}, language);
+                if(cm.getId() != 0) {
+                    cities_list.clear();
 
-                //Toast.makeText(MainActivity.this, "Selected : "+ categories.get(position), Toast.LENGTH_SHORT).show();
+                    //Updates cities spinner
+                    cities_list = dataBaseHelper.getCitiesList(new int[]{cm.getId()}, language);
+                    CityModel all_cities_option = new CityModel(
+                            0,
+                            getResources().getString(R.string.all_cities),
+                            0,
+                            language);
+                    cities_list.add(0, all_cities_option);
+
+                    city_dataAdapter = new ArrayAdapter<CityModel>(parent.getContext(), android.R.layout.simple_spinner_item, cities_list);
+                    sp_select_entity_city.setAdapter(city_dataAdapter);
+                    city_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                }
             }
 
             @Override
@@ -94,12 +118,21 @@ public class EntityActivity extends AppCompatActivity {
             }
         });
 
-        // Set listener for city spinner
+        //Set listener for city spinner
         sp_select_entity_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CityModel cm = (CityModel) parent.getSelectedItem();
 
-                //Toast.makeText(MainActivity.this, "Selected : "+ categories.get(position), Toast.LENGTH_SHORT).show();
+                if(cm.getId() != 0){
+                    cm.getId_country();
+                    for(int i = 0; i < countries_list.size(); i++) {
+                        if (cm.getId_country() == countries_list.get(i).getId()) {
+                            sp_select_entity_country.setSelection(i, true);
+                            break;
+                        }
+                    }
+                }
             }
 
             @Override
@@ -107,7 +140,6 @@ public class EntityActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     @Override

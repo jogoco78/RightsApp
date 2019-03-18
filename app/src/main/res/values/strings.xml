@@ -41,5 +41,7 @@
     <string name="select_entity_country">Choose the entity country</string>
     <string name="select_entity_city">Choose the entity city</string>
     <string name="select_entity_postal_code">Choose the entity postal code</string>
+    <string name="all_countries">All available countries</string>
+    <string name="all_cities">All available citiesç</string>
 
 </resources>

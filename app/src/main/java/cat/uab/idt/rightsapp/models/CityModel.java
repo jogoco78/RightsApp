@@ -13,6 +13,13 @@ public class CityModel {
         language = null;
     }
 
+    public CityModel(int _id, String _city_name, int _id_country, String _language){
+        id = _id;
+        city_name = _city_name;
+        id_country = _id_country;
+        language = _language;
+    }
+
     public int getId() {
         return id;
     }

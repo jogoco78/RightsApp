@@ -12,6 +12,12 @@ public class CountryModel {
         language = null;
     }
 
+    public CountryModel(int _id, String _country_name, String _language){
+        id = _id;
+        country_name = _country_name;
+        language = _language;
+    }
+
     public int getId() {
         return id;
     }

@@ -27,4 +27,6 @@
     <string name="select_entity_country">Selecciona el pais de la entidad</string>
     <string name="select_entity_city">Selecciona la ciudad de la entidad</string>
     <string name="select_entity_postal_code">Selecciona el  código postal de la entidad</string>
+    <string name="all_countries">Todos los paises disponibles</string>
+    <string name="all_cities">Todas las ciudades disponibles</string>
 </resources>
