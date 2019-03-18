@@ -1,7 +1,7 @@
 package cat.uab.idt.rightsapp.models;
 
 public class CityModel {
-     private int id;
+    private int id;
     private String city_name;
     private int id_country;
     private String language;

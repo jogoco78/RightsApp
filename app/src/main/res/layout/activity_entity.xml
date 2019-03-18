@@ -22,7 +22,7 @@
         android:orientation="vertical" />
 
     <Spinner
-        android:id="@+id/sp_entity_type"
+        android:id="@+id/sp_entity_category"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -61,19 +61,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/tv_select_entity_city" />
 
-    <Spinner
-        android:id="@+id/sp_entity_postal_code"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/tv_select_entity_postal_code" />
-
     <TextView
         android:id="@+id/tv_select_entity_type"
         android:layout_width="wrap_content"
@@ -94,7 +81,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/select_entity_country"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/sp_entity_type" />
+        app:layout_constraintTop_toBottomOf="@+id/sp_entity_category" />
 
     <TextView
         android:id="@+id/tv_select_entity_city"
@@ -106,17 +93,6 @@
         android:text="@string/select_entity_city"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sp_entity_country" />
-
-    <TextView
-        android:id="@+id/tv_select_entity_postal_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/select_entity_postal_code"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/sp_entity_city" />
 
     <Button
         android:id="@+id/btn_entity_next"

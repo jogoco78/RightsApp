@@ -14,8 +14,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import cat.uab.idt.rightsapp.models.CategoryModel;
 import cat.uab.idt.rightsapp.models.CityModel;
 import cat.uab.idt.rightsapp.models.CountryModel;
+import cat.uab.idt.rightsapp.models.EntityModel;
 import cat.uab.idt.rightsapp.models.ParticleModel;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -413,6 +415,126 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         break;
                 }
                 results.add(cm);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return results;
+    }
+
+    public ArrayList<EntityModel> getEntitiesList(int[] id_cities, int[] id_countries, int[] id_categories, String language){
+        boolean previous_clause = false;
+        ArrayList<EntityModel> results = new ArrayList<>();
+
+        String query = "SELECT * FROM " + DBContract.Entities.TABLE_NAME;
+
+        if(id_cities != null){
+            query = query + " WHERE " + DBContract.Entities.COLUMN_NAME_ID_CITY + " IN (" + id_cities[0];
+            for(int i = 1; i < id_cities.length; i++){
+                query = query + "," + id_cities[i];
+            }
+            query = query + ")";
+            previous_clause = true;
+        }
+
+        if(id_countries != null){
+            if(previous_clause) query = query + " AND ";
+            query = query + " WHERE " + DBContract.Entities.COLUMN_NAME_ID_COUNTRY + " IN (" + id_countries[0];
+            for(int i = 1; i < id_countries.length; i++){
+                query = query + "," + id_countries[i];
+            }
+            query = query + ")";
+            previous_clause = true;
+        }
+
+        if(id_categories != null){
+            if(previous_clause) query = query + " AND ";
+            query = query + " WHERE " + DBContract.Entities.COLUMN_NAME_ID_CATEGORY + " IN (" + id_categories[0];
+            for(int i = 1; i < id_categories.length; i++){
+                query = query + "," + id_categories[i];
+            }
+            query = query + ")";
+        }
+
+        Cursor cursor = myDataBase.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            // Loop through cursor results if the query has rows
+            do {
+                EntityModel em = new EntityModel();
+                em.setId(cursor.getInt(0));
+                em.setLanguage(language);
+                em.setEntity_name(cursor.getString(1));
+                em.setAddress(cursor.getString(6));
+                em.setLatitude(cursor.getDouble(7));
+                em.setLongitude(cursor.getDouble(8));
+                em.setId_city(cursor.getInt(9));
+                em.setId_country(cursor.getInt(10));
+                em.setId_category(cursor.getInt(11));
+                switch (language){
+                    case "es":
+                        em.setEntity_description(cursor.getString(2));
+                        break;
+                    case "en":
+                        em.setEntity_description(cursor.getString(3));
+                        break;
+                    case "por":
+                        em.setEntity_description(cursor.getString(4));
+                        break;
+                    case "it":
+                        em.setEntity_description(cursor.getString(5));
+                        break;
+                    default:
+                        //do default
+                        break;
+                }
+                results.add(em);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return results;
+    }
+
+    public ArrayList<CategoryModel> getCategoriesList(int[] id_categories, String language){
+        ArrayList<CategoryModel> results = new ArrayList<>();
+
+        String query = "SELECT * FROM " + DBContract.Categories.TABLE_NAME;
+
+        if(id_categories != null){
+            query = query + " WHERE " + DBContract.Entities.COLUMN_NAME_ID_CATEGORY + " IN (" + id_categories[0];
+            for(int i = 1; i < id_categories.length; i++){
+                query = query + "," + id_categories[i];
+            }
+            query = query + ")";
+        }
+
+        Cursor cursor = myDataBase.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            // Loop through cursor results if the query has rows
+            do {
+                CategoryModel cat_model = new CategoryModel();
+                cat_model.setId(cursor.getInt(0));
+                cat_model.setLanguage(language);
+                switch (language){
+                    case "es":
+                        cat_model.setCategory_name(cursor.getString(1));
+                        break;
+                    case "en":
+                        cat_model.setCategory_name(cursor.getString(2));
+                        break;
+                    case "por":
+                        cat_model.setCategory_name(cursor.getString(3));
+                        break;
+                    case "it":
+                        cat_model.setCategory_name(cursor.getString(4));
+                        break;
+                    default:
+                        //do default
+                        break;
+                }
+                results.add(cat_model);
             } while (cursor.moveToNext());
         }
         cursor.close();

@@ -11,27 +11,33 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
+import cat.uab.idt.rightsapp.models.CategoryModel;
 import cat.uab.idt.rightsapp.models.CityModel;
 import cat.uab.idt.rightsapp.models.CountryModel;
 
 public class EntityActivity extends AppCompatActivity {
 
-    private Spinner sp_select_entity_type;
+    private String language;
+    private Spinner sp_select_entity_category;
     private Spinner sp_select_entity_country;
     private Spinner sp_select_entity_city;
-    private Spinner sp_select_entity_postal_code;
+
     private DataBaseHelper dataBaseHelper;
-    private String language;
+
+    private ArrayList<CategoryModel> categories_list;
     private ArrayList<CountryModel> countries_list;
     private ArrayList<CityModel> cities_list;
-    ArrayAdapter<CityModel> city_dataAdapter;
+    private ArrayAdapter<CategoryModel> category_dataAdapter;
+    private ArrayAdapter<CityModel> city_dataAdapter;
+
+    private SharedPreferences sharedPreferences;
 
 
     protected void onCreate(Bundle savedInstance){
@@ -46,12 +52,10 @@ public class EntityActivity extends AppCompatActivity {
         TextView tv_select_entity_type = findViewById(R.id.tv_select_entity_type);
         TextView tv_select_entity_country = findViewById(R.id.tv_select_entity_country);
         TextView tv_select_entity_city = findViewById(R.id.tv_select_entity_city);
-        TextView tv_select_entity_postal_code = findViewById(R.id.tv_select_entity_postal_code);
 
-        sp_select_entity_type = findViewById(R.id.sp_entity_type);
+        sp_select_entity_category = findViewById(R.id.sp_entity_category);
         sp_select_entity_country = findViewById(R.id.sp_entity_country);
         sp_select_entity_city = findViewById(R.id.sp_entity_city);
-        sp_select_entity_postal_code = findViewById(R.id.sp_entity_postal_code);
 
         if (dataBaseHelper == null) {
             //Opens DB
@@ -60,9 +64,21 @@ public class EntityActivity extends AppCompatActivity {
         }
 
         //Gets preference file & language
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
+        sharedPreferences = getApplicationContext().getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
+
+        //Set initial values for categories spinner
+        categories_list = dataBaseHelper.getCategoriesList(null, language);
+        CategoryModel cat_model = new CategoryModel(
+                0,
+                getResources().getString(R.string.all_categories),
+                language);
+        categories_list.add(0, cat_model);
+
+        category_dataAdapter = new ArrayAdapter<CategoryModel>(this, android.R.layout.simple_spinner_item, categories_list);
+        sp_select_entity_category.setAdapter(category_dataAdapter);
+        category_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         //Set initial values for country spinner
         countries_list = dataBaseHelper.getCountriesList(null, language);
@@ -89,27 +105,44 @@ public class EntityActivity extends AppCompatActivity {
         sp_select_entity_city.setAdapter(city_dataAdapter);
         city_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        //Set listener for category spinner
+        sp_select_entity_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         // Set listener for country spinner
         sp_select_entity_country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CountryModel cm = (CountryModel) parent.getSelectedItem();
-                if(cm.getId() != 0) {
-                    cities_list.clear();
+                CountryModel country_model = (CountryModel) parent.getSelectedItem();
 
-                    //Updates cities spinner
-                    cities_list = dataBaseHelper.getCitiesList(new int[]{cm.getId()}, language);
-                    CityModel all_cities_option = new CityModel(
-                            0,
-                            getResources().getString(R.string.all_cities),
-                            0,
-                            language);
-                    cities_list.add(0, all_cities_option);
+                cities_list.clear();
 
-                    city_dataAdapter = new ArrayAdapter<CityModel>(parent.getContext(), android.R.layout.simple_spinner_item, cities_list);
-                    sp_select_entity_city.setAdapter(city_dataAdapter);
-                    city_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                //Updates cities spinner
+                if(country_model.getId() == 0){
+                    cities_list = dataBaseHelper.getCitiesList(null, language);
+                }else{
+                    cities_list = dataBaseHelper.getCitiesList(new int[]{country_model.getId()}, language);
                 }
+
+                CityModel all_cities_option = new CityModel(
+                        0,
+                        getResources().getString(R.string.all_cities),
+                        0,
+                        language);
+                cities_list.add(0, all_cities_option);
+
+                city_dataAdapter = new ArrayAdapter<CityModel>(parent.getContext(), android.R.layout.simple_spinner_item, cities_list);
+                sp_select_entity_city.setAdapter(city_dataAdapter);
+                city_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             }
 
             @Override
@@ -122,12 +155,11 @@ public class EntityActivity extends AppCompatActivity {
         sp_select_entity_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CityModel cm = (CityModel) parent.getSelectedItem();
+                CityModel city_model = (CityModel) parent.getSelectedItem();
 
-                if(cm.getId() != 0){
-                    cm.getId_country();
+                if(city_model.getId() != 0){
                     for(int i = 0; i < countries_list.size(); i++) {
-                        if (cm.getId_country() == countries_list.get(i).getId()) {
+                        if (city_model.getId_country() == countries_list.get(i).getId()) {
                             sp_select_entity_country.setSelection(i, true);
                             break;
                         }
@@ -138,6 +170,33 @@ public class EntityActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        //Sets the button and its listener
+        Button btn_continue = findViewById(R.id.btn_entity_next);
+        btn_continue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CategoryModel category_model = (CategoryModel) sp_select_entity_category.getSelectedItem();
+                System.out.println("TEST Category Model: " + category_model.getCategory_name());
+                CountryModel country_model = (CountryModel) sp_select_entity_country.getSelectedItem();
+                System.out.println("TEST Country Model: " + country_model.getCountry_name());
+                CityModel city_model = (CityModel) sp_select_entity_city.getSelectedItem();
+                System.out.println("TEST City Model: " + city_model.getCity_name());
+                System.out.println("TEST CRITERIA: " + category_model.getId() +
+                        "," + country_model.getId() +
+                        "," + city_model.getId());
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(Constants.SEARCH_ENTITY_CRITERIA,
+                        category_model.getId() +
+                                "," + country_model.getId() +
+                                "," + city_model.getId());
+                editor.apply();
+
+                Intent intent = new Intent(getApplicationContext(), NavigateActivity.class);
+                startActivity(intent);
             }
         });
     }
