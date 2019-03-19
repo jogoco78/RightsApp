@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -25,11 +26,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 
+import cat.uab.idt.rightsapp.adapters.EntitiesViewAdapter;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 import cat.uab.idt.rightsapp.models.EntityModel;
 
 
-public class NavigateActivity extends AppCompatActivity {
+public class NavigateActivity extends AppCompatActivity implements EntitiesViewAdapter.ItemClickListener{
 
     private String language;
     private final static int REQUEST_PERMISSION_GET_COORDINATES = 101;
@@ -38,7 +40,7 @@ public class NavigateActivity extends AppCompatActivity {
     private double latitude;
     private FusedLocationProviderClient fusedLocationClient;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter rv_adapter;
+    private EntitiesViewAdapter rv_adapter;
     private RecyclerView.LayoutManager rv_layoutManager;
 
 
@@ -75,29 +77,32 @@ public class NavigateActivity extends AppCompatActivity {
         //Populates the arraylist for recycleview
         ArrayList<EntityModel> entities_list = new ArrayList<>();
 
-        dataBaseHelper.getEntitiesList(
+        entities_list = dataBaseHelper.getEntitiesList(
                 new int[] {Integer.getInteger(criteria[0])},
                 new int[] {Integer.getInteger(criteria[1])},
                 new int[] {Integer.getInteger(criteria[2])},
                 language);
 
-
-
-        //Set up the recycler view
-        recyclerView.setHasFixedSize(true);
-        rv_layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(rv_layoutManager);
-
-
-
+        //Sets the distance to every selected entity
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         //getLocation();
         longitude = 41.5372217;
         latitude = 2.4313953;
-
         float[] results = new float[1];
-        Location.distanceBetween(longitude, latitude, 42.0, 3.0, results);
-        System.out.println("Distance in meters " + Math.round(results[0] / 1000));
+        for (int i = 0; i < entities_list.size(); i++){
+            Location.distanceBetween(longitude, latitude, entities_list.get(i).getLongitude(), entities_list.get(i).getLatitude(),results);
+            entities_list.get(i).setDistance(results[0] / 1000);
+        }
+
+        //Set up the recycler view
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        rv_adapter = new EntitiesViewAdapter(this, entities_list);
+        rv_adapter.setClickListener(this);
+        recyclerView.setAdapter(rv_adapter);
+
+        //Location.distanceBetween(longitude, latitude, 42.0, 3.0, results);
+        //System.out.println("Distance in meters " + Math.round(results[0] / 1000));
 
         btn_location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +112,11 @@ public class NavigateActivity extends AppCompatActivity {
                 //getLocation();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(View view, int position){
+        Toast.makeText(this, "You clicked " + rv_adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
 
     private void getLocation() {
@@ -129,11 +139,11 @@ public class NavigateActivity extends AppCompatActivity {
                                 longitude = location.getLongitude();
                                 latitude = location.getLatitude();
 
-                                tv_lat.setText(String.valueOf(location.getLatitude()));
-                                tv_long.setText(String.valueOf(location.getLongitude()));
+                                //tv_lat.setText(String.valueOf(location.getLatitude()));
+                                //tv_long.setText(String.valueOf(location.getLongitude()));
                             } else {
-                                tv_lat.setText("Latitude not available");
-                                tv_long.setText("Longitude not available");
+                                //tv_lat.setText("Latitude not available");
+                                //tv_long.setText("Longitude not available");
                             }
                         }
                     });
@@ -170,11 +180,11 @@ public class NavigateActivity extends AppCompatActivity {
                                             longitude = location.getLongitude();
                                             latitude = location.getLatitude();
 
-                                            tv_lat.setText(String.valueOf(location.getLatitude()));
-                                            tv_long.setText(String.valueOf(location.getLongitude()));
+                                            //tv_lat.setText(String.valueOf(location.getLatitude()));
+                                            //tv_long.setText(String.valueOf(location.getLongitude()));
                                         } else {
-                                            tv_lat.setText("Latitude not available");
-                                            tv_long.setText("Longitude not available");
+                                            //tv_lat.setText("Latitude not available");
+                                            //tv_long.setText("Longitude not available");
                                         }
                                     }
                                 });

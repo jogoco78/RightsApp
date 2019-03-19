@@ -39,7 +39,7 @@ public class EntitiesViewAdapter extends RecyclerView.Adapter<EntitiesViewAdapte
         holder.tv_entity_description.setText(entity.getEntity_description());
         holder.tv_entity_address.setText(entity.getAddress());
         holder.tv_entity_phone.setText(entity.getPhone_number());
-        holder.tv_entity_distance.setText(entity.getDistance());
+        holder.tv_entity_distance.setText(String.valueOf(entity.getDistance()));
     }
 
     // total number of rows
@@ -74,12 +74,12 @@ public class EntitiesViewAdapter extends RecyclerView.Adapter<EntitiesViewAdapte
     }
 
     // convenience method for getting data at click position
-    EntityModel getItem(int pos) {
+    public EntityModel getItem(int pos) {
         return dataSet.get(pos);
     }
 
     // allows clicks events to be caught
-    void setClickListener(ItemClickListener itemClickListener) {
+    public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

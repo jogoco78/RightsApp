@@ -13,7 +13,7 @@ public class EntityModel {
     private int id_category;
     private String language;
     private String phone_number;
-    private int distance;
+    private double distance;
 
     public EntityModel(){
         init();
@@ -119,11 +119,11 @@ public class EntityModel {
         this.phone_number = phone_number;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 }
