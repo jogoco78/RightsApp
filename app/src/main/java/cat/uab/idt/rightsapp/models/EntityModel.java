@@ -12,6 +12,8 @@ public class EntityModel {
     private int id_country;
     private int id_category;
     private String language;
+    private String phone_number;
+    private int distance;
 
     public EntityModel(){
         init();
@@ -27,6 +29,7 @@ public class EntityModel {
         id_city = 0;
         id_country = 0;
         id_category = 0;
+        phone_number = null;
     }
 
     public int getId() {
@@ -106,5 +109,21 @@ public class EntityModel {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 }

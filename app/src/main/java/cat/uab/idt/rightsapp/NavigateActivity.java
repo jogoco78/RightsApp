@@ -1,13 +1,17 @@
 package cat.uab.idt.rightsapp;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,16 +23,23 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.ArrayList;
+
+import cat.uab.idt.rightsapp.database.DataBaseHelper;
+import cat.uab.idt.rightsapp.models.EntityModel;
+
 
 public class NavigateActivity extends AppCompatActivity {
 
+    private String language;
     private final static int REQUEST_PERMISSION_GET_COORDINATES = 101;
     private LocationManager locationManager;
     private double longitude;
     private double latitude;
     private FusedLocationProviderClient fusedLocationClient;
-    private TextView tv_lat;
-    private TextView tv_long;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter rv_adapter;
+    private RecyclerView.LayoutManager rv_layoutManager;
 
 
     @Override
@@ -40,9 +51,44 @@ public class NavigateActivity extends AppCompatActivity {
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
-        tv_lat = findViewById(R.id.tv_lat);
-        tv_long = findViewById(R.id.tv_long);
+        //Get elements from layout
+        recyclerView = findViewById(R.id.rv_entities);
         Button btn_location = findViewById(R.id.btn_location);
+
+        // Gets preferences file
+        Context context = getApplicationContext();
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        //Gets the language stored in Preferences for the app
+        language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
+        //Gets the search criteria stored in preferences for the app
+        String[] criteria = sharedPreferences.getString(
+                Constants.SEARCH_ENTITY_CRITERIA,
+                null)
+                .split(",");
+
+        //Opens DB
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
+        dataBaseHelper.openDataBase();
+
+        //Populates the arraylist for recycleview
+        ArrayList<EntityModel> entities_list = new ArrayList<>();
+
+        dataBaseHelper.getEntitiesList(
+                new int[] {Integer.getInteger(criteria[0])},
+                new int[] {Integer.getInteger(criteria[1])},
+                new int[] {Integer.getInteger(criteria[2])},
+                language);
+
+
+
+        //Set up the recycler view
+        recyclerView.setHasFixedSize(true);
+        rv_layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(rv_layoutManager);
+
+
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         //getLocation();

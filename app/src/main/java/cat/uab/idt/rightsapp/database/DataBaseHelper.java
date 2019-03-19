@@ -422,13 +422,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return results;
     }
 
-    public ArrayList<EntityModel> getEntitiesList(int[] id_cities, int[] id_countries, int[] id_categories, String language){
+    /**
+     * Returns an ArrayList of entities that match the criteria given by parameters in the specified
+     * language. Just one language is recovered
+     * @param id_categories id of the category to search in the database
+     * @param id_countries id of the country to search in the database
+     * @param id_cities id of the city to search in the database
+     * @param language the language of the recovered information about the entity
+     * @return returns an ArrayList with the entities that match the criteria
+     */
+    public ArrayList<EntityModel> getEntitiesList(int[] id_categories, int[] id_countries, int[] id_cities, String language){
         boolean previous_clause = false;
         ArrayList<EntityModel> results = new ArrayList<>();
 
         String query = "SELECT * FROM " + DBContract.Entities.TABLE_NAME;
 
-        if(id_cities != null){
+        if(id_cities != null && id_cities[0] != 0){
             query = query + " WHERE " + DBContract.Entities.COLUMN_NAME_ID_CITY + " IN (" + id_cities[0];
             for(int i = 1; i < id_cities.length; i++){
                 query = query + "," + id_cities[i];
@@ -541,6 +550,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         return results;
     }
+
+
 
     /********************************************************************************************
      *************************     PARTICLES AND TAGS       *************************************
