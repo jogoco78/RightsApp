@@ -36,6 +36,13 @@ public class Constants {
     //Entities search criteria
     public static final String SEARCH_ENTITY_CRITERIA = "search_entity_criteria";
 
+    //Entity selected information
+    public static final String ENTITY_NAME = "entity_name";
+    public static final String ENTITY_DESCRIPTION = "entity_description";
+    public static final String ENTITY_ADDRESS = "entity_address";
+    public static final String ENTITY_PHONE = "entity_phone";
+    public static final String ENTITY_POSITION = "entity_position";
+
 
 
 

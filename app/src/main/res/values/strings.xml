@@ -21,10 +21,7 @@
     <!-- activities -->
     <string name="emergency_call">Emergency call</string>
     <string name="get_information">Get information</string>
-    <string name="cruz_roja">Red Cross</string>
     <string name="emergency_112">112 Emergency</string>
-    <string name="mossos">Mossos\nd\'Esquadra</string>
-    <string name="navigate_to">Navigate to</string>
 
     <string name="language">Language</string>
     <string name="select_language">Select the current language</string>
@@ -35,7 +32,7 @@
     <string name="title_activity_questionnaire_fragment">QuestionnaireFragment</string>
     <string name="title_activity_language">LanguageActivity</string>
     <string name="title_activity_navigate">NavigateActivity</string>
-    <string name="no_answer">You sould select one answer</string>
+    <string name="no_answer">You should select one answer</string>
     <string name="textview">TextView</string>
     <string name="select_entity_type">Choose the entity type</string>
     <string name="select_entity_country">Choose the entity country</string>
@@ -44,5 +41,9 @@
     <string name="all_countries">All available countries</string>
     <string name="all_cities">All available citiesç</string>
     <string name="all_categories">All available categories</string>
+    <string name="phone">Phone</string>
+    <string name="distance">Distance</string>
+    <string name="call">Call</string>
+    <string name="navigate">Navigate</string>
 
 </resources>

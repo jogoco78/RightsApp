@@ -1,200 +1,109 @@
 package cat.uab.idt.rightsapp;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
-import cat.uab.idt.rightsapp.database.DataBaseHelper;
-import cat.uab.idt.rightsapp.models.CategoryModel;
-import cat.uab.idt.rightsapp.models.CityModel;
-import cat.uab.idt.rightsapp.models.CountryModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class EntityActivity extends AppCompatActivity {
 
-    private String language;
-    private Spinner sp_select_entity_category;
-    private Spinner sp_select_entity_country;
-    private Spinner sp_select_entity_city;
+    private final static int REQUEST_PERMISSION_PHONE_CALL = 102;
+    private Context context;
+    private String phone_number;
 
-    private DataBaseHelper dataBaseHelper;
-
-    private ArrayList<CategoryModel> categories_list;
-    private ArrayList<CountryModel> countries_list;
-    private ArrayList<CityModel> cities_list;
-    private ArrayAdapter<CategoryModel> category_dataAdapter;
-    private ArrayAdapter<CityModel> city_dataAdapter;
-
-    private SharedPreferences sharedPreferences;
-
-
-    protected void onCreate(Bundle savedInstance){
-        super.onCreate(savedInstance);
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entity);
 
         //Sets the toolbar
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
-        TextView tv_select_entity_type = findViewById(R.id.tv_select_entity_type);
-        TextView tv_select_entity_country = findViewById(R.id.tv_select_entity_country);
-        TextView tv_select_entity_city = findViewById(R.id.tv_select_entity_city);
+        context = getApplicationContext();
 
-        sp_select_entity_category = findViewById(R.id.sp_entity_category);
-        sp_select_entity_country = findViewById(R.id.sp_entity_country);
-        sp_select_entity_city = findViewById(R.id.sp_entity_city);
+        //Gets the entity information from the previous activity
+        String name = getIntent().getStringExtra(Constants.ENTITY_NAME);
+        String description = getIntent().getStringExtra(Constants.ENTITY_DESCRIPTION);
+        String address = getIntent().getStringExtra(Constants.ENTITY_ADDRESS);
+        phone_number = getIntent().getStringExtra(Constants.ENTITY_PHONE);
+        String position = getIntent().getStringExtra(Constants.ENTITY_POSITION);
 
-        if (dataBaseHelper == null) {
-            //Opens DB
-            dataBaseHelper = new DataBaseHelper(this);
-            dataBaseHelper.openDataBase();
-        }
+        double longitude = Double.parseDouble(position.split(",")[0]);
+        double latitude = Double.parseDouble(position.split(",")[1]);
 
-        //Gets preference file & language
-        sharedPreferences = getApplicationContext().getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
+        TextView tv_name = findViewById(R.id.tv_name);
+        TextView tv_description = findViewById(R.id.tv_description);
+        TextView tv_address = findViewById(R.id.tv_address);
+        Button btn_call = findViewById(R.id.btn_call);
+        Button btn_navigate = findViewById(R.id.btn_navigate);
 
-        //Set initial values for categories spinner
-        categories_list = dataBaseHelper.getCategoriesList(null, language);
-        CategoryModel cat_model = new CategoryModel(
-                0,
-                getResources().getString(R.string.all_categories),
-                language);
-        categories_list.add(0, cat_model);
+        tv_name.setText(name);
+        tv_description.setText(description);
+        tv_address.setText(address);
 
-        category_dataAdapter = new ArrayAdapter<CategoryModel>(this, android.R.layout.simple_spinner_item, categories_list);
-        sp_select_entity_category.setAdapter(category_dataAdapter);
-        category_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        //Set initial values for country spinner
-        countries_list = dataBaseHelper.getCountriesList(null, language);
-        CountryModel all_countries_option = new CountryModel(
-                0,
-                getResources().getString(R.string.all_countries),
-                language);
-        countries_list.add(0, all_countries_option);
-
-        ArrayAdapter<CountryModel> country_dataAdapter = new ArrayAdapter<CountryModel>(this, android.R.layout.simple_spinner_item, countries_list);
-        sp_select_entity_country.setAdapter(country_dataAdapter);
-        country_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Set initial values for cities spinner
-        cities_list = dataBaseHelper.getCitiesList(null, language);
-        CityModel all_cities_option = new CityModel(
-                0,
-                getResources().getString(R.string.all_cities),
-                0,
-                language);
-        cities_list.add(0, all_cities_option);
-
-        city_dataAdapter = new ArrayAdapter<CityModel>(this, android.R.layout.simple_spinner_item, cities_list);
-        sp_select_entity_city.setAdapter(city_dataAdapter);
-        city_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        //Set listener for category spinner
-        sp_select_entity_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        btn_call.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onClick(View v){
+                int phonePermission = ActivityCompat.checkSelfPermission(EntityActivity.this, Manifest.permission.CALL_PHONE);
 
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        // Set listener for country spinner
-        sp_select_entity_country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CountryModel country_model = (CountryModel) parent.getSelectedItem();
-
-                cities_list.clear();
-
-                //Updates cities spinner
-                if(country_model.getId() == 0){
-                    cities_list = dataBaseHelper.getCitiesList(null, language);
+                if (phonePermission != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(EntityActivity.this,
+                            new String[]{Manifest.permission.CALL_PHONE},
+                            REQUEST_PERMISSION_PHONE_CALL);
                 }else{
-                    cities_list = dataBaseHelper.getCitiesList(new int[]{country_model.getId()}, language);
-                }
-
-                CityModel all_cities_option = new CityModel(
-                        0,
-                        getResources().getString(R.string.all_cities),
-                        0,
-                        language);
-                cities_list.add(0, all_cities_option);
-
-                city_dataAdapter = new ArrayAdapter<CityModel>(parent.getContext(), android.R.layout.simple_spinner_item, cities_list);
-                sp_select_entity_city.setAdapter(city_dataAdapter);
-                city_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        //Set listener for city spinner
-        sp_select_entity_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CityModel city_model = (CityModel) parent.getSelectedItem();
-
-                if(city_model.getId() != 0){
-                    for(int i = 0; i < countries_list.size(); i++) {
-                        if (city_model.getId_country() == countries_list.get(i).getId()) {
-                            sp_select_entity_country.setSelection(i, true);
-                            break;
-                        }
-                    }
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:" + phone_number));
+                    startActivity(callIntent);
                 }
             }
+        });
 
+        btn_navigate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onClick(View v){
 
             }
         });
 
-        //Sets the button and its listener
-        Button btn_continue = findViewById(R.id.btn_entity_next);
-        btn_continue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CategoryModel category_model = (CategoryModel) sp_select_entity_category.getSelectedItem();
 
-                CountryModel country_model = (CountryModel) sp_select_entity_country.getSelectedItem();
 
-                CityModel city_model = (CityModel) sp_select_entity_city.getSelectedItem();
+    }
 
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(Constants.SEARCH_ENTITY_CRITERIA,
-                        category_model.getId() +
-                                "," + country_model.getId() +
-                                "," + city_model.getId());
-                editor.apply();
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSION_PHONE_CALL: {
 
-                Intent intent = new Intent(getApplicationContext(), NavigateActivity.class);
-                startActivity(intent);
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the task you need to do.
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:" + phone_number));
+                    startActivity(callIntent);
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
             }
-        });
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
 
     @Override
@@ -246,4 +155,5 @@ public class EntityActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -80,6 +80,7 @@ public final class DBContract {
         public static final String COLUMN_NAME_ID_CITY = "id_city";
         public static final String COLUMN_NAME_ID_COUNTRY = "id_country";
         public static final String COLUMN_NAME_ID_CATEGORY = "id_category";
+        public static final String COLUMN_NAME_PHONE = "phone_number";
     }
 
     /* Inner class that defines the cities table */

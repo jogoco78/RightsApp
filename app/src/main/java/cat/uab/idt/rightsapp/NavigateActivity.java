@@ -63,20 +63,10 @@ public class NavigateActivity extends AppCompatActivity implements EntitiesViewA
 
         //Gets the language stored in Preferences for the app
         language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
-        //Gets the search criteria stored in preferences for the app
-        String[] criteria = sharedPreferences.getString(
-                Constants.SEARCH_ENTITY_CRITERIA,
-                null)
-                .split(",");
 
-        System.out.println("TEST: CRITERIA READ " + sharedPreferences.getString(Constants.SEARCH_ENTITY_CRITERIA,null));
-        for(int i = 0; i < criteria.length; i++){
-            if(criteria[i] != null){
-                System.out.println("TEST CRITERIA " + i + " " + criteria[i]);
-            }else{
-                System.out.println("TEST CRITERIA NULL");
-            }
-        }
+        //Gets the search criteria stored in intent
+        String[] criteria = getIntent().getStringExtra(Constants.SEARCH_ENTITY_CRITERIA).split(",");
+
         //Opens DB
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
         dataBaseHelper.openDataBase();
@@ -90,8 +80,6 @@ public class NavigateActivity extends AppCompatActivity implements EntitiesViewA
                 new int[] {Integer.parseInt(criteria[2])},
                 language);
 
-        System.out.println("TEST: SIZE entities_list: " + entities_list.size());
-
         //Sets the distance to every selected entity
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         //getLocation();
@@ -100,24 +88,27 @@ public class NavigateActivity extends AppCompatActivity implements EntitiesViewA
         float[] results = new float[1];
         for (int i = 0; i < entities_list.size(); i++){
             Location.distanceBetween(longitude, latitude, entities_list.get(i).getLongitude(), entities_list.get(i).getLatitude(),results);
-            entities_list.get(i).setDistance(results[0] / 1000);
+            entities_list.get(i).setDistance(Math.round(results[0] / 10.0) / 100.0); //meters to kms and rounded two decimals
         }
 
         //Set up the recycler view
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_adapter = new EntitiesViewAdapter(this, entities_list);
-        System.out.println("TEST: SIZE entities_list: " + rv_adapter.getItemCount());
         rv_adapter.setClickListener(this);
         recyclerView.setAdapter(rv_adapter);
-
-        //Location.distanceBetween(longitude, latitude, 42.0, 3.0, results);
-        //System.out.println("Distance in meters " + Math.round(results[0] / 1000));
     }
 
     @Override
     public void onItemClick(View view, int position){
         Toast.makeText(this, "You clicked " + rv_adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), EntityActivity.class);
+        intent.putExtra(Constants.ENTITY_NAME, rv_adapter.getItem(position).getEntity_name());
+        intent.putExtra(Constants.ENTITY_DESCRIPTION, rv_adapter.getItem(position).getEntity_description());
+        intent.putExtra(Constants.ENTITY_ADDRESS, rv_adapter.getItem(position).getAddress());
+        intent.putExtra(Constants.ENTITY_PHONE, rv_adapter.getItem(position).getPhone_number());
+        intent.putExtra(Constants.ENTITY_POSITION, rv_adapter.getItem(position).getLongitude() + "," + rv_adapter.getItem(position).getLatitude());
+        startActivity(intent);
     }
 
     private void getLocation() {

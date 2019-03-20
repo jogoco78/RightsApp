@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">RightsApp</string>
-    <string name="country">Pais</string>
+    <string name="country">País</string>
     <string name="terms_and_conditions">Términos y condiciones</string>
     <string name="terms_and_conditions_title">Título 1</string>
     <string name="terms_and_conditions_body">Cuerpo 1</string>
@@ -30,4 +30,8 @@
     <string name="all_countries">Todos los paises disponibles</string>
     <string name="all_cities">Todas las ciudades disponibles</string>
     <string name="all_categories">Todas las categorias disponibles</string>
+    <string name="phone">Teléfono</string>
+    <string name="distance">Distancia</string>
+    <string name="call">Llamar</string>
+    <string name="navigate">Navegar</string>
 </resources>

@@ -446,7 +446,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             previous_clause = true;
         }
 
-        if(id_countries != null){
+        if(id_countries != null && id_countries[0] != 0){
             if(previous_clause) query = query + " AND ";
             else query = query + " WHERE ";
             query = query + DBContract.Entities.COLUMN_NAME_ID_COUNTRY + " IN (" + id_countries[0];
@@ -457,7 +457,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             previous_clause = true;
         }
 
-        if(id_categories != null){
+        if(id_categories != null && id_categories[0] != 0){
             if(previous_clause) query = query + " AND ";
             else query = query + " WHERE ";
             query = query + DBContract.Entities.COLUMN_NAME_ID_CATEGORY + " IN (" + id_categories[0];
@@ -477,11 +477,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 em.setLanguage(language);
                 em.setEntity_name(cursor.getString(1));
                 em.setAddress(cursor.getString(6));
-                em.setLatitude(cursor.getDouble(7));
-                em.setLongitude(cursor.getDouble(8));
+                em.setLongitude(cursor.getDouble(7));
+                em.setLatitude(cursor.getDouble(8));
                 em.setId_city(cursor.getInt(9));
                 em.setId_country(cursor.getInt(10));
                 em.setId_category(cursor.getInt(11));
+                em.setPhone_number(cursor.getString(12));
                 switch (language){
                     case "es":
                         em.setEntity_description(cursor.getString(2));
