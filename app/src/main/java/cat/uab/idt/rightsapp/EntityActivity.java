@@ -179,14 +179,10 @@ public class EntityActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CategoryModel category_model = (CategoryModel) sp_select_entity_category.getSelectedItem();
-                System.out.println("TEST Category Model: " + category_model.getCategory_name());
+
                 CountryModel country_model = (CountryModel) sp_select_entity_country.getSelectedItem();
-                System.out.println("TEST Country Model: " + country_model.getCountry_name());
+
                 CityModel city_model = (CityModel) sp_select_entity_city.getSelectedItem();
-                System.out.println("TEST City Model: " + city_model.getCity_name());
-                System.out.println("TEST CRITERIA: " + category_model.getId() +
-                        "," + country_model.getId() +
-                        "," + city_model.getId());
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(Constants.SEARCH_ENTITY_CRITERIA,

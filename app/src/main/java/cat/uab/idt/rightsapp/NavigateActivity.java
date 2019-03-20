@@ -55,7 +55,6 @@ public class NavigateActivity extends AppCompatActivity implements EntitiesViewA
 
         //Get elements from layout
         recyclerView = findViewById(R.id.rv_entities);
-        Button btn_location = findViewById(R.id.btn_location);
 
         // Gets preferences file
         Context context = getApplicationContext();
@@ -70,6 +69,14 @@ public class NavigateActivity extends AppCompatActivity implements EntitiesViewA
                 null)
                 .split(",");
 
+        System.out.println("TEST: CRITERIA READ " + sharedPreferences.getString(Constants.SEARCH_ENTITY_CRITERIA,null));
+        for(int i = 0; i < criteria.length; i++){
+            if(criteria[i] != null){
+                System.out.println("TEST CRITERIA " + i + " " + criteria[i]);
+            }else{
+                System.out.println("TEST CRITERIA NULL");
+            }
+        }
         //Opens DB
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
         dataBaseHelper.openDataBase();
@@ -78,10 +85,12 @@ public class NavigateActivity extends AppCompatActivity implements EntitiesViewA
         ArrayList<EntityModel> entities_list = new ArrayList<>();
 
         entities_list = dataBaseHelper.getEntitiesList(
-                new int[] {Integer.getInteger(criteria[0])},
-                new int[] {Integer.getInteger(criteria[1])},
-                new int[] {Integer.getInteger(criteria[2])},
+                new int[] {Integer.parseInt(criteria[0])},
+                new int[] {Integer.parseInt(criteria[1])},
+                new int[] {Integer.parseInt(criteria[2])},
                 language);
+
+        System.out.println("TEST: SIZE entities_list: " + entities_list.size());
 
         //Sets the distance to every selected entity
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -98,20 +107,12 @@ public class NavigateActivity extends AppCompatActivity implements EntitiesViewA
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_adapter = new EntitiesViewAdapter(this, entities_list);
+        System.out.println("TEST: SIZE entities_list: " + rv_adapter.getItemCount());
         rv_adapter.setClickListener(this);
         recyclerView.setAdapter(rv_adapter);
 
         //Location.distanceBetween(longitude, latitude, 42.0, 3.0, results);
         //System.out.println("Distance in meters " + Math.round(results[0] / 1000));
-
-        btn_location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                longitude = 41.5372217;
-                latitude = 2.4313953;
-                //getLocation();
-            }
-        });
     }
 
     @Override

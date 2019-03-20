@@ -448,7 +448,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         if(id_countries != null){
             if(previous_clause) query = query + " AND ";
-            query = query + " WHERE " + DBContract.Entities.COLUMN_NAME_ID_COUNTRY + " IN (" + id_countries[0];
+            else query = query + " WHERE ";
+            query = query + DBContract.Entities.COLUMN_NAME_ID_COUNTRY + " IN (" + id_countries[0];
             for(int i = 1; i < id_countries.length; i++){
                 query = query + "," + id_countries[i];
             }
@@ -458,7 +459,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         if(id_categories != null){
             if(previous_clause) query = query + " AND ";
-            query = query + " WHERE " + DBContract.Entities.COLUMN_NAME_ID_CATEGORY + " IN (" + id_categories[0];
+            else query = query + " WHERE ";
+            query = query + DBContract.Entities.COLUMN_NAME_ID_CATEGORY + " IN (" + id_categories[0];
             for(int i = 1; i < id_categories.length; i++){
                 query = query + "," + id_categories[i];
             }
