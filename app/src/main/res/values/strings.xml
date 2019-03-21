@@ -5,7 +5,7 @@
 
     <!-- Terms and conditions -->
     <string name="terms_and_conditions">Terms and conditions</string>
-    <string name="terms_and_conditions_title">Title</string>
+    <string name="title_activity_terms_and_conditions">Terms and conditions</string>
     <string name="terms_and_conditions_body">Body</string>
 
     <!-- Buttons -->
@@ -15,8 +15,8 @@
 
     <!-- explanation -->
     <string name="explanation_title">Explanation</string>
-    <string name="explanation_body">Explanation Body</string>
-    <string name="do_not_show">Do not show this message again</string>
+    <string name="explanation_body">"Explanation Body Explanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation Body Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation "</string>
+    <string name="do_not_show">Do not show this message again at the beginning of the app</string>
 
     <!-- activities -->
     <string name="emergency_call">Emergency call</string>
@@ -27,11 +27,11 @@
     <string name="select_language">Select the current language</string>
     <string name="about">About us</string>
     <string name="about_us_body">About us body About us body About us body About us body About us body \n About us body About us body</string>
-    <string name="title_activity_questionnaire">QuestionnaireActivity</string>
+    <string name="title_activity_questionnaire">Questionnaire</string>
     <string name="questionnaire_title">Questionnaire</string>
     <string name="title_activity_questionnaire_fragment">QuestionnaireFragment</string>
-    <string name="title_activity_language">LanguageActivity</string>
-    <string name="title_activity_navigate">NavigateActivity</string>
+    <string name="title_activity_language">Select language</string>
+    <string name="title_activity_navigate">List of entities</string>
     <string name="no_answer">You should select one answer</string>
     <string name="textview">TextView</string>
     <string name="select_entity_type">Choose the entity type</string>
@@ -39,11 +39,23 @@
     <string name="select_entity_city">Choose the entity city</string>
     <string name="select_entity_postal_code">Choose the entity postal code</string>
     <string name="all_countries">All available countries</string>
-    <string name="all_cities">All available citiesç</string>
+    <string name="all_cities">All available cities</string>
     <string name="all_categories">All available categories</string>
     <string name="phone">Phone</string>
     <string name="distance">Distance</string>
     <string name="call">Call</string>
     <string name="navigate">Navigate</string>
+    <string name="title_activity_rights_app">Main screen</string>
+    <string name="title_activity_search_entity">Search entity criteria</string>
+    <string name="title_activity_entity">Entity</string>
+    <string name="language_name_spanish">Spanish</string>
+    <string name="language_name_english">English</string>
+    <string name="language_name_portuguese">Portuguese</string>
+    <string name="language_name_italian">Italian</string>
+    <string name="emergency_call_text">If you have been victim of a crime and you need assistance, make an emergency call to 112</string>
+    <string name="questionnaire_text">Get tailored information about your rights as crime victim thorugh our questionnaire</string>
+    <string name="navigate_text">Get information and navigate to different assistance entities</string>
+    <string name="title_activity_about_us">About us</string>
+    <string name="title_activity_explanation">How to use the app</string>
 
 </resources>

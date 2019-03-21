@@ -23,10 +23,13 @@ public class EntityActivity extends AppCompatActivity {
     private final static int REQUEST_PERMISSION_PHONE_CALL = 102;
     private Context context;
     private String phone_number;
+    private double longitude;
+    private double latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_activity_entity);
         setContentView(R.layout.activity_entity);
 
         //Sets the toolbar
@@ -42,8 +45,8 @@ public class EntityActivity extends AppCompatActivity {
         phone_number = getIntent().getStringExtra(Constants.ENTITY_PHONE);
         String position = getIntent().getStringExtra(Constants.ENTITY_POSITION);
 
-        double longitude = Double.parseDouble(position.split(",")[0]);
-        double latitude = Double.parseDouble(position.split(",")[1]);
+        longitude = Double.parseDouble(position.split(",")[0]);
+        latitude = Double.parseDouble(position.split(",")[1]);
 
         TextView tv_name = findViewById(R.id.tv_name);
         TextView tv_description = findViewById(R.id.tv_description);
@@ -75,12 +78,19 @@ public class EntityActivity extends AppCompatActivity {
         btn_navigate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
+                // Create a Uri from an intent string. Use the result to create an Intent
+                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + longitude + "," + latitude);
 
+                // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+
+                // Make the Intent explicit by setting the Google Maps package
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+                // Attempt to start an activity that can handle the Intent
+                startActivity(mapIntent);
             }
         });
-
-
-
     }
 
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_home"
         android:icon="@drawable/rightsapp_logo_50x84"
-        android:title="@string/terms_and_conditions_title"
+        android:title="@string/title_activity_terms_and_conditions"
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->

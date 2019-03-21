@@ -15,6 +15,7 @@ public class RightsAppActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setTitle(R.string.title_activity_rights_app);
         setContentView(R.layout.activity_rights_app);
 
         //Sets the toolbar
@@ -44,7 +45,6 @@ public class RightsAppActivity extends AppCompatActivity {
         button_navigate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                //Intent intent = new Intent(getApplicationContext(), NavigateActivity.class);
                 Intent intent = new Intent(getApplicationContext(), EntitySearchActivity.class);
                 startActivity(intent);
             }

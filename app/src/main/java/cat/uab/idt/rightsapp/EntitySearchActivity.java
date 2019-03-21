@@ -43,6 +43,7 @@ public class EntitySearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
 
+        setTitle(R.string.title_activity_search_entity);
         setContentView(R.layout.activity_entity_search);
 
         //Sets the toolbar

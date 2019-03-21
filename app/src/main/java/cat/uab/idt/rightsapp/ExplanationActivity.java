@@ -6,24 +6,48 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
 
 public class ExplanationActivity extends AppCompatActivity {
-    boolean showExplanation = true;
+
+    private boolean showExplanation = true;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_activity_explanation);
         setContentView(R.layout.activity_explanation);
 
         Toolbar toolbarRightsApp = (Toolbar) findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
-        final Button button = findViewById(R.id.button_explanation);
+        final Switch sw_explanation = findViewById(R.id.switch_explanation);
+        TextView tv_explanation = findViewById(R.id.tv_explanation);
+        tv_explanation.setMovementMethod(new ScrollingMovementMethod());
+
+        // Gets preferences file
+        Context context = getApplicationContext();
+        sharedPreferences = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        showExplanation = sharedPreferences.getBoolean(Constants.SHOW_EXPLANATION, true);
+
+        sw_explanation.setChecked(!showExplanation);
+        sw_explanation.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                showExplanation = ! sw_explanation.isChecked();
+            }
+        });
+
+        Button button = findViewById(R.id.button_explanation);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Context context = getApplicationContext();
@@ -31,74 +55,13 @@ public class ExplanationActivity extends AppCompatActivity {
                         getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
                 SharedPreferences.Editor editor = mSharedPreferences.edit();
-                editor.putBoolean("show_explanation", showExplanation);
+                editor.putBoolean(Constants.SHOW_EXPLANATION, showExplanation);
                 editor.apply();
 
                 Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);
-
             }
         });
-
-        final Switch _switch = findViewById(R.id.switch_explanation);
-        _switch.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view){
-                showExplanation = !_switch.isChecked();
-            }
-        });
-
-        /*Context context = getApplicationContext();
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
-        boolean firstTime = sharedPreferences.getBoolean("firstTime", true);
-        if(firstTime){
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("firstTime", false);
-            editor.apply();
-
-            DataBaseHelper myDataBase = new DataBaseHelper(this);
-            try{
-                myDataBase.createDatabase();
-            }catch (IOException e){
-                System.out.println("Error creating database");
-                throw new Error("Unable to create database: " + e.getMessage());
-            }
-
-            Intent intent = new Intent(getApplicationContext(), TermsAndConditions.class);
-            startActivity(intent);
-        }else{
-            System.out.println("Not first time");
-        }*/
-
-
-
-        /*DataBaseHelper myDataBase = new DataBaseHelper(this);
-
-        try{
-            myDataBase.createDatabase();
-        }catch (IOException e){
-            System.out.println("Error creating database");
-            throw new Error("Unable to create database: " + e.getMessage());
-        }
-
-       try{
-            myDataBase.openDataBase();
-        }catch (SQLException e){
-            System.out.println("Error opening database");
-           // throw new Error("Unable to open database");
-        }catch (Exception e){
-           System.out.println("Error opening database 2");
-       }
-       ArrayList<AnswerModel> result = myDataBase.getAnswersForQuestion(2);
-        for(int i = 0; i < result.size(); i++){
-            System.out.println("i: " + i + " ID: " + result.get(i).getId());
-            System.out.println("Text_es: " + result.get(i).getText_es());
-        }
-
-        System.out.println("Fin1. Size: " + result.size());
-        myDataBase.close();*/
-
     }
 
     @Override

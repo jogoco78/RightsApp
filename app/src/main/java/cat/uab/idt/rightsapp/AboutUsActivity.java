@@ -4,19 +4,35 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class AboutUsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_activity_about_us);
         setContentView(R.layout.activity_about_us);
 
-        Toolbar toolbarRightsApp = (Toolbar) findViewById(R.id.toolbar_rights_app);
+        Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
+        TextView tv_about_us = findViewById(R.id.tv_about_us);
+        tv_about_us.setMovementMethod(new ScrollingMovementMethod());
+
+        Button btn_continue = findViewById(R.id.btn_continue_about_us);
+        btn_continue.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

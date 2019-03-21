@@ -4,26 +4,39 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class TermsAndConditions extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setTitle(R.string.title_activity_terms_and_conditions);
         setContentView(R.layout.activity_terms_and_conditions);
 
-        Toolbar toolbarRightsApp = (Toolbar) findViewById(R.id.toolbar_rights_app);
+        Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
+        TextView tv_terms_and_conditions = findViewById(R.id.tv_terms_and_conditions);
+        tv_terms_and_conditions.setMovementMethod(new ScrollingMovementMethod());
 
-
-
-
-
+        Button btn_continue = findViewById(R.id.btn_continue_terms_and_conditions);
+        btn_continue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

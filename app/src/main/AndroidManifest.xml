@@ -16,11 +16,9 @@
         <activity android:name=".EntityActivity"></activity>
         <activity
             android:name=".NavigateActivity"
-            android:label="@string/title_activity_navigate"
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".QuestionnaireActivity"
-            android:label="@string/title_activity_questionnaire"
             android:theme="@style/NoActionBar" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>

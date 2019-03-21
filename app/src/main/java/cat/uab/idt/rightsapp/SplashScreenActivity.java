@@ -50,19 +50,19 @@ public class SplashScreenActivity extends AppCompatActivity {
             Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
 
             int index = 0;
-            for(index = 0; index < Constants.LANGUAGES.length; index++){
-                if(Constants.LANGUAGES[index].equals(locale.getLanguage())) break;
+            for(index = 0; index < Constants.LANGUAGE_CODES.length; index++){
+                if(Constants.LANGUAGE_CODES[index].equals(locale.getLanguage())) break;
             }
 
             locale = null;
-            if(index == Constants.LANGUAGES.length){
+            if(index == Constants.LANGUAGE_CODES.length){
                 //Language by default - not in the list
-                locale = new Locale(Constants.LANGUAGES[1], Constants.REGIONS[1]);
-                language = Constants.LANGUAGES[1];
+                locale = new Locale(Constants.LANGUAGE_CODES[1], Constants.REGIONS[1]);
+                language = Constants.LANGUAGE_CODES[1];
             }else{
                 //Sets the language as the device
-                locale = new Locale(Constants.LANGUAGES[index], Constants.REGIONS[index]);
-                language = Constants.LANGUAGES[index];
+                locale = new Locale(Constants.LANGUAGE_CODES[index], Constants.REGIONS[index]);
+                language = Constants.LANGUAGE_CODES[index];
             }
             //Sets the language for the app
             Locale.setDefault(locale);
@@ -76,12 +76,12 @@ public class SplashScreenActivity extends AppCompatActivity {
             editor.apply();
         }else {
             int index = 0;
-            for(index = 0; index < Constants.LANGUAGES.length; index++){
-                if(Constants.LANGUAGES[index].equals(language)) break;
+            for(index = 0; index < Constants.LANGUAGE_CODES.length; index++){
+                if(Constants.LANGUAGE_CODES[index].equals(language)) break;
             }
 
             //Sets the language for the app
-            Locale locale = new Locale(Constants.LANGUAGES[index], Constants.REGIONS[index]);
+            Locale locale = new Locale(Constants.LANGUAGE_CODES[index], Constants.REGIONS[index]);
             Locale.setDefault(locale);
             Configuration config = new Configuration();
             config.locale = locale;
@@ -98,7 +98,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         if(!agreed){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.terms_and_conditions_title)
+            builder.setMessage(R.string.title_activity_terms_and_conditions)
                     .setTitle(R.string.terms_and_conditions_body);
 
             // Add the buttons

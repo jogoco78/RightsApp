@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,26 +13,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import java.util.Locale;
-
-import cat.uab.idt.rightsapp.utils.LocaleUtils;
 
 
 public class LanguageActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
     private RadioGroup rg_answers;
-    String localeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_activity_language);
         setContentView(R.layout.activity_language);
 
         //Sets the toolbar
-        Toolbar toolbarRightsApp = (Toolbar) findViewById(R.id.toolbar_rights_app);
+        Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
         //Gets preferences
@@ -42,7 +38,7 @@ public class LanguageActivity extends AppCompatActivity {
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         //Gets the layout
-        TextView tv_selectLanguage = findViewById(R.id.textView_change_language);
+        //TextView tv_selectLanguage = findViewById(R.id.textView_change_language);
         rg_answers = findViewById(R.id.radioGroup_select_language);
         Button btn_selectLanguage = findViewById(R.id.button_select_language);
 
@@ -53,17 +49,15 @@ public class LanguageActivity extends AppCompatActivity {
 
                 //Saves the device and pref locale
                 SharedPreferences.Editor editor = mSharedPreferences.edit();
-                editor.putString(Constants.PREF_LANGUAGE, Constants.LANGUAGES[id_answer]);
+                editor.putString(Constants.PREF_LANGUAGE, Constants.LANGUAGE_CODES[id_answer]);
                 editor.apply();
 
                 //Sets the language for the app
-                Locale locale = new Locale(Constants.LANGUAGES[id_answer], Constants.REGIONS[id_answer]);
+                Locale locale = new Locale(Constants.LANGUAGE_CODES[id_answer], Constants.REGIONS[id_answer]);
                 Locale.setDefault(locale);
                 Configuration config = new Configuration();
                 config.locale = locale;
                 getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-                System.out.println("LANGUAGE SELECTED: " + Constants.LANGUAGES[id_answer] + " " + Constants.REGIONS[id_answer]);
 
                 Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);
@@ -78,9 +72,22 @@ public class LanguageActivity extends AppCompatActivity {
         rg_answers.clearCheck();
         rg_answers.removeAllViews();
 
-        for(int i=0; i<Constants.LANGUAGES.length; i++){
+        for(int i = 0; i<Constants.LANGUAGE_CODES.length; i++){
             RadioButton rb = new RadioButton(this);
-            rb.setText(Constants.LANGUAGES[i]);
+            switch(Constants.LANGUAGE_CODES[i]){
+                case "es":
+                    rb.setText(getResources().getString(R.string.language_name_spanish));
+                    break;
+                case "en":
+                    rb.setText(getResources().getString(R.string.language_name_english));
+                    break;
+                case "por":
+                    rb.setText(getResources().getString(R.string.language_name_portuguese));
+                    break;
+                case "it":
+                    rb.setText(getResources().getString(R.string.language_name_italian));
+                    break;
+            }
             //rb.setLayoutParams(rg_answersParams);
             rb.setId(i);
             rg_answers.addView(rb);

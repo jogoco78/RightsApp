@@ -12,35 +12,26 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:text="@string/explanation_title"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar_rights_app"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_rights_app"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_rights_app"
-        tools:text="@string/explanation_title" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/tv_explanation"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:scrollbars="vertical"
         android:text="@string/explanation_body"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/switch_explanation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_rights_app"
         tools:text="@string/explanation_body" />
 
     <Switch
@@ -49,25 +40,25 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:checked="false"
         android:text="@string/do_not_show"
+        app:layout_constraintBottom_toTopOf="@+id/button_explanation"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
         tools:text="@string/do_not_show" />
 
     <Button
         android:id="@+id/button_explanation"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch_explanation"
         tools:text="@string/next" />
 
 </android.support.constraint.ConstraintLayout>

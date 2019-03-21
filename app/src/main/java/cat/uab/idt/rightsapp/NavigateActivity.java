@@ -47,6 +47,7 @@ public class NavigateActivity extends AppCompatActivity implements EntitiesViewA
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_activity_navigate);
         setContentView(R.layout.activity_navigate);
 
         //Sets the toolbar
