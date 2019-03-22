@@ -25,7 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /**
      * Database name
      */
-    private static String DB_NAME = "rightsapp_v4_utf16.db";
+    private static String DB_NAME = "rightsapp_v5_utf16.db";
 
     /**
      * Assets path for databases folder
