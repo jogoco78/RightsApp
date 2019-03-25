@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -152,13 +154,32 @@ public class QuestionnaireFragment extends Fragment {
                     if (id_tag_raised != 0) editor.putString(Constants.PAR_TAGS, par_tag);
                     editor.apply();
 
+                    if(currentQuestionID == 1){
+                        //Shows a message for the list of crimes
+                        AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity);
+                        builder.setMessage(R.string.crime_list_message);
+
+                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User clicked OK button
+                            }
+                        });
+
+                        // Create the AlertDialog
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                        // Sets text button color to black
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                    }
+
                     //Gets the next question ID and updates the fragment
                     int id_next_question = db.getNextQuestionID(currentQuestionID, id_answer);
-                    System.out.println("TEST: ID NEXT QUESTION " + id_next_question);
                     if (id_next_question == 0) {
                         //the questionnaire is over - loads the next activity
                         System.out.println("TEST: Questions " + sharedPreferences.getString(Constants.PAR_QUESTIONS, null));
                         System.out.println("TEST: Answers " + sharedPreferences.getString(Constants.PAR_ANSWERS, null));
+                        System.out.println("TEST: Tags " + sharedPreferences.getString(Constants.PAR_TAGS, null));
 
                         Intent intent = new Intent(parentActivity.getApplicationContext(), RightsAppActivity.class);
                         startActivity(intent);

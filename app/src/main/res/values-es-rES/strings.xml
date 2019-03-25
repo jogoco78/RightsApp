@@ -46,4 +46,5 @@
     <string name="navigate_text">Obtén información y navega a diferentes entidades de asistencia</string>
     <string name="title_activity_about_us">Sobre nosotros</string>
     <string name="title_activity_explanation">Como usar la app</string>
+    <string name="crime_list_message">Selecciona el delito más grave del que has sido víctima según tu percepción</string>
 </resources>
