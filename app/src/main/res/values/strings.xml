@@ -58,5 +58,6 @@
     <string name="title_activity_about_us">About us</string>
     <string name="title_activity_explanation">How to use the app</string>
     <string name="crime_list_message">Select the most serious crime of which you have been victim in the list according to your perception</string>
+    <string name="title_activity_call112">Call 112</string>
 
 </resources>

@@ -47,4 +47,5 @@
     <string name="title_activity_about_us">Sobre nosotros</string>
     <string name="title_activity_explanation">Como usar la app</string>
     <string name="crime_list_message">Selecciona el delito más grave del que has sido víctima según tu percepción</string>
+    <string name="title_activity_call112">Llama al 112</string>
 </resources>
