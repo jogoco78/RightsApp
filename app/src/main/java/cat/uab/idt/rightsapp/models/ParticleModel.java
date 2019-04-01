@@ -1,22 +1,28 @@
 package cat.uab.idt.rightsapp.models;
 
 public class ParticleModel {
+
     private int id;
-    private String text_es;
-    private String text_en;
-    private String text_fr;
-    private String text_it;
+    private String language;
+    private String text;
+    private int id_subject;
 
     public ParticleModel(){
         this.initialize();
     }
 
+    public ParticleModel(int id, String text, int id_subject, String language){
+        this.id = id;
+        this.text = text;
+        this.id_subject = id_subject;
+        this.language = language;
+    }
+
     public void initialize(){
         this.id = 0;
-        this.text_es = null;
-        this.text_en = null;
-        this.text_fr = null;
-        this.text_it = null;
+        this.language = null;
+        this.text = null;
+        this.id_subject = 0;
     }
 
     public int getId() {
@@ -27,35 +33,28 @@ public class ParticleModel {
         this.id = id;
     }
 
-    public String getText_es() {
-        return text_es;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setText_es(String text_es) {
-        this.text_es = text_es;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
-    public String getText_en() {
-        return text_en;
+    public String getText() {
+        return text;
     }
 
-    public void setText_en(String text_en) {
-        this.text_en = text_en;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public String getText_fr() {
-        return text_fr;
+    public int getId_subject() {
+        return id_subject;
     }
 
-    public void setText_fr(String text_fr) {
-        this.text_fr = text_fr;
+    public void setId_subject(int id_subject) {
+        this.id_subject = id_subject;
     }
 
-    public String getText_it() {
-        return text_it;
-    }
-
-    public void setText_it(String text_it) {
-        this.text_it = text_it;
-    }
 }

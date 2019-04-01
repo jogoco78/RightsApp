@@ -44,10 +44,16 @@ public final class DBContract {
         public static final String COLUMN_NAME_TEXT_EN = "text_en";
         public static final String COLUMN_NAME_TEXT_PT = "text_pt";
         public static final String COLUMN_NAME_TEXT_IT = "text_it";
-        public static final String COLUMN_NAME_SUBJECT_ES = "subject_es";
-        public static final String COLUMN_NAME_SUBJECT_EN = "subject_en";
-        public static final String COLUMN_NAME_SUBJECT_PT = "subject_pt";
-        public static final String COLUMN_NAME_SUBJECT_IT = "subject_it";
+        public static final String COLUMN_NAME_ID_SUBJEECT = "id_subject";
+    }
+
+    public static class Subjects implements BaseColumns{
+        public static final String TABLE_NAME="subjects";
+        public static final String COLUMN_NAME_ID = "id";
+        public static final String COLUMN_NAME_TEXT_ES = "text_es";
+        public static final String COLUMN_NAME_TEXT_EN = "text_en";
+        public static final String COLUMN_NAME_TEXT_PT = "text_pt";
+        public static final String COLUMN_NAME_TEXT_IT = "text_it";
     }
 
     /*Inner class that defines the tags table*/
