@@ -16,8 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -26,12 +24,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 
-import cat.uab.idt.rightsapp.adapters.EntitiesViewAdapter;
+import cat.uab.idt.rightsapp.adapters.RecyclerViewAdapter;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 import cat.uab.idt.rightsapp.models.EntityModel;
 
 
-public class NavigateActivity extends AppCompatActivity implements EntitiesViewAdapter.ItemClickListener{
+public class NavigateActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener{
 
     private String language;
     private final static int REQUEST_PERMISSION_GET_COORDINATES = 101;
@@ -40,7 +38,7 @@ public class NavigateActivity extends AppCompatActivity implements EntitiesViewA
     private double latitude;
     private FusedLocationProviderClient fusedLocationClient;
     private RecyclerView recyclerView;
-    private EntitiesViewAdapter rv_adapter;
+    private RecyclerViewAdapter rv_adapter;
     private RecyclerView.LayoutManager rv_layoutManager;
 
 
@@ -95,7 +93,7 @@ public class NavigateActivity extends AppCompatActivity implements EntitiesViewA
         //Set up the recycler view
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        rv_adapter = new EntitiesViewAdapter(this, entities_list);
+        rv_adapter = new RecyclerViewAdapter(this, entities_list);
         rv_adapter.setClickListener(this);
         recyclerView.setAdapter(rv_adapter);
     }

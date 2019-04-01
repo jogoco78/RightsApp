@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import cat.uab.idt.rightsapp.models.CategoryModel;
 import cat.uab.idt.rightsapp.models.CityModel;
@@ -623,9 +624,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Cursor cursor = myDataBase.rawQuery(query, null);
         results = new String[cursor.getCount()];
 
-        int index = 0;
         if(cursor.moveToFirst()){
             // Loop through cursor results if the query has rows
+            int index = 0;
             do {
                 switch (language){
                     case "es":

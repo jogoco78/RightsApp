@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import cat.uab.idt.rightsapp.Constants;
 import cat.uab.idt.rightsapp.ExplanationActivity;
 import cat.uab.idt.rightsapp.LanguageActivity;
+import cat.uab.idt.rightsapp.ParticlesActivity;
 import cat.uab.idt.rightsapp.R;
 import cat.uab.idt.rightsapp.RightsAppActivity;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
@@ -181,7 +182,7 @@ public class QuestionnaireFragment extends Fragment {
                         System.out.println("TEST: Answers " + sharedPreferences.getString(Constants.PAR_ANSWERS, null));
                         System.out.println("TEST: Tags " + sharedPreferences.getString(Constants.PAR_TAGS, null));
 
-                        Intent intent = new Intent(parentActivity.getApplicationContext(), RightsAppActivity.class);
+                        Intent intent = new Intent(parentActivity.getApplicationContext(), ParticlesActivity.class);
                         startActivity(intent);
                     } else {
                         //updates the fragment to the new question

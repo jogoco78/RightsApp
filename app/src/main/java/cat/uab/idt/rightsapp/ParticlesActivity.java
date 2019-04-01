@@ -3,39 +3,41 @@ package cat.uab.idt.rightsapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
 
+import cat.uab.idt.rightsapp.adapters.ExpandableAdapter;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 import cat.uab.idt.rightsapp.models.ParticleModel;
 
-public class SubjectsActivity extends AppCompatActivity {
+public class ParticlesActivity extends AppCompatActivity{
 
     private String language = null;
     private String par_tag = null;
-    private RecyclerView recyclerView = null;
     private DataBaseHelper db = null;
     private ArrayList<ParticleModel> particles_list = null;
+    private ExpandableListView expandableListView;
+    private ExpandableListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.title_activity_subjects);
-        setContentView(R.layout.activity_subjects);
+        setContentView(R.layout.activity_particles);
 
         //Sets the toolbar
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
         //Gets elements from layout
-        recyclerView = findViewById(R.id.rv_subjects);
+        expandableListView = findViewById(R.id.elv_particles);
 
         // Gets preferences file
         Context context = getApplicationContext();
@@ -57,7 +59,7 @@ public class SubjectsActivity extends AppCompatActivity {
             tags_s = par_tag.split(",");
             tags_i = new int[tags_s.length];
             for(int i = 0; i < tags_s.length; i++){
-                tags_i[i] = Integer.getInteger(tags_s[i]);
+                tags_i[i] = Integer.parseInt(tags_s[i]);
             }
         }
 
@@ -77,22 +79,18 @@ public class SubjectsActivity extends AppCompatActivity {
             id_subjects[index] = par.getId_subject();
             index++;
         }
-        String[] subjects = new String[id_subjects.length];
+
+        String[] subjects;
         subjects = db.getSubjectByID(id_subjects, language);
 
+        ArrayList<ArrayList<String>> childList = new ArrayList<>();
+        for(int i = 0; i < subjects.length; i++){
+            childList.add(particles_list.get(i).getTextArray());
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
+        adapter = new ExpandableAdapter(this, childList, subjects);
+        System.out.println("TEST: Children: " + adapter.getChildrenCount(0));
+        expandableListView.setAdapter(adapter);
     }
 
     @Override

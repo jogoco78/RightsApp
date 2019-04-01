@@ -1,5 +1,7 @@
 package cat.uab.idt.rightsapp.models;
 
+import java.util.ArrayList;
+
 public class ParticleModel {
 
     private int id;
@@ -43,6 +45,14 @@ public class ParticleModel {
 
     public String getText() {
         return text;
+    }
+
+    public ArrayList<String> getTextArray(){
+        ArrayList<String> results = new ArrayList<>();
+
+        results.add(text);
+
+        return(results);
     }
 
     public void setText(String text) {
