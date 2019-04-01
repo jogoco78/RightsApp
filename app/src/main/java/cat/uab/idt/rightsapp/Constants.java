@@ -1,6 +1,9 @@
 package cat.uab.idt.rightsapp;
 
 public class Constants {
+    //Text constants
+    public static final String SEPARATOR_TEXT = "--";
+
     //Initial explanation and terms of use
     public static final String AGREED = "agreed";
     public static final String SHOW_EXPLANATION = "show_explanation";

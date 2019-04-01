@@ -2,6 +2,8 @@ package cat.uab.idt.rightsapp.models;
 
 import java.util.ArrayList;
 
+import cat.uab.idt.rightsapp.Constants;
+
 public class ParticleModel {
 
     private int id;
@@ -50,7 +52,10 @@ public class ParticleModel {
     public ArrayList<String> getTextArray(){
         ArrayList<String> results = new ArrayList<>();
 
-        results.add(text);
+        String[] splited = text.split(Constants.SEPARATOR_TEXT);
+        for (int i = 0; i < splited.length; i++){
+            results.add(splited[i]);
+        }
 
         return(results);
     }
@@ -66,5 +71,4 @@ public class ParticleModel {
     public void setId_subject(int id_subject) {
         this.id_subject = id_subject;
     }
-
 }

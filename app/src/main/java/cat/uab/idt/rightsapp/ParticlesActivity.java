@@ -89,7 +89,6 @@ public class ParticlesActivity extends AppCompatActivity{
         }
 
         adapter = new ExpandableAdapter(this, childList, subjects);
-        System.out.println("TEST: Children: " + adapter.getChildrenCount(0));
         expandableListView.setAdapter(adapter);
     }
 
