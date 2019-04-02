@@ -560,13 +560,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      **********************     PARTICLES, SUBJECTS AND TAGS       ******************************
      ********************************************************************************************/
 
+    /**
+     * Returns the particles related to the given tag
+     * @param id_tags the list of tags
+     * @param language the language for the particles
+     * @return an ArrayList with the particles related to given tags in specified language
+     */
     public ArrayList<ParticleModel> getParticlesByTag(int[] id_tags, String language){
-        ArrayList<ParticleModel> results = new ArrayList<>();
+        int[] results;
 
-        String query = "SELECT * FROM " + DBContract.Particles.TABLE_NAME;
+        String query = "SELECT * FROM " + DBContract.Particles_Tags.TABLE_NAME;
 
         if(id_tags != null){
-            query = query + " WHERE " + DBContract.Particles.COLUMN_NAME_ID_SUBJEECT + " IN (" + id_tags[0];
+            query = query + " WHERE " + DBContract.Particles_Tags.COLUMN_NAME_ID_TAG + " IN (" + id_tags[0];
             for(int i = 1; i < id_tags.length; i++){
                 query = query + "," + id_tags[i];
             }
@@ -574,39 +580,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
 
         Cursor cursor = myDataBase.rawQuery(query, null);
+        results = new int[cursor.getCount()];
 
         if(cursor.moveToFirst()){
             // Loop through cursor results if the query has rows
+            int index = 0;
             do {
-                ParticleModel pm = new ParticleModel();
-                pm.setId(cursor.getInt(0));
-                pm.setLanguage(language);
-                pm.setId_subject(cursor.getInt(5));
-                switch (language){
-                    case "es":
-                        pm.setText(cursor.getString(1));
-                        break;
-                    case "en":
-                        pm.setText(cursor.getString(2));
-                        break;
-                    case "por":
-                        pm.setText(cursor.getString(3));
-                        break;
-                    case "it":
-                        pm.setText(cursor.getString(4));
-                        break;
-                    default:
-                        //do default
-                        break;
-                }
-                results.add(pm);
+                results[index] = cursor.getInt(0);
+                index++;
             } while (cursor.moveToNext());
         }
         cursor.close();
 
-        return results;
+        return getParticles(results, language);
     }
 
+    /**
+     * Returns the subjects of the rights by their ID
+     * @param id_subjects the id of the subjects
+     * @param language the language for the subject to be returned
+     * @return an String array with the subjects that match the given IDs
+     */
     public String[] getSubjectByID(int[] id_subjects, String language){
         String[] results;
 
@@ -652,70 +646,51 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return results;
     }
 
-    public ArrayList<ParticleModel> getParticle(int[] id_particles){
-        ArrayList<ParticleModel> result = new ArrayList<>();
+    public ArrayList<ParticleModel> getParticles(int[] id_particles, String language){
+        ArrayList<ParticleModel> results = new ArrayList<>();
 
-        return result;
-    }
-    /**
-     * Returns the tags associated to a given particle
-     * @param id_particle the id of the particle
-     * @return a String array with the name of the tags associated with the given particle
-     */
-    public String[] getTagsFromParticle(int id_particle){
-        String query = "SELECT " + DBContract.Particles_Tags.COLUMN_NAME_ID_TAG
-                + " FROM " + DBContract.Particles_Tags.TABLE_NAME
-                + " WHERE " +  DBContract.Particles_Tags.COLUMN_NAME_ID_PARTICLE + " = "
-                + String.valueOf(id_particle);
+        String query = "SELECT * FROM " + DBContract.Particles.TABLE_NAME;
+
+        if(id_particles != null){
+            query = query + " WHERE " + DBContract.Particles.COLUMN_NAME_ID + " IN (" + id_particles[0];
+            for(int i = 1; i < id_particles.length; i++){
+                query = query + "," + id_particles[i];
+            }
+            query = query + ")";
+        }
 
         Cursor cursor = myDataBase.rawQuery(query, null);
-
-        int i = 0;
-        String[] id_tags = new String[cursor.getCount()];
 
         if(cursor.moveToFirst()){
             // Loop through cursor results if the query has rows
             do {
-                id_tags[i] = String.valueOf(cursor.getInt(0));
-                i++;
-
+                ParticleModel pm = new ParticleModel();
+                pm.setId(cursor.getInt(0));
+                pm.setLanguage(language);
+                pm.setId_subject(cursor.getInt(5));
+                switch (language){
+                    case "es":
+                        pm.setText(cursor.getString(1));
+                        break;
+                    case "en":
+                        pm.setText(cursor.getString(2));
+                        break;
+                    case "por":
+                        pm.setText(cursor.getString(3));
+                        break;
+                    case "it":
+                        pm.setText(cursor.getString(4));
+                        break;
+                    default:
+                        //do default
+                        break;
+                }
+                results.add(pm);
             } while (cursor.moveToNext());
         }
         cursor.close();
 
-        return this.getTags(id_tags);
-    }
-
-    /**
-     * Returns the tags given by the parameter
-     * @param id_tags an array with the id of the tags to be returned
-     * @return a String array with the name of the tags given by parameter
-     */
-    public String[] getTags(String[] id_tags){
-        String query = "SELECT " + DBContract.Tags.COLUMN_NAME_TAG + " FROM " + DBContract.Tags.TABLE_NAME
-                + " WHERE " +  DBContract.Tags.COLUMN_NAME_ID + " IN (" + id_tags[0];
-
-        for(int i = 1; i < id_tags.length; i++){
-            query = query + "," + id_tags[i];
-        }
-        query = query + ")";
-
-        Cursor cursor = myDataBase.rawQuery(query, null);
-
-        String[] tags = new String[cursor.getCount()];
-
-        if(cursor.moveToFirst()){
-            // Loop through cursor results if the query has rows
-            int i = 0;
-            do {
-                tags[i] = cursor.getString(0);
-                i++;
-            } while (cursor.moveToNext());
-
-        }
-        cursor.close();
-
-        return tags;
+        return results;
     }
 
 }

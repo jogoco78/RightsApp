@@ -7,9 +7,9 @@ import cat.uab.idt.rightsapp.Constants;
 public class ParticleModel {
 
     private int id;
-    private String language;
     private String text;
     private int id_subject;
+    private String language;
 
     public ParticleModel(){
         this.initialize();
@@ -53,6 +53,7 @@ public class ParticleModel {
         ArrayList<String> results = new ArrayList<>();
 
         String[] splited = text.split(Constants.SEPARATOR_TEXT);
+
         for (int i = 0; i < splited.length; i++){
             results.add(splited[i]);
         }

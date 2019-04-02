@@ -71,6 +71,7 @@ public class ParticlesActivity extends AppCompatActivity{
 
         //Gets particles list
         particles_list = db.getParticlesByTag(tags_i, language);
+        System.out.println("TEST: Particles list count " + particles_list.size());
 
         //Gets subject list in string array
         int[] id_subjects = new int[particles_list.size()];
@@ -90,6 +91,8 @@ public class ParticlesActivity extends AppCompatActivity{
 
         adapter = new ExpandableAdapter(this, childList, subjects);
         expandableListView.setAdapter(adapter);
+        System.out.println("TEST: Group Count " + adapter.getGroupCount());
+        System.out.println("TEST: Child Count " + adapter.getChildrenCount(0));
     }
 
     @Override

@@ -31,7 +31,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int parent){
-        return parents.length;
+        return childList.get(parent).size();
     }
 
     @Override
