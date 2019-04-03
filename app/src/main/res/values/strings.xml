@@ -60,5 +60,6 @@
     <string name="crime_list_message">Select the most serious crime of which you have been victim in the list according to your perception</string>
     <string name="title_activity_call112">Call 112</string>
     <string name="title_activity_subjects">Rights</string>
+    <string name="emergency_call_112">If you press the above button you will make an emergency call to 112</string>
 
 </resources>

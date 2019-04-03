@@ -49,4 +49,5 @@
     <string name="crime_list_message">Selecciona el delito más grave del que has sido víctima según tu percepción</string>
     <string name="title_activity_call112">Llama al 112</string>
     <string name="title_activity_subjects">Derechos</string>
+    <string name="emergency_call_112">Si pulsas el botón de más abajo harás una llamada de emergencia al 112</string>
 </resources>

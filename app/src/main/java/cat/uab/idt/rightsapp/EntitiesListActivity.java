@@ -29,7 +29,7 @@ import cat.uab.idt.rightsapp.database.DataBaseHelper;
 import cat.uab.idt.rightsapp.models.EntityModel;
 
 
-public class NavigateActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener{
+public class EntitiesListActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener{
 
     private String language;
     private final static int REQUEST_PERMISSION_GET_COORDINATES = 101;
@@ -46,7 +46,7 @@ public class NavigateActivity extends AppCompatActivity implements RecyclerViewA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.title_activity_navigate);
-        setContentView(R.layout.activity_navigate);
+        setContentView(R.layout.activity_entities_list);
 
         //Sets the toolbar
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
@@ -121,7 +121,7 @@ public class NavigateActivity extends AppCompatActivity implements RecyclerViewA
 
         } else {
             fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(NavigateActivity.this, new OnSuccessListener<Location>() {
+                    .addOnSuccessListener(EntitiesListActivity.this, new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
@@ -162,7 +162,7 @@ public class NavigateActivity extends AppCompatActivity implements RecyclerViewA
                     // permission was granted, yay! Do the task you need to do.
                     try {
                         fusedLocationClient.getLastLocation()
-                                .addOnSuccessListener(NavigateActivity.this, new OnSuccessListener<Location>() {
+                                .addOnSuccessListener(EntitiesListActivity.this, new OnSuccessListener<Location>() {
                                     @Override
                                     public void onSuccess(Location location) {
                                         // Got last known location. In some rare situations this can be null.

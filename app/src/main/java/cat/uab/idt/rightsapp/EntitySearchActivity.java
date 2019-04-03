@@ -183,7 +183,7 @@ public class EntitySearchActivity extends AppCompatActivity {
                 CountryModel country_model = (CountryModel) sp_select_entity_country.getSelectedItem();
                 CityModel city_model = (CityModel) sp_select_entity_city.getSelectedItem();
 
-                Intent intent = new Intent(getApplicationContext(), NavigateActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EntitiesListActivity.class);
                 intent.putExtra(Constants.SEARCH_ENTITY_CRITERIA, category_model.getId() +
                         "," + country_model.getId() +
                         "," + city_model.getId());

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 public class RightsAppActivity extends AppCompatActivity {
 
@@ -21,6 +22,34 @@ public class RightsAppActivity extends AppCompatActivity {
         //Sets the toolbar
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
+
+        //TextView Listeners
+        TextView tv_call112 = findViewById(R.id.tv_112);
+        tv_call112.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getApplicationContext(), Emergency112CallActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        TextView tv_information = findViewById(R.id.tv_questionnaire);
+        tv_information.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), QuestionnaireActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        TextView tv_navigate = findViewById(R.id.tv_navigate);
+        tv_navigate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getApplicationContext(), EntitySearchActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //ImageButton Listeners
         ImageButton button_emergency112 = findViewById(R.id.ib_112);

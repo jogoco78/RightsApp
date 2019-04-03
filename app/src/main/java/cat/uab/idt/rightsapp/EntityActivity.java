@@ -51,12 +51,14 @@ public class EntityActivity extends AppCompatActivity {
         TextView tv_name = findViewById(R.id.tv_name);
         TextView tv_description = findViewById(R.id.tv_description);
         TextView tv_address = findViewById(R.id.tv_address);
+        TextView tv_phone = findViewById(R.id.tv_phone);
         Button btn_call = findViewById(R.id.btn_call);
         Button btn_navigate = findViewById(R.id.btn_navigate);
 
         tv_name.setText(name);
         tv_description.setText(description);
         tv_address.setText(address);
+        tv_phone.setText(phone_number);
 
         btn_call.setOnClickListener(new View.OnClickListener() {
             @Override

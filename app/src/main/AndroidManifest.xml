@@ -16,7 +16,7 @@
         <activity android:name=".ParticlesActivity"></activity>
         <activity android:name=".EntityActivity" />
         <activity
-            android:name=".NavigateActivity"
+            android:name=".EntitiesListActivity"
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".QuestionnaireActivity"

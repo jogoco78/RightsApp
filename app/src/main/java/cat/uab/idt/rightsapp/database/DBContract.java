@@ -87,6 +87,9 @@ public final class DBContract {
         public static final String COLUMN_NAME_ID_COUNTRY = "id_country";
         public static final String COLUMN_NAME_ID_CATEGORY = "id_category";
         public static final String COLUMN_NAME_PHONE = "phone_number";
+        public static final String COLUMN_NAME_PHONE2 = "phone_number2";
+        public static final String COLUMN_NAME_LINK = "link";
+        public static final String COLUMN_NAME_ENMAIL = "email";
     }
 
     /* Inner class that defines the cities table */
