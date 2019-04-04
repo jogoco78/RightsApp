@@ -94,7 +94,7 @@ public class EntitySearchActivity extends AppCompatActivity {
         country_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Set initial values for cities spinner
-        cities_list = dataBaseHelper.getCitiesList(null, language);
+        cities_list = dataBaseHelper.getCitiesList(null, language, true);
         CityModel all_cities_option = new CityModel(
                 0,
                 getResources().getString(R.string.all_cities),
@@ -129,9 +129,9 @@ public class EntitySearchActivity extends AppCompatActivity {
 
                 //Updates cities spinner
                 if(country_model.getId() == 0){
-                    cities_list = dataBaseHelper.getCitiesList(null, language);
+                    cities_list = dataBaseHelper.getCitiesList(null, language, true);
                 }else{
-                    cities_list = dataBaseHelper.getCitiesList(new int[]{country_model.getId()}, language);
+                    cities_list = dataBaseHelper.getCitiesList(new int[]{country_model.getId()}, language, true);
                 }
 
                 CityModel all_cities_option = new CityModel(

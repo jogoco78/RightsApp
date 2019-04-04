@@ -45,7 +45,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.title_activity_navigate);
+        setTitle(R.string.title_activity_entities_list);
         setContentView(R.layout.activity_entities_list);
 
         //Sets the toolbar
@@ -90,10 +90,27 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
             entities_list.get(i).setDistance(Math.round(results[0] / 10.0) / 100.0); //meters to kms and rounded two decimals
         }
 
+        //Sort the entities list by distance
+        ArrayList<EntityModel> entities_list_sorted = new ArrayList<>();
+        int size = entities_list.size();
+        for(int i = 0; i < size; i++){
+            double min = Double.MAX_VALUE;
+            int s = 0;
+            for(int j = 0; j < entities_list.size(); j++){
+                if(entities_list.get(j).getDistance() < min){
+                    s = j;
+                    min = entities_list.get(j).getDistance();
+                }
+            }
+            entities_list_sorted.add(entities_list.get(s));
+            entities_list.remove(s);
+        }
+        entities_list = null;
+
         //Set up the recycler view
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        rv_adapter = new RecyclerViewAdapter(this, entities_list);
+        rv_adapter = new RecyclerViewAdapter(this, entities_list_sorted);
         rv_adapter.setClickListener(this);
         recyclerView.setAdapter(rv_adapter);
     }

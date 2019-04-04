@@ -19,8 +19,6 @@ import cat.uab.idt.rightsapp.models.ParticleModel;
 
 public class ParticlesActivity extends AppCompatActivity{
 
-    private String language = null;
-    private String par_tag = null;
     private DataBaseHelper db = null;
     private ArrayList<ParticleModel> particles_list = null;
     private ExpandableListView expandableListView;
@@ -45,12 +43,12 @@ public class ParticlesActivity extends AppCompatActivity{
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         //Gets the language stored in Preferences for the app
-        language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
+        String language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
 
         //Gets current questions, answers and tags parameters
         String par_questionID = sharedPreferences.getString(Constants.PAR_QUESTIONS, null);
         String par_answersID = sharedPreferences.getString(Constants.PAR_ANSWERS, null);
-        par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
+        String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
 
         //Gets tags in string and int arrays
         String[] tags_s;
@@ -71,7 +69,6 @@ public class ParticlesActivity extends AppCompatActivity{
 
         //Gets particles list
         particles_list = db.getParticlesByTag(tags_i, language);
-        System.out.println("TEST: Particles list count " + particles_list.size());
 
         //Gets subject list in string array
         int[] id_subjects = new int[particles_list.size()];
@@ -91,8 +88,6 @@ public class ParticlesActivity extends AppCompatActivity{
 
         adapter = new ExpandableAdapter(this, childList, subjects);
         expandableListView.setAdapter(adapter);
-        System.out.println("TEST: Group Count " + adapter.getGroupCount());
-        System.out.println("TEST: Child Count " + adapter.getChildrenCount(0));
     }
 
     @Override

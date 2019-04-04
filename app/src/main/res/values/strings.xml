@@ -24,15 +24,15 @@
     <string name="emergency_112">112 Emergency</string>
 
     <string name="language">Language</string>
-    <string name="select_language">Select the current language</string>
+    <string name="select_language">Select the new language</string>
     <string name="about">About us</string>
     <string name="about_us_body">About us body About us body About us body About us body About us body \n About us body About us body</string>
     <string name="title_activity_questionnaire">Questionnaire</string>
     <string name="questionnaire_title">Questionnaire</string>
     <string name="title_activity_questionnaire_fragment">QuestionnaireFragment</string>
     <string name="title_activity_language">Select language</string>
-    <string name="title_activity_navigate">List of entities</string>
-    <string name="no_answer">You should select one answer</string>
+    <string name="title_activity_entities_list">Select one entity</string>
+    <string name="no_answer">You should select one option</string>
     <string name="textview">TextView</string>
     <string name="select_entity_type">Choose the entity type</string>
     <string name="select_entity_country">Choose the entity country</string>
@@ -42,12 +42,12 @@
     <string name="all_cities">All available cities</string>
     <string name="all_categories">All available categories</string>
     <string name="phone">Phone</string>
-    <string name="distance">Distance</string>
+    <string name="distance">Distance (in kms)</string>
     <string name="call">Call</string>
     <string name="navigate">Navigate</string>
-    <string name="title_activity_rights_app">Main screen</string>
+    <string name="title_activity_rights_app">Select one option</string>
     <string name="title_activity_search_entity">Search entity criteria</string>
-    <string name="title_activity_entity">Entity</string>
+    <string name="title_activity_entity">Entity details</string>
     <string name="language_name_spanish">Spanish</string>
     <string name="language_name_english">English</string>
     <string name="language_name_portuguese">Portuguese</string>
@@ -61,5 +61,8 @@
     <string name="title_activity_call112">Call 112</string>
     <string name="title_activity_subjects">Rights</string>
     <string name="emergency_call_112">If you press the above button you will make an emergency call to 112</string>
+    <string name="back">Back</string>
+    <string name="link">Link</string>
+    <string name="email">E-mail</string>
 
 </resources>

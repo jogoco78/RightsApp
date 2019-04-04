@@ -1,5 +1,7 @@
 package cat.uab.idt.rightsapp.models;
 
+import cat.uab.idt.rightsapp.database.DataBaseHelper;
+
 public class EntityModel {
 
     private int id;
@@ -13,7 +15,12 @@ public class EntityModel {
     private int id_category;
     private String language;
     private String phone_number;
+    private String phone_number2;
+    private String link;
     private double distance;
+    private String city_name;
+    private String country_name;
+    private String email;
 
     public EntityModel(){
         init();
@@ -103,6 +110,7 @@ public class EntityModel {
     public void setId_category(int id_category) {
         this.id_category = id_category;
     }
+
     public String getLanguage() {
         return language;
     }
@@ -126,4 +134,45 @@ public class EntityModel {
     public void setDistance(double distance) {
         this.distance = distance;
     }
+
+    public String getCity_name() {
+        return city_name;
+    }
+
+    public void setCity_name(String city_name) {
+        this.city_name = city_name;
+    }
+
+    public String getCountry_name() {
+        return country_name;
+    }
+
+    public void setCountry_name(String country_name) {
+        this.country_name = country_name;
+    }
+
+    public String getPhone_number2() {
+        return phone_number2;
+    }
+
+    public void setPhone_number2(String phone_number2) {
+        this.phone_number2 = phone_number2;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

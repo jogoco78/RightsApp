@@ -140,7 +140,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     //Public helper methods to access and get content from the database
 
-    // QUESTIONS & ANSWERS
+    /*********************************************************************************************
+     **************************     QUESTIONS AND ANSWERS      ***********************************
+     *********************************************************************************************/
 
     /**
      * Returns the text of the question given by parameter in the specified language
@@ -329,99 +331,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     **************************     ENTITIES AND CATEGORIES      **********************************
     *********************************************************************************************/
 
-    public ArrayList<CountryModel> getCountriesList(int[] id, String language){
-        ArrayList<CountryModel> results = new ArrayList<>();
-
-        String query = "SELECT * FROM " + DBContract.Countries.TABLE_NAME;
-
-        if(id != null){
-            query = query + " WHERE " + DBContract.Countries.COLUMN_NAME_ID + " IN (" + id[0];
-            for(int i = 1; i < id.length; i++){
-                query = query + "," + id[i];
-            }
-            query = query + ")";
-        }
-
-        Cursor cursor = myDataBase.rawQuery(query, null);
-
-        if(cursor.moveToFirst()){
-            // Loop through cursor results if the query has rows
-            do {
-                CountryModel cm = new CountryModel();
-                cm.setId(cursor.getInt(0));
-                cm.setLanguage(language);
-                switch (language){
-                    case "es":
-                        cm.setCountry_name(cursor.getString(1));
-                        break;
-                    case "en":
-                        cm.setCountry_name(cursor.getString(2));
-                        break;
-                    case "por":
-                        cm.setCountry_name(cursor.getString(3));
-                        break;
-                    case "it":
-                        cm.setCountry_name(cursor.getString(4));
-                        break;
-                    default:
-                        //do default
-                        break;
-                }
-                results.add(cm);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        return results;
-    }
-
-    public ArrayList<CityModel> getCitiesList(int[] id_country, String language){
-        ArrayList<CityModel> results = new ArrayList<>();
-
-        String query = "SELECT * FROM " + DBContract.Cities.TABLE_NAME;
-
-        if(id_country != null){
-            query = query + " WHERE " + DBContract.Cities.COLUMN_NAME_ID_COUNTRY + " IN (" + id_country[0];
-            for(int i = 1; i < id_country.length; i++){
-                query = query + "," + id_country[i];
-            }
-            query = query + ")";
-        }
-
-        Cursor cursor = myDataBase.rawQuery(query, null);
-
-        if(cursor.moveToFirst()){
-            // Loop through cursor results if the query has rows
-            do {
-                CityModel cm = new CityModel();
-                cm.setId(cursor.getInt(0));
-                cm.setLanguage(language);
-                cm.setId_country(cursor.getInt(5));
-                switch (language){
-                    case "es":
-                        cm.setCity_name(cursor.getString(1));
-                        break;
-                    case "en":
-                        cm.setCity_name(cursor.getString(2));
-                        break;
-                    case "por":
-                        cm.setCity_name(cursor.getString(3));
-                        break;
-                    case "it":
-                        cm.setCity_name(cursor.getString(4));
-                        break;
-                    default:
-                        //do default
-                        break;
-                }
-                results.add(cm);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        return results;
-    }
-
     /**
      * Returns an ArrayList of entities that match the criteria given by parameters in the specified
      * language. Just one language is recovered
@@ -435,7 +344,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         boolean previous_clause = false;
         ArrayList<EntityModel> results = new ArrayList<>();
 
-        String query = "SELECT * FROM " + DBContract.Entities.TABLE_NAME;
+        String query = "SELECT * FROM " + DBContract.Entities.TABLE_NAME +
+                " INNER JOIN " + DBContract.Cities.TABLE_NAME + " ON " +
+                DBContract.Cities.TABLE_NAME + "." + DBContract.Cities.COLUMN_NAME_ID +
+                "=" + DBContract.Entities.TABLE_NAME + "." + DBContract.Entities.COLUMN_NAME_ID_CITY +
+                " INNER JOIN " + DBContract.Countries.TABLE_NAME + " ON " +
+                DBContract.Countries.TABLE_NAME + "." + DBContract.Countries.COLUMN_NAME_ID +
+                "=" + DBContract.Entities.TABLE_NAME + "." + DBContract.Entities.COLUMN_NAME_ID_COUNTRY;
+
+        //inner join cities on cities.id = entities.id_city inner join countries on countries.id = entities.id_country
 
         if(id_cities != null && id_cities[0] != 0){
             query = query + " WHERE " + DBContract.Entities.COLUMN_NAME_ID_CITY + " IN (" + id_cities[0];
@@ -483,18 +400,30 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 em.setId_country(cursor.getInt(10));
                 em.setId_category(cursor.getInt(11));
                 em.setPhone_number(cursor.getString(12));
+                em.setPhone_number2(cursor.getString(13));
+                em.setLink(cursor.getString(14));
+                em.setEmail(cursor.getString(15));
+
                 switch (language){
                     case "es":
                         em.setEntity_description(cursor.getString(2));
+                        em.setCity_name(cursor.getString(17));
+                        em.setCountry_name(cursor.getString(23));
                         break;
                     case "en":
                         em.setEntity_description(cursor.getString(3));
+                        em.setCity_name(cursor.getString(18));
+                        em.setCountry_name(cursor.getString(24));
                         break;
                     case "por":
                         em.setEntity_description(cursor.getString(4));
+                        em.setCity_name(cursor.getString(19));
+                        em.setCountry_name(cursor.getString(25));
                         break;
                     case "it":
                         em.setEntity_description(cursor.getString(5));
+                        em.setCity_name(cursor.getString(20));
+                        em.setCountry_name(cursor.getString(26));
                         break;
                     default:
                         //do default
@@ -504,6 +433,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
+
+
 
         return results;
     }
@@ -623,10 +554,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             do {
                 switch (language){
                     case "es":
-                        results[index] = cursor.getString(1);
+                        results[index] = "P" + cursor.getInt(0) + " " + cursor.getString(1);
                         break;
                     case "en":
-                        results[index] = cursor.getString(2);
+                        results[index] = "P" + cursor.getInt(0) + " " +  cursor.getString(2);
                         break;
                     case "por":
                         results[index] = cursor.getString(3);
@@ -686,6 +617,197 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         break;
                 }
                 results.add(pm);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return results;
+    }
+
+    /********************************************************************************************
+     **************************     COUNTRIES AND CITIES       **********************************
+     ********************************************************************************************/
+
+    public ArrayList<CountryModel> getCountriesList(int[] id, String language){
+        ArrayList<CountryModel> results = new ArrayList<>();
+
+        String query = "SELECT * FROM " + DBContract.Countries.TABLE_NAME;
+
+        if(id != null){
+            query = query + " WHERE " + DBContract.Countries.COLUMN_NAME_ID + " IN (" + id[0];
+            for(int i = 1; i < id.length; i++){
+                query = query + "," + id[i];
+            }
+            query = query + ")";
+        }
+
+        Cursor cursor = myDataBase.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            // Loop through cursor results if the query has rows
+            do {
+                CountryModel cm = new CountryModel();
+                cm.setId(cursor.getInt(0));
+                cm.setLanguage(language);
+                switch (language){
+                    case "es":
+                        cm.setCountry_name(cursor.getString(1));
+                        break;
+                    case "en":
+                        cm.setCountry_name(cursor.getString(2));
+                        break;
+                    case "por":
+                        cm.setCountry_name(cursor.getString(3));
+                        break;
+                    case "it":
+                        cm.setCountry_name(cursor.getString(4));
+                        break;
+                    default:
+                        //do default
+                        break;
+                }
+                results.add(cm);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return results;
+    }
+
+    /**
+     * Returns the list of cities in a given country
+     * @param id_country ID of the country
+     * @param language Current language selected in the app
+     * @param sorted boolean 0- false the return will not be sorted 1- true the return will be sorted
+     * @return an ArrayList with the cities from a given country
+     */
+    public ArrayList<CityModel> getCitiesList(int[] id_country, String language, boolean sorted){
+        ArrayList<CityModel> results = new ArrayList<>();
+
+        String query = "SELECT * FROM " + DBContract.Cities.TABLE_NAME;
+
+        if(id_country != null){
+            query = query + " WHERE " + DBContract.Cities.COLUMN_NAME_ID_COUNTRY + " IN (" + id_country[0];
+            for(int i = 1; i < id_country.length; i++){
+                query = query + "," + id_country[i];
+            }
+            query = query + ")";
+        }
+
+        if(sorted){
+            switch (language){
+                case "es":
+                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_ES + " asc";
+                    break;
+                case "en":
+                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_EN + " asc";
+                    break;
+                case "por":
+                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_PT + " asc";
+                    break;
+                case "it":
+                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_IT + " asc";
+                    break;
+                default:
+                    //do default
+                    break;
+            }
+        }
+
+        Cursor cursor = myDataBase.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            // Loop through cursor results if the query has rows
+            do {
+                CityModel cm = new CityModel();
+                cm.setId(cursor.getInt(0));
+                cm.setLanguage(language);
+                cm.setId_country(cursor.getInt(5));
+                switch (language){
+                    case "es":
+                        cm.setCity_name(cursor.getString(1));
+                        break;
+                    case "en":
+                        cm.setCity_name(cursor.getString(2));
+                        break;
+                    case "por":
+                        cm.setCity_name(cursor.getString(3));
+                        break;
+                    case "it":
+                        cm.setCity_name(cursor.getString(4));
+                        break;
+                    default:
+                        //do default
+                        break;
+                }
+                results.add(cm);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return results;
+    }
+
+    public ArrayList<CityModel> getCitiesByID(int[] id_cities, String language){
+        ArrayList<CityModel> results = new ArrayList<>();
+
+        String query = "SELECT * FROM " + DBContract.Cities.TABLE_NAME;
+
+        if(id_cities != null){
+            query = query + " WHERE " + DBContract.Cities.COLUMN_NAME_ID + " IN (" + id_cities[0];
+            for(int i = 1; i < id_cities.length; i++){
+                query = query + "," + id_cities[i];
+            }
+            query = query + ")";
+        }
+
+        /*if(sorted){
+            switch (language){
+                case "es":
+                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_ES + " asc";
+                    break;
+                case "en":
+                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_EN + " asc";
+                    break;
+                case "por":
+                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_PT + " asc";
+                    break;
+                case "it":
+                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_IT + " asc";
+                    break;
+                default:
+                    //do default
+                    break;
+            }
+        }*/
+
+        Cursor cursor = myDataBase.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            // Loop through cursor results if the query has rows
+            do {
+                CityModel cm = new CityModel();
+                cm.setId(cursor.getInt(0));
+                cm.setLanguage(language);
+                cm.setId_country(cursor.getInt(5));
+                switch (language){
+                    case "es":
+                        cm.setCity_name(cursor.getString(1));
+                        break;
+                    case "en":
+                        cm.setCity_name(cursor.getString(2));
+                        break;
+                    case "por":
+                        cm.setCity_name(cursor.getString(3));
+                        break;
+                    case "it":
+                        cm.setCity_name(cursor.getString(4));
+                        break;
+                    default:
+                        //do default
+                        break;
+                }
+                results.add(cm);
             } while (cursor.moveToNext());
         }
         cursor.close();

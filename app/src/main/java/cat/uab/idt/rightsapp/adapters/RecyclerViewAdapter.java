@@ -35,11 +35,39 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         EntityModel entity = dataSet.get(position);
+
         holder.tv_entity_name.setText(entity.getEntity_name());
-        holder.tv_entity_description.setText(entity.getEntity_description());
-        holder.tv_entity_address.setText(entity.getAddress());
-        holder.tv_entity_phone.setText(entity.getPhone_number());
+
+        if(entity.getEntity_description() == null){
+            holder.tv_entity_description.setVisibility(View.GONE);
+        } else holder.tv_entity_description.setText(entity.getEntity_description());
+
+        holder.tv_entity_address.setText(entity.getAddress() + ", " + entity.getCity_name() + ", " + entity.getCountry_name());
+
+        if(entity.getPhone_number() == null && entity.getPhone_number2() == null){
+            holder.tv_phone.setVisibility(View.GONE);
+            holder.tv_entity_phone.setVisibility(View.GONE);
+            holder.tv_entity_phone2.setVisibility(View.GONE);
+        } else {
+            if(entity.getPhone_number() == null){
+                holder.tv_entity_phone.setVisibility(View.GONE);
+            } else {
+                holder.tv_entity_phone.setText(entity.getPhone_number());
+            }
+            holder.tv_entity_phone2.setText(entity.getPhone_number2());
+        }
+
         holder.tv_entity_distance.setText(String.valueOf(entity.getDistance()));
+
+        if(entity.getEmail() == null){
+            holder.tv_email.setVisibility(View.GONE);
+            holder.tv_entity_email.setVisibility(View.GONE);
+        } else holder.tv_entity_email.setText(entity.getEmail());
+
+        if(entity.getLink() == null){
+            holder.tv_link.setVisibility(View.GONE);
+            holder.tv_entity_link.setVisibility(View.GONE);
+        } else holder.tv_entity_link.setText(entity.getLink());
     }
 
     // total number of rows
@@ -53,16 +81,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView tv_entity_name;
         TextView tv_entity_description;
         TextView tv_entity_address;
+        TextView tv_phone;
         TextView tv_entity_phone;
+        TextView tv_entity_phone2;
         TextView tv_entity_distance;
+        TextView tv_link;
+        TextView tv_entity_link;
+        TextView tv_email;
+        TextView tv_entity_email;
 
         ViewHolder(View itemView) {
             super(itemView);
             tv_entity_name = itemView.findViewById(R.id.tv_rv_entity_name);
             tv_entity_description = itemView.findViewById(R.id.tv_rv_entity_description);
             tv_entity_address = itemView.findViewById(R.id.tv_rv_entity_address);
+            tv_phone = itemView.findViewById(R.id.tv_phone);
             tv_entity_phone = itemView.findViewById(R.id.tv_rv_entity_phone);
+            tv_entity_phone2 = itemView.findViewById(R.id.tv_rv_entity_phone2);
             tv_entity_distance = itemView.findViewById(R.id.tv_rv_entity_distance);
+            tv_email = itemView.findViewById(R.id.tv_email);
+            tv_entity_email = itemView.findViewById(R.id.tv_rv_entity_email);
+            tv_link = itemView.findViewById(R.id.tv_link);
+            tv_entity_link = itemView.findViewById(R.id.tv_rv_entity_link);
 
             itemView.setOnClickListener(this);
         }

@@ -1,10 +1,13 @@
 package cat.uab.idt.rightsapp;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -21,6 +25,7 @@ public class LanguageActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
     private RadioGroup rg_answers;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,25 +45,53 @@ public class LanguageActivity extends AppCompatActivity {
         //Gets the layout
         //TextView tv_selectLanguage = findViewById(R.id.textView_change_language);
         rg_answers = findViewById(R.id.radioGroup_select_language);
-        Button btn_selectLanguage = findViewById(R.id.button_select_language);
+        Button btn_selectLanguage = findViewById(R.id.btn_select_language);
+        Button btn_back_language = findViewById(R.id.btn_back_language);
+
+        //Sets the alert dialog within the activity context
+        builder = new AlertDialog.Builder(this);
 
         btn_selectLanguage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 int id_answer = rg_answers.getCheckedRadioButtonId();
 
-                //Saves the device and pref locale
-                SharedPreferences.Editor editor = mSharedPreferences.edit();
-                editor.putString(Constants.PREF_LANGUAGE, Constants.LANGUAGE_CODES[id_answer]);
-                editor.apply();
+                if(id_answer == -1) {
+                    //No answer is set by the user
+                    builder.setMessage(R.string.no_answer);
 
-                //Sets the language for the app
-                Locale locale = new Locale(Constants.LANGUAGE_CODES[id_answer], Constants.REGIONS[id_answer]);
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+                    // Add the buttons
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked OK button - Do nothing
+                        }
+                    });
 
+                    // Create the AlertDialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }else {
+                    //Saves the device and pref locale
+                    SharedPreferences.Editor editor = mSharedPreferences.edit();
+                    editor.putString(Constants.PREF_LANGUAGE, Constants.LANGUAGE_CODES[id_answer]);
+                    editor.apply();
+
+                    //Sets the language for the app
+                    Locale locale = new Locale(Constants.LANGUAGE_CODES[id_answer], Constants.REGIONS[id_answer]);
+                    Locale.setDefault(locale);
+                    Configuration config = new Configuration();
+                    config.locale = locale;
+                    getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+                    Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        btn_back_language.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
                 Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);
             }
