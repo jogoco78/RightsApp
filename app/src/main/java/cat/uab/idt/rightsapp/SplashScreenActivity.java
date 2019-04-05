@@ -98,8 +98,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         if(!agreed){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.title_activity_terms_and_conditions)
-                    .setTitle(R.string.terms_and_conditions_body);
+            builder.setMessage(R.string.terms_and_conditions_body)
+                    .setTitle(R.string.title_activity_terms_and_conditions);
 
             // Add the buttons
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
