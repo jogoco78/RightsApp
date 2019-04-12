@@ -8,11 +8,8 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 public class TermsAndConditions extends AppCompatActivity {
 
@@ -26,7 +23,7 @@ public class TermsAndConditions extends AppCompatActivity {
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
-        TextView tv_terms_and_conditions = findViewById(R.id.tv_terms_and_conditions);
+        TextView tv_terms_and_conditions = findViewById(R.id.tv_disclaimer_title);
         tv_terms_and_conditions.setMovementMethod(new ScrollingMovementMethod());
 
         Button btn_continue = findViewById(R.id.btn_continue_terms_and_conditions);
