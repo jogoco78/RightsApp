@@ -9,7 +9,7 @@
     <string name="cancel">Cancelar</string>
     <string name="explanation_title">Explicacion</string>
     <string name="explanation_body">"Cuerpo de la explicación Cuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicación Cuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicaciónCuerpo de la explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación explicación "</string>
-    <string name="do_not_show">No volver a mostrar al inicio de la app</string>
+    <string name="do_not_show">No volver a mostrar este mensaje</string>
     <string name="next">Siguiente</string>
     <string name="emergency_call">Llamada de emergencia</string>
     <string name="get_information">Obtener información</string>
@@ -53,4 +53,8 @@
     <string name="back">Volver</string>
     <string name="link">Enlace</string>
     <string name="email">Correo electrónico</string>
+    <string name="terms_and_conditions_checkbox">He leído y acepto los terminos y condiciones de uso de la aplicación</string>
+    <string name="accept">Aceptar</string>
+    <string name="must_accept_terms_and_conditions">Debes aceptar los términos y condiciones de la aplicación para utilizarla</string>
+    <string name="disclaimer_title">Disclaimer</string>
 </resources>

@@ -16,7 +16,7 @@
     <!-- explanation -->
     <string name="explanation_title">Explanation</string>
     <string name="explanation_body">"Explanation Body Explanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation BodyExplanation Body Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation Explanation "</string>
-    <string name="do_not_show">Do not show this message again at the beginning of the app</string>
+    <string name="do_not_show">Do not show this message again</string>
 
     <!-- activities -->
     <string name="emergency_call">Emergency call</string>
@@ -66,5 +66,8 @@
     <string name="email">E-mail</string>
     <string name="disclaimer_title">Disclaimer</string>
     <string name="disclaimer_body">The <b>RightsApp</b> app (hereinafter, the app) is the main outcome for the DG-Justice funded project “RightsApp: Mobile Technologies applied to protect victims of a crime within the EU Area of Justice: RightsApp for e-Justice” (hereinafter RightsApp), which has received funding from the DG-Justice European Union’s Programme (2014-2020) under Grant Agreement No. 785854. \n\n The app falls under the responsibility of the RightsApp consortium. It is not concerned with commercial transactions or with the exchange of data for marketing purposes. Whereas we endeavour to keep the information up to date and correct, we make no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability or availability with respect to the app, or the information, products, services, or related graphics contained into the app for any purpose. The information in this app is provided “as is”, and no guarantee or warranty is given that the information is fit for any particular purpose. The user thereof uses the information at its sole risk and liability. \n\n It is our goal to minimize disruption caused by technical errors. However, some data or information on our site may have been created or structured in files or formats that are not error-free and we cannot guarantee that our service will not be interrupted or otherwise affected by such problems. The RightsApp consortium accepts no responsibility regarding such problems incurred as a result of using this site or any linked external sites.</string>
+    <string name="terms_and_conditions_checkbox">I have read and accept the terms and conditions from the app</string>
+    <string name="accept">Accept</string>
+    <string name="must_accept_terms_and_conditions">You must accept the terms and conditions of the app to use it</string>
 
 </resources>

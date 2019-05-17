@@ -97,52 +97,17 @@ public class SplashScreenActivity extends AppCompatActivity {
         //End test code
 
         if(!agreed){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.terms_and_conditions_body)
-                    .setTitle(R.string.title_activity_terms_and_conditions);
-
-            // Add the buttons
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // User clicked OK button
-
-                    // Updates the agreed field in the preferences
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("agreed", true);
-                    editor.apply();
-
-                    // Sets a delay for the splashscreen
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Do something after 3s = 3000ms
-                            // Starts next activity
-                            if(showExplanation) {
-                                Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
-                                startActivity(intent);
-                            }else{
-                                Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
-                                startActivity(intent);
-                            }
-                        }
-                    }, 3000);
+            // Sets a delay for the splashscreen
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Do something after 3s = 3000ms
+                    // Starts next activity
+                    Intent intent = new Intent(getApplicationContext(), TermsAndConditions.class);
+                    startActivity(intent);
                 }
-            });
-            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // User cancelled the dialog
-                    finish();
-                }
-            });
-
-            // Create the AlertDialog
-            AlertDialog dialog = builder.create();
-            dialog.show();
-
-            // Sets text button color to black
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+            }, 3000);
         }else{
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
