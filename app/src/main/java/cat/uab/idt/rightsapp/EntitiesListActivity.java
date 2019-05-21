@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -117,7 +119,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
 
     @Override
     public void onItemClick(View view, int position){
-        Toast.makeText(this, "You clicked " + rv_adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "You clicked " + rv_adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), EntityActivity.class);
         intent.putExtra(Constants.ENTITY_NAME, rv_adapter.getItem(position).getEntity_name());
         intent.putExtra(Constants.ENTITY_DESCRIPTION, rv_adapter.getItem(position).getEntity_description());

@@ -355,7 +355,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //inner join cities on cities.id = entities.id_city inner join countries on countries.id = entities.id_country
 
         if(id_cities != null && id_cities[0] != 0){
-            query = query + " WHERE " + DBContract.Entities.COLUMN_NAME_ID_CITY + " IN (" + id_cities[0];
+            query = query + " WHERE " + DBContract.Entities.TABLE_NAME + "." + DBContract.Entities.COLUMN_NAME_ID_CITY + " IN (" + id_cities[0];
             for(int i = 1; i < id_cities.length; i++){
                 query = query + "," + id_cities[i];
             }
@@ -366,7 +366,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if(id_countries != null && id_countries[0] != 0){
             if(previous_clause) query = query + " AND ";
             else query = query + " WHERE ";
-            query = query + DBContract.Entities.COLUMN_NAME_ID_COUNTRY + " IN (" + id_countries[0];
+            query = query + DBContract.Entities.TABLE_NAME + "." + DBContract.Entities.COLUMN_NAME_ID_COUNTRY + " IN (" + id_countries[0];
             for(int i = 1; i < id_countries.length; i++){
                 query = query + "," + id_countries[i];
             }
@@ -377,7 +377,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if(id_categories != null && id_categories[0] != 0){
             if(previous_clause) query = query + " AND ";
             else query = query + " WHERE ";
-            query = query + DBContract.Entities.COLUMN_NAME_ID_CATEGORY + " IN (" + id_categories[0];
+            query = query + DBContract.Entities.TABLE_NAME + "." + DBContract.Entities.COLUMN_NAME_ID_CATEGORY + " IN (" + id_categories[0];
             for(int i = 1; i < id_categories.length; i++){
                 query = query + "," + id_categories[i];
             }
@@ -676,43 +676,64 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     /**
      * Returns the list of cities in a given country
-     * @param id_country ID of the country
+     * @param id_countries ID of the country
      * @param language Current language selected in the app
      * @param sorted boolean 0- false the return will not be sorted 1- true the return will be sorted
      * @return an ArrayList with the cities from a given country
      */
-    public ArrayList<CityModel> getCitiesList(int[] id_country, String language, boolean sorted){
+    public ArrayList<CityModel> getCitiesList(int[] id_countries, int[] id_categories, String language, boolean sorted){
+        String city_language_column = null;
         ArrayList<CityModel> results = new ArrayList<>();
 
-        String query = "SELECT * FROM " + DBContract.Cities.TABLE_NAME;
+        //Sets the column with the given language
+        switch (language){
+            case "es":
+                city_language_column = DBContract.Cities.COLUMN_NAME_CITY_ES;
+                break;
+            case "en":
+                city_language_column = DBContract.Cities.COLUMN_NAME_CITY_EN;
+                break;
+            case "por":
+                city_language_column = DBContract.Cities.COLUMN_NAME_CITY_PT;
+                break;
+            case "it":
+                city_language_column = DBContract.Cities.COLUMN_NAME_CITY_IT;
+                break;
+            default:
+                //do default
+                break;
+        }
 
-        if(id_country != null){
-            query = query + " WHERE " + DBContract.Cities.COLUMN_NAME_ID_COUNTRY + " IN (" + id_country[0];
-            for(int i = 1; i < id_country.length; i++){
-                query = query + "," + id_country[i];
+        String query = "SELECT DISTINCT " + DBContract.Cities.TABLE_NAME + "." + DBContract.Cities.COLUMN_NAME_ID +
+                "," + DBContract.Cities.TABLE_NAME + "." + city_language_column +
+                "," + DBContract.Cities.TABLE_NAME + "." + DBContract.Cities.COLUMN_NAME_ID_COUNTRY +
+                " FROM " + DBContract.Cities.TABLE_NAME;
+
+        boolean whereStatement = false;
+        if(id_categories != null && id_categories[0] != 0){
+            whereStatement = true;
+            query = query + " INNER JOIN " + DBContract.Entities.TABLE_NAME + " ON " + DBContract.Entities.TABLE_NAME + "." + DBContract.Entities.COLUMN_NAME_ID_CITY + " = " + DBContract.Cities.TABLE_NAME + "." + DBContract.Cities.COLUMN_NAME_ID +
+                    " WHERE " + DBContract.Entities.TABLE_NAME + "." + DBContract.Entities.COLUMN_NAME_ID_CATEGORY + " IN (" + id_categories[0];
+            for(int i = 1; i < id_categories.length; i++){
+                query = query + "," + id_categories[i];
             }
             query = query + ")";
         }
 
-        if(sorted){
-            switch (language){
-                case "es":
-                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_ES + " asc";
-                    break;
-                case "en":
-                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_EN + " asc";
-                    break;
-                case "por":
-                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_PT + " asc";
-                    break;
-                case "it":
-                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_IT + " asc";
-                    break;
-                default:
-                    //do default
-                    break;
+        if(id_countries != null && id_countries[0] != 0){
+            if(whereStatement) query = query + " AND ";
+            else query = query + " WHERE ";
+
+            query = query + DBContract.Cities.TABLE_NAME + "." + DBContract.Cities.COLUMN_NAME_ID_COUNTRY + " IN (" + id_countries[0];
+            for(int i = 1; i < id_countries.length; i++){
+                query = query + "," + id_countries[i];
             }
+            query = query + ")";
         }
+
+        if(sorted) query = query + " order by " + city_language_column + " asc";
+
+        System.out.println("QUERY: " + query);
 
         Cursor cursor = myDataBase.rawQuery(query, null);
 
@@ -721,25 +742,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             do {
                 CityModel cm = new CityModel();
                 cm.setId(cursor.getInt(0));
+                cm.setCity_name(cursor.getString(1));
+                cm.setId_country(cursor.getInt(2));
                 cm.setLanguage(language);
-                cm.setId_country(cursor.getInt(5));
-                switch (language){
-                    case "es":
-                        cm.setCity_name(cursor.getString(1));
-                        break;
-                    case "en":
-                        cm.setCity_name(cursor.getString(2));
-                        break;
-                    case "por":
-                        cm.setCity_name(cursor.getString(3));
-                        break;
-                    case "it":
-                        cm.setCity_name(cursor.getString(4));
-                        break;
-                    default:
-                        //do default
-                        break;
-                }
                 results.add(cm);
             } while (cursor.moveToNext());
         }
@@ -761,27 +766,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             query = query + ")";
         }
 
-        /*if(sorted){
-            switch (language){
-                case "es":
-                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_ES + " asc";
-                    break;
-                case "en":
-                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_EN + " asc";
-                    break;
-                case "por":
-                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_PT + " asc";
-                    break;
-                case "it":
-                    query = query + " order by " + DBContract.Cities.COLUMN_NAME_CITY_IT + " asc";
-                    break;
-                default:
-                    //do default
-                    break;
-            }
-        }*/
-
-        Cursor cursor = myDataBase.rawQuery(query, null);
+         Cursor cursor = myDataBase.rawQuery(query, null);
 
         if(cursor.moveToFirst()){
             // Loop through cursor results if the query has rows

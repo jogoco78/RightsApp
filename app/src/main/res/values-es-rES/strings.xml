@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">RightsApp</string>
     <string name="country">País</string>
     <string name="terms_and_conditions">Términos y condiciones</string>
     <string name="title_activity_terms_and_conditions">Condiciones de uso</string>
@@ -56,5 +55,6 @@
     <string name="terms_and_conditions_checkbox">He leído y acepto los terminos y condiciones de uso de la aplicación</string>
     <string name="accept">Aceptar</string>
     <string name="must_accept_terms_and_conditions">Debes aceptar los términos y condiciones de la aplicación para utilizarla</string>
-    <string name="disclaimer_title">Disclaimer</string>
+    <string name="disclaimer_title">Aviso legal</string>
+    <string name="no_entities_list">La búsqueda no ha retornado ningún resultado. Cambia los parámetros</string>
 </resources>
