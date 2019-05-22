@@ -16,7 +16,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <TextView
-        android:id="@+id/tv_about_us"
+        android:id="@+id/tv_about_us_body"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -27,13 +27,13 @@
         android:layout_marginBottom="8dp"
         android:scrollbars="vertical"
         android:text="@string/about_us_body"
-        app:layout_constraintBottom_toTopOf="@+id/btn_continue_about_us"
+        app:layout_constraintBottom_toTopOf="@+id/btn_about_us_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_rights_app" />
 
     <Button
-        android:id="@+id/btn_continue_about_us"
+        android:id="@+id/btn_about_us_back"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginTop="8dp"
@@ -41,10 +41,10 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/rounded_corners"
-        android:text="@string/next"
+        android:text="@string/back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_about_us" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_about_us_body" />
 
 
 </android.support.constraint.ConstraintLayout>

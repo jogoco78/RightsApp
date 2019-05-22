@@ -22,10 +22,10 @@ public class AboutUsActivity extends AppCompatActivity {
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
-        TextView tv_about_us = findViewById(R.id.tv_about_us);
+        TextView tv_about_us = findViewById(R.id.tv_about_us_body);
         tv_about_us.setMovementMethod(new ScrollingMovementMethod());
 
-        Button btn_continue = findViewById(R.id.btn_continue_about_us);
+        Button btn_continue = findViewById(R.id.btn_about_us_back);
         btn_continue.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
