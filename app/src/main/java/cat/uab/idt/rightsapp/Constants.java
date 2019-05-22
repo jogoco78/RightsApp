@@ -37,9 +37,11 @@ public class Constants {
     public static final String ENTITY_DESCRIPTION = "entity_description";
     public static final String ENTITY_ADDRESS = "entity_address";
     public static final String ENTITY_PHONE = "entity_phone";
+    public static final String ENTITY_PHONE2 = "entity_phone2";
     public static final String ENTITY_POSITION = "entity_position";
     public static final String ENTITY_CITY = "entity_city";
     public static final String ENTITY_COUNTRY = "entity_country";
+    public static final String ENTITY_LINK = "entity_link";
 
     //Phone numbers
     public static final String PHONE_EMERGENCIES = "935812235";

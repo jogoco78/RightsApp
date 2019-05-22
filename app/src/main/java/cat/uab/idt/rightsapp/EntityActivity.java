@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.google.android.gms.tasks.OnSuccessListener;
 
 public class EntityActivity extends AppCompatActivity {
 
@@ -44,21 +41,25 @@ public class EntityActivity extends AppCompatActivity {
         String address = getIntent().getStringExtra(Constants.ENTITY_ADDRESS);
         phone_number = getIntent().getStringExtra(Constants.ENTITY_PHONE);
         String position = getIntent().getStringExtra(Constants.ENTITY_POSITION);
+        String link = getIntent().getStringExtra(Constants.ENTITY_LINK);
 
         longitude = Double.parseDouble(position.split(",")[0]);
         latitude = Double.parseDouble(position.split(",")[1]);
 
-        TextView tv_name = findViewById(R.id.tv_name);
-        TextView tv_description = findViewById(R.id.tv_description);
-        TextView tv_address = findViewById(R.id.tv_address);
-        TextView tv_phone = findViewById(R.id.tv_phone);
+        TextView tv_entity_name = findViewById(R.id.tv_name);
+        TextView tv_entity_description = findViewById(R.id.tv_description);
+        TextView tv_entity_address = findViewById(R.id.tv_address);
+        TextView tv_entity_phone = findViewById(R.id.tv_entity_phone);
+        TextView tv_entity_link = findViewById(R.id.tv_entity_link);
         Button btn_call = findViewById(R.id.btn_call);
         Button btn_navigate = findViewById(R.id.btn_navigate);
+        Button btn_back = findViewById(R.id.btn_entity_back);
 
-        tv_name.setText(name);
-        tv_description.setText(description);
-        tv_address.setText(address);
-        tv_phone.setText(phone_number);
+        tv_entity_name.setText(name);
+        tv_entity_description.setText(description);
+        tv_entity_address.setText(address);
+        tv_entity_phone.setText(phone_number);
+        tv_entity_link.setText(link);
 
         btn_call.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +92,13 @@ public class EntityActivity extends AppCompatActivity {
 
                 // Attempt to start an activity that can handle the Intent
                 startActivity(mapIntent);
+            }
+        });
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

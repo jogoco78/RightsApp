@@ -67,7 +67,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         if(entity.getLink() == null){
             holder.tv_link.setVisibility(View.GONE);
             holder.tv_entity_link.setVisibility(View.GONE);
-        } else holder.tv_entity_link.setText(entity.getLink());
+        } else {
+            holder.tv_entity_link.setText(entity.getLink());
+        }
     }
 
     // total number of rows
@@ -95,7 +97,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tv_entity_name = itemView.findViewById(R.id.tv_rv_entity_name);
             tv_entity_description = itemView.findViewById(R.id.tv_rv_entity_description);
             tv_entity_address = itemView.findViewById(R.id.tv_rv_entity_address);
-            tv_phone = itemView.findViewById(R.id.tv_phone);
+            tv_phone = itemView.findViewById(R.id.tv_entity_phone);
             tv_entity_phone = itemView.findViewById(R.id.tv_rv_entity_phone);
             tv_entity_phone2 = itemView.findViewById(R.id.tv_rv_entity_phone2);
             tv_entity_distance = itemView.findViewById(R.id.tv_rv_entity_distance);

@@ -74,13 +74,14 @@
     <Button
         android:id="@+id/btn_accept_terms_and_conditions"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/rounded_corners"
-        android:text="@string/accept"
+        android:text="@string/ok"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="@string/ok" />
 
 </android.support.constraint.ConstraintLayout>

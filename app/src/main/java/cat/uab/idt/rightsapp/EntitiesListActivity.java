@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -56,6 +57,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
 
         //Get elements from layout
         recyclerView = findViewById(R.id.rv_entities);
+        Button btn_entities_list_back = findViewById(R.id.btn_entities_list_back);
 
         // Gets preferences file
         Context context = getApplicationContext();
@@ -111,10 +113,21 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
 
         //Set up the recycler view
         recyclerView.setHasFixedSize(true);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_adapter = new RecyclerViewAdapter(this, entities_list_sorted);
         rv_adapter.setClickListener(this);
         recyclerView.setAdapter(rv_adapter);
+
+        RecyclerView.ItemDecoration divider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(divider);
+
+        btn_entities_list_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -126,6 +139,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
         intent.putExtra(Constants.ENTITY_ADDRESS, rv_adapter.getItem(position).getAddress());
         intent.putExtra(Constants.ENTITY_PHONE, rv_adapter.getItem(position).getPhone_number());
         intent.putExtra(Constants.ENTITY_POSITION, rv_adapter.getItem(position).getLongitude() + "," + rv_adapter.getItem(position).getLatitude());
+        intent.putExtra(Constants.ENTITY_LINK, rv_adapter.getItem(position).getLink());
         startActivity(intent);
     }
 
