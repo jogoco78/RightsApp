@@ -40,20 +40,14 @@ public final class DBContract {
     public static class Particles implements BaseColumns{
         public static final String TABLE_NAME = "particles";
         public static final String COLUMN_NAME_ID = "id";
-        public static final String COLUMN_NAME_TEXT_ES = "text_es";
-        public static final String COLUMN_NAME_TEXT_EN = "text_en";
-        public static final String COLUMN_NAME_TEXT_PT = "text_pt";
-        public static final String COLUMN_NAME_TEXT_IT = "text_it";
+        public static final String COLUMN_NAME_TEXT_ES = "text";
         public static final String COLUMN_NAME_ID_SUBJEECT = "id_subject";
     }
 
     public static class Subjects implements BaseColumns{
         public static final String TABLE_NAME="subjects";
         public static final String COLUMN_NAME_ID = "id";
-        public static final String COLUMN_NAME_TEXT_ES = "text_es";
-        public static final String COLUMN_NAME_TEXT_EN = "text_en";
-        public static final String COLUMN_NAME_TEXT_PT = "text_pt";
-        public static final String COLUMN_NAME_TEXT_IT = "text_it";
+        public static final String COLUMN_NAME_TEXT_ES = "text";
     }
 
     /*Inner class that defines the tags table*/

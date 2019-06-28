@@ -9,16 +9,18 @@ public class ParticleModel {
     private int id;
     private String text;
     private int id_subject;
+    private String subjectText;
     private String language;
 
     public ParticleModel(){
         this.initialize();
     }
 
-    public ParticleModel(int id, String text, int id_subject, String language){
+    public ParticleModel(int id, String text, int id_subject, String subjectText, String language){
         this.id = id;
         this.text = text;
         this.id_subject = id_subject;
+        this.subjectText = subjectText;
         this.language = language;
     }
 
@@ -71,5 +73,13 @@ public class ParticleModel {
 
     public void setId_subject(int id_subject) {
         this.id_subject = id_subject;
+    }
+
+    public String getSubjectText() {
+        return subjectText;
+    }
+
+    public void setSubjectText(String subjectText) {
+        this.subjectText = subjectText;
     }
 }

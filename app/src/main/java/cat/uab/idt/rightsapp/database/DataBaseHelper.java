@@ -554,10 +554,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             do {
                 switch (language){
                     case "es":
-                        results[index] = "P" + cursor.getInt(0) + " " + cursor.getString(1);
+                        results[index] = cursor.getInt(0) + " " + cursor.getString(1);
                         break;
                     case "en":
-                        results[index] = "P" + cursor.getInt(0) + " " +  cursor.getString(2);
+                        results[index] = cursor.getInt(0) + " " +  cursor.getString(2);
                         break;
                     case "por":
                         results[index] = cursor.getString(3);
@@ -578,17 +578,31 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<ParticleModel> getParticles(int[] id_particles, String language){
+        boolean previousClause = false;
         ArrayList<ParticleModel> results = new ArrayList<>();
 
-        String query = "SELECT * FROM " + DBContract.Particles.TABLE_NAME;
+        //String query = "SELECT * FROM " + DBContract.Particles.TABLE_NAME;
+        String query = "select " + DBContract.Particles.TABLE_NAME + ".*, " + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_TEXT_ES + "_" + language
+                + " from " + DBContract.Particles.TABLE_NAME + "," + DBContract.Subjects.TABLE_NAME;
 
         if(id_particles != null){
-            query = query + " WHERE " + DBContract.Particles.COLUMN_NAME_ID + " IN (" + id_particles[0];
+            previousClause = true;
+            query = query + " WHERE " + DBContract.Particles.TABLE_NAME + "." + DBContract.Particles.COLUMN_NAME_ID + " IN (" + id_particles[0];
             for(int i = 1; i < id_particles.length; i++){
                 query = query + "," + id_particles[i];
             }
             query = query + ")";
         }
+
+        if (previousClause) {
+            query = query + " and ";
+        }else{
+            query = query + " where ";
+        }
+
+        query = query + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_ID + " = " + DBContract.Particles.TABLE_NAME + "." + DBContract.Particles.COLUMN_NAME_ID_SUBJEECT;
+
+        System.out.println("Query " + query);
 
         Cursor cursor = myDataBase.rawQuery(query, null);
 
@@ -599,6 +613,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 pm.setId(cursor.getInt(0));
                 pm.setLanguage(language);
                 pm.setId_subject(cursor.getInt(5));
+                pm.setSubjectText(cursor.getString(6));
                 switch (language){
                     case "es":
                         pm.setText(cursor.getString(1));

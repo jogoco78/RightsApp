@@ -44,7 +44,7 @@ public class Constants {
     public static final String ENTITY_LINK = "entity_link";
 
     //Phone numbers
-    public static final String PHONE_EMERGENCIES = "935812235";
+    public static final String PHONE_EMERGENCIES = "112";
 
 
 

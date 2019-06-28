@@ -71,15 +71,20 @@ public class ParticlesActivity extends AppCompatActivity{
         particles_list = db.getParticlesByTag(tags_i, language);
 
         //Gets subject list in string array
-        int[] id_subjects = new int[particles_list.size()];
+        /*int[] id_subjects = new int[particles_list.size()];
         int index = 0;
         for(ParticleModel par : particles_list){
             id_subjects[index] = par.getId_subject();
+            //System.out.println("Particle: " + par.getId());
+            //System.out.println("Subject: " + par.getId_subject());
             index++;
-        }
+        }*/
 
-        String[] subjects;
-        subjects = db.getSubjectByID(id_subjects, language);
+        String[] subjects = new String[particles_list.size()];
+        for(int i = 0; i < subjects.length; i++) {
+            subjects[i] = particles_list.get(i).getSubjectText();
+        }
+        //subjects = db.getSubjectByID(id_subjects, language);
 
         ArrayList<ArrayList<String>> childList = new ArrayList<>();
         for(int i = 0; i < subjects.length; i++){

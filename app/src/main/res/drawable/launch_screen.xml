@@ -10,7 +10,7 @@
     <item>
 
         <bitmap
-            android:src="@drawable/rightsapp_logo_144x242"
+            android:src="@drawable/splashscreen_828x1792"
             android:gravity="center"/>
 
     </item>
