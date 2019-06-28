@@ -85,9 +85,9 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
 
         //Sets the distance to every selected entity
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        //getLocation();
-        longitude = 41.5372217;
-        latitude = 2.4313953;
+        getLocation();
+        //longitude = 41.5372217;
+        //latitude = 2.4313953;
         float[] results = new float[1];
         for (int i = 0; i < entities_list.size(); i++){
             Location.distanceBetween(longitude, latitude, entities_list.get(i).getLongitude(), entities_list.get(i).getLatitude(),results);

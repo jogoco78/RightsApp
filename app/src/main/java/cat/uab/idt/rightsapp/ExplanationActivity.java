@@ -29,8 +29,8 @@ public class ExplanationActivity extends AppCompatActivity {
         setSupportActionBar(toolbarRightsApp);
 
         final Switch sw_explanation = findViewById(R.id.switch_explanation);
-        TextView tv_explanation = findViewById(R.id.tv_explanation);
-        tv_explanation.setMovementMethod(new ScrollingMovementMethod());
+        //TextView tv_explanation = findViewById(R.id.tv_explanation_preferences_title);
+        //tv_explanation.setMovementMethod(new ScrollingMovementMethod());
 
         // Gets preferences file
         Context context = getApplicationContext();
