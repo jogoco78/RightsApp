@@ -12,7 +12,7 @@ public final class DBContract {
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_TEXT_ES = "text_es";
         public static final String COLUMN_NAME_TEXT_EN = "text_en";
-        public static final String COLUMN_NAME_TEXT_PT= "text_pt";
+        public static final String COLUMN_NAME_TEXT_PT= "text_por";
         public static final String COLUMN_NAME_TEXT_IT = "text_it";
     }
 
@@ -22,7 +22,7 @@ public final class DBContract {
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_TEXT_ES = "text_es";
         public static final String COLUMN_NAME_TEXT_EN = "text_en";
-        public static final String COLUMN_NAME_TEXT_PT = "text_pt";
+        public static final String COLUMN_NAME_TEXT_PT = "text_por";
         public static final String COLUMN_NAME_TEXT_IT = "text_it";
     }
 
@@ -72,7 +72,7 @@ public final class DBContract {
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_DESCRIPTION_ES = "description_es";
         public static final String COLUMN_NAME_DESCRIPTION_EN = "description_en";
-        public static final String COLUMN_NAME_DESCRIPTION_PT = "description_pt";
+        public static final String COLUMN_NAME_DESCRIPTION_PT = "description_por";
         public static final String COLUMN_NAME_DESCRIPTION_IT = "description_it";
         public static final String COLUMN_NAME_ADDRESS = "address";
         public static final String COLUMN_NAME_LATITUDE = "latitude";
@@ -92,7 +92,7 @@ public final class DBContract {
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_CITY_ES = "city_es";
         public static final String COLUMN_NAME_CITY_EN = "city_en";
-        public static final String COLUMN_NAME_CITY_PT = "city_pt";
+        public static final String COLUMN_NAME_CITY_PT = "city_por";
         public static final String COLUMN_NAME_CITY_IT = "city_it";
         public static final String COLUMN_NAME_ID_COUNTRY = "id_country";
     }
@@ -102,7 +102,7 @@ public final class DBContract {
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_COUNTRY_ES = "country_es";
         public static final String COLUMN_NAME_COUNTRY_EN = "country_en";
-        public static final String COLUMN_NAME_COUNTRY_PT = "country_pt";
+        public static final String COLUMN_NAME_COUNTRY_PT = "country_por";
         public static final String COLUMN_NAME_COUNTRY_IT = "country_it";
     }
 
@@ -112,7 +112,7 @@ public final class DBContract {
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_CATEGORY_ES = "category_es";
         public static final String COLUMN_NAME_CATEGORY_EN = "category_en";
-        public static final String COLUMN_NAME_CATEGORY_PT = "category_pt";
+        public static final String COLUMN_NAME_CATEGORY_PT = "category_por";
         public static final String COLUMN_NAME_CATEGORY_IT = "category_it";
     }
 
