@@ -394,8 +394,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 em.setLanguage(language);
                 em.setEntity_name(cursor.getString(1));
                 em.setAddress(cursor.getString(6));
-                em.setLongitude(cursor.getDouble(7));
-                em.setLatitude(cursor.getDouble(8));
+                em.setLongitude(cursor.getDouble(8));
+                em.setLatitude(cursor.getDouble(7));
                 em.setId_city(cursor.getInt(9));
                 em.setId_country(cursor.getInt(10));
                 em.setId_category(cursor.getInt(11));

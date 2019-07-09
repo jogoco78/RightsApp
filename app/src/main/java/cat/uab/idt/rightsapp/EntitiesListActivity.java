@@ -1,6 +1,7 @@
 package cat.uab.idt.rightsapp;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,6 +44,8 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
     private RecyclerView recyclerView;
     private RecyclerViewAdapter rv_adapter;
     private RecyclerView.LayoutManager rv_layoutManager;
+    Activity activity = this;
+    ArrayList<EntityModel> entities_list;
 
 
     @Override
@@ -75,7 +78,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
         dataBaseHelper.openDataBase();
 
         //Populates the arraylist for recycleview
-        ArrayList<EntityModel> entities_list = new ArrayList<>();
+        entities_list = new ArrayList<>();
 
         entities_list = dataBaseHelper.getEntitiesList(
                 new int[] {Integer.parseInt(criteria[0])},
@@ -87,7 +90,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLocation();
 
-        float[] results = new float[1];
+        /*float[] results = new float[1];
         for (int i = 0; i < entities_list.size(); i++){
             Location.distanceBetween(longitude, latitude, entities_list.get(i).getLongitude(), entities_list.get(i).getLatitude(),results);
             entities_list.get(i).setDistance(Math.round(results[0] / 10.0) / 100.0); //meters to kms and rounded two decimals
@@ -119,7 +122,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
         recyclerView.setAdapter(rv_adapter);
 
         RecyclerView.ItemDecoration divider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(divider);
+        recyclerView.addItemDecoration(divider);*/
 
         btn_entities_list_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +156,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
 
         } else {
             fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(EntitiesListActivity.this, new OnSuccessListener<Location>() {
+                    .addOnSuccessListener(activity, new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
@@ -162,6 +165,53 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
                                 longitude = location.getLongitude();
                                 latitude = location.getLatitude();
 
+                                float[] results = new float[1];
+                                for (int i = 0; i < entities_list.size(); i++){
+                                    Location.distanceBetween(longitude, latitude, entities_list.get(i).getLongitude(), entities_list.get(i).getLatitude(),results);
+                                    entities_list.get(i).setDistance(Math.round(results[0] / 10.0) / 100.0); //meters to kms and rounded two decimals
+                                }
+
+                                //Sort the entities list by distance
+                                ArrayList<EntityModel> entities_list_sorted = new ArrayList<>();
+                                int size = entities_list.size();
+                                for(int i = 0; i < size; i++){
+                                    double min = Double.MAX_VALUE;
+                                    int s = 0;
+                                    for(int j = 0; j < entities_list.size(); j++){
+                                        if(entities_list.get(j).getDistance() < min){
+                                            s = j;
+                                            min = entities_list.get(j).getDistance();
+                                        }
+                                    }
+                                    entities_list_sorted.add(entities_list.get(s));
+                                    entities_list.remove(s);
+                                }
+                                entities_list = null;
+
+                                //Set up the recycler view
+                                recyclerView.setHasFixedSize(true);
+
+                                recyclerView.setLayoutManager(new LinearLayoutManager(activity.getBaseContext()));
+                                rv_adapter = new RecyclerViewAdapter(activity.getBaseContext(), entities_list_sorted);
+                                rv_adapter.setClickListener(new RecyclerViewAdapter.ItemClickListener() {
+                                    @Override
+                                    public void onItemClick(View view, int position) {
+                                        //Toast.makeText(this, "You clicked " + rv_adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), EntityActivity.class);
+                                        intent.putExtra(Constants.ENTITY_NAME, rv_adapter.getItem(position).getEntity_name());
+                                        intent.putExtra(Constants.ENTITY_DESCRIPTION, rv_adapter.getItem(position).getEntity_description());
+                                        intent.putExtra(Constants.ENTITY_ADDRESS, rv_adapter.getItem(position).getAddress());
+                                        intent.putExtra(Constants.ENTITY_PHONE, rv_adapter.getItem(position).getPhone_number());
+                                        intent.putExtra(Constants.ENTITY_POSITION, rv_adapter.getItem(position).getLongitude() + "," + rv_adapter.getItem(position).getLatitude());
+                                        intent.putExtra(Constants.ENTITY_LINK, rv_adapter.getItem(position).getLink());
+                                        startActivity(intent);
+                                    }
+                                });
+                                recyclerView.setAdapter(rv_adapter);
+
+                                RecyclerView.ItemDecoration divider = new DividerItemDecoration(activity.getBaseContext(), DividerItemDecoration.VERTICAL);
+                                recyclerView.addItemDecoration(divider);
+
                                 //tv_lat.setText(String.valueOf(location.getLatitude()));
                                 //tv_long.setText(String.valueOf(location.getLongitude()));
                             } else {
@@ -169,6 +219,8 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
                                 //tv_long.setText("Longitude not available");
                             }
                         }
+
+
                     });
         }
     }
