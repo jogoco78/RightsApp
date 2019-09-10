@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import cat.uab.idt.rightsapp.Constants;
@@ -31,6 +33,7 @@ import cat.uab.idt.rightsapp.RightsAppActivity;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 import cat.uab.idt.rightsapp.QuestionnaireActivity;
 import cat.uab.idt.rightsapp.models.AnswerModel;
+import cat.uab.idt.rightsapp.utils.TestQuestionnaire;
 
 public class QuestionnaireFragment extends Fragment {
 
@@ -178,9 +181,25 @@ public class QuestionnaireFragment extends Fragment {
                     int id_next_question = db.getNextQuestionID(currentQuestionID, id_answer);
                     if (id_next_question == 0) {
                         //the questionnaire is over - loads the next activity
-                        System.out.println("TEST: Questions " + sharedPreferences.getString(Constants.PAR_QUESTIONS, null));
-                        System.out.println("TEST: Answers " + sharedPreferences.getString(Constants.PAR_ANSWERS, null));
-                        System.out.println("TEST: Tags " + sharedPreferences.getString(Constants.PAR_TAGS, null));
+                        //System.out.println("TEST: Questions " + sharedPreferences.getString(Constants.PAR_QUESTIONS, null));
+                        //System.out.println("TEST: Answers " + sharedPreferences.getString(Constants.PAR_ANSWERS, null));
+                        //System.out.println("TEST: Tags " + sharedPreferences.getString(Constants.PAR_TAGS, null));
+
+                        TestQuestionnaire tq = new TestQuestionnaire(parentActivity, par_questionID, par_answersID, par_tag);
+                        try{
+                            if(tq.runTest()){
+                                System.out.println("TEST: OK!");
+                            }else {
+                                Log.d("Test", "Fail");
+                                Log.d("Test", par_questionID);
+                                Log.d("Test", par_answersID);
+                                Log.d("Test", par_tag);
+                            }
+
+                        }catch (IOException e){
+                            e.printStackTrace();
+                            System.exit(0);
+                        }
 
                         Intent intent = new Intent(parentActivity.getApplicationContext(), ParticlesActivity.class);
                         startActivity(intent);
