@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 import cat.uab.idt.rightsapp.models.QuestionnaireTestModel;
 
@@ -17,6 +19,7 @@ public class TestQuestionnaire {
     private static String ASSETS_PATH = "tests/";
 
 
+    private int key = 0;
     private Context myContext;
     private String par_questionsID;
     private String par_answersID;
@@ -50,6 +53,8 @@ public class TestQuestionnaire {
             }
         } while (lineID != null);
 
+        myInputStream.close();
+
         //Compares the results
         boolean questionsOK = false;
         boolean answersOK = false;
@@ -60,28 +65,60 @@ public class TestQuestionnaire {
             if (par_questionsID.equals(testKey.get(i).getQuestionsID())) {
                 candidatePositions.add(i);
                 questionsOK = true;
+                System.out.println("Questions OK");
+                /*System.out.println("I:" + i);
+                System.out.println("ID: " + testKey.get(i).getId());
+                System.out.println("PAR Q:" + par_questionsID);
+                System.out.println("QT:" + testKey.get(i).getQuestionsID());*/
             }
         }
+        for(int cd : candidatePositions){
+            System.out.println("POS: " + cd);
+        }
+        System.out.println(" ");
+        System.out.println(" ");
+
+        /*if(questionsOK){
+            for(int cd : candidatePositions){
+                if (par_answersID.equals(testKey.get(cd).getAnswersID())) {
+                    answersOK = true;
+                    System.out.println("Answers OK");
+                    System.out.println("I:" + cd);
+                    System.out.println("ID: " + testKey.get(cd).getId());
+                    System.out.println("PAR A:" + par_answersID);
+                    System.out.println("AT:" + testKey.get(cd).getAnswersID());
+                }else{
+                    System.out.println("I REMOVE:" + cd);
+                    candidatePositions.remove(cd);
+                }
+            }
+        }*/
 
         if(questionsOK){
             for(int i = 0; i < candidatePositions.size(); i++) {
                 if (par_answersID.equals(testKey.get(candidatePositions.get(i)).getAnswersID())) {
                     answersOK = true;
-                }else{
-                    candidatePositions.remove(i);
+                    key = candidatePositions.get(i);
+                    candidatePositions.clear();
+                    System.out.println("Answers OK");
+                    System.out.println("I: " + i);
+                    System.out.println("POS:" + key);
+                    System.out.println("ID: " + testKey.get(key).getId());
+                    System.out.println("PAR A:" + par_answersID);
+                    System.out.println("AT:" + testKey.get(key).getAnswersID());
+                    break;
                 }
             }
         }
+        System.out.println(" ");
 
         if(questionsOK && answersOK){
-            for(int i = 0; i < candidatePositions.size(); i++) {
-                if (par_tags.equals(testKey.get(candidatePositions.get(i)).getTagsID())) {
-                    tagsOK = true;
-                }else{
-                    candidatePositions.remove(i);
-                }
+            if (par_tags.equals(testKey.get(key).getTagsID())) {
+                tagsOK = true;
+                System.out.println("Tags OK");
             }
         }
+        System.out.println(" ");
 
         return questionsOK & answersOK & tagsOK;
     }
