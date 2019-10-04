@@ -7,10 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
+
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
+
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,21 +19,16 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import cat.uab.idt.rightsapp.Constants;
-import cat.uab.idt.rightsapp.ExplanationActivity;
-import cat.uab.idt.rightsapp.LanguageActivity;
 import cat.uab.idt.rightsapp.ParticlesActivity;
 import cat.uab.idt.rightsapp.R;
-import cat.uab.idt.rightsapp.RightsAppActivity;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 import cat.uab.idt.rightsapp.QuestionnaireActivity;
-import cat.uab.idt.rightsapp.models.AnswerModel;
-import cat.uab.idt.rightsapp.utils.TestQuestionnaire;
+
+
 
 public class QuestionnaireFragment extends Fragment {
 
@@ -185,7 +180,7 @@ public class QuestionnaireFragment extends Fragment {
                         //System.out.println("TEST: Answers " + sharedPreferences.getString(Constants.PAR_ANSWERS, null));
                         //System.out.println("TEST: Tags " + sharedPreferences.getString(Constants.PAR_TAGS, null));
 
-                        TestQuestionnaire tq = new TestQuestionnaire(parentActivity, par_questionID, par_answersID, par_tag);
+                        /*TestQuestionnaire tq = new TestQuestionnaire(parentActivity, par_questionID, par_answersID, par_tag);
                         try{
                             if(tq.runTest()){
                                 System.out.println("TEST: OK!");
@@ -199,7 +194,7 @@ public class QuestionnaireFragment extends Fragment {
                         }catch (IOException e){
                             e.printStackTrace();
                             System.exit(0);
-                        }
+                        }*/
 
                         Intent intent = new Intent(parentActivity.getApplicationContext(), ParticlesActivity.class);
                         startActivity(intent);

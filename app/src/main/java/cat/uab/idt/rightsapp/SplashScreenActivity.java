@@ -1,17 +1,15 @@
 package cat.uab.idt.rightsapp;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.os.ConfigurationCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.os.ConfigurationCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.util.Locale;

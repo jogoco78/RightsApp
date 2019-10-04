@@ -1,16 +1,21 @@
 package cat.uab.idt.rightsapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+
 public class RightsAppActivity extends AppCompatActivity {
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +28,21 @@ public class RightsAppActivity extends AppCompatActivity {
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         //TextView Listeners
         TextView tv_call112 = findViewById(R.id.tv_112);
         tv_call112.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                //START Analytics
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "112");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Call112");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "mainscreen");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                //END Analytics
+
                 Intent intent = new Intent(getApplicationContext(), Emergency112CallActivity.class);
                 startActivity(intent);
             }
@@ -56,6 +71,11 @@ public class RightsAppActivity extends AppCompatActivity {
         button_emergency112.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "112Button");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Call112Button");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "mainscreen");
+
                 Intent intent = new Intent(getApplicationContext(), Emergency112CallActivity.class);
                 startActivity(intent);
             }
@@ -78,6 +98,16 @@ public class RightsAppActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //START Analytics
+        mFirebaseAnalytics.setCurrentScreen(this, "112Screen", null /* class override */);
+        //END Analytics
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        mFirebaseAnalytics.setCurrentScreen(this, "112Screen", null /* class override */);
     }
 
     @Override
