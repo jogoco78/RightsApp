@@ -581,8 +581,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         boolean previousClause = false;
         ArrayList<ParticleModel> results = new ArrayList<>();
 
-        //String query = "SELECT * FROM " + DBContract.Particles.TABLE_NAME;
-        String query = "select " + DBContract.Particles.TABLE_NAME + ".*, " + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_TEXT_ES + "_" + language
+        String query = "select " + DBContract.Particles.TABLE_NAME + ".*, " + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_TEXT + "_" + language
+                + DBContract.Subjects.COLUMN_NAME_PRIORITY + DBContract.Subjects.COLUMN_NAME_GROUP
                 + " from " + DBContract.Particles.TABLE_NAME + "," + DBContract.Subjects.TABLE_NAME;
 
         if(id_particles != null){
@@ -614,6 +614,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 pm.setLanguage(language);
                 pm.setId_subject(cursor.getInt(5));
                 pm.setSubjectText(cursor.getString(6));
+                pm.setPriority(cursor.getInt(7));
+                pm.setGroup(cursor.getInt(8));
                 switch (language){
                     case "es":
                         pm.setText(cursor.getString(1));

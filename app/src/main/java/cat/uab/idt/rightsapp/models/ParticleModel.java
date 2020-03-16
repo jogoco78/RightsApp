@@ -10,17 +10,21 @@ public class ParticleModel {
     private String text;
     private int id_subject;
     private String subjectText;
+    private int group;
+    private int priority;
     private String language;
 
     public ParticleModel(){
         this.initialize();
     }
 
-    public ParticleModel(int id, String text, int id_subject, String subjectText, String language){
+    public ParticleModel(int id, String text, int id_subject, String subjectText, int group, int priority, String language){
         this.id = id;
         this.text = text;
         this.id_subject = id_subject;
         this.subjectText = subjectText;
+        this.group = group;
+        this.priority = priority;
         this.language = language;
     }
 
@@ -29,6 +33,8 @@ public class ParticleModel {
         this.language = null;
         this.text = null;
         this.id_subject = 0;
+        this.group = Integer.MAX_VALUE;
+        this.priority = Integer.MAX_VALUE;
     }
 
     public int getId() {
@@ -54,10 +60,10 @@ public class ParticleModel {
     public ArrayList<String> getTextArray(){
         ArrayList<String> results = new ArrayList<>();
 
-        String[] splited = text.split(Constants.SEPARATOR_TEXT);
+        String[] split = text.split(Constants.NEW_LINE_SEPARATOR);
 
-        for (int i = 0; i < splited.length; i++){
-            results.add(splited[i]);
+        for (int i = 0; i < split.length; i++){
+            results.add(split[i]);
         }
 
         return(results);
@@ -82,4 +88,21 @@ public class ParticleModel {
     public void setSubjectText(String subjectText) {
         this.subjectText = subjectText;
     }
+
+    public int getGroup() {
+        return group;
+    }
+
+    public void setGroup(int group) {
+        this.group = group;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
 }

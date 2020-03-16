@@ -47,7 +47,9 @@ public final class DBContract {
     public static class Subjects implements BaseColumns{
         public static final String TABLE_NAME="subjects";
         public static final String COLUMN_NAME_ID = "id";
-        public static final String COLUMN_NAME_TEXT_ES = "text";
+        public static final String COLUMN_NAME_TEXT = "text";
+        public static final String COLUMN_NAME_GROUP = "group";
+        public static final String COLUMN_NAME_PRIORITY = "priority";
     }
 
     /*Inner class that defines the tags table*/

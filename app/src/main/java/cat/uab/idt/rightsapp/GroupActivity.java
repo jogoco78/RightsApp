@@ -1,41 +1,38 @@
 package cat.uab.idt.rightsapp;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
 
-import cat.uab.idt.rightsapp.adapters.ExpandableAdapter;
-import cat.uab.idt.rightsapp.database.DataBaseHelper;
-import cat.uab.idt.rightsapp.models.ParticleModel;
+import cat.uab.idt.rightsapp.adapters.MyRecyclerViewAdapterGroups;
 
-public class ParticlesActivity extends AppCompatActivity{
+public class GroupActivity extends AppCompatActivity {
 
-    private DataBaseHelper db = null;
-    private ArrayList<ParticleModel> particles_list = null;
-    private ExpandableListView expandableListView;
-    private ExpandableListAdapter adapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setTitle(R.string.title_activity_subjects);
-        setContentView(R.layout.activity_particles);
+        setContentView(R.layout.activity_group);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_particles_groups);
 
         //Sets the toolbar
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
-
-        //Gets elements from layout
-        expandableListView = findViewById(R.id.elv_particles);
 
         // Gets preferences file
         Context context = getApplicationContext();
@@ -46,43 +43,35 @@ public class ParticlesActivity extends AppCompatActivity{
         String language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
 
         //Gets current questions, answers and tags parameters
-        String par_questionID = sharedPreferences.getString(Constants.PAR_QUESTIONS, null);
-        String par_answersID = sharedPreferences.getString(Constants.PAR_ANSWERS, null);
         String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
 
-        //Gets tags in string and int arrays
-        String[] tags_s;
-        int[] tags_i = null;
-        if(par_tag != null) {
-            tags_s = par_tag.split(",");
-            tags_i = new int[tags_s.length];
-            for(int i = 0; i < tags_s.length; i++){
-                tags_i[i] = Integer.parseInt(tags_s[i]);
-            }
+
+        ArrayList dataSet = new ArrayList<String>();
+
+        if (par_tag.contains("6")){
+            //Sexual attack tag is activated
+
+        }
+        if (par_tag.contains("7")){
+            //EU residents tag activated
+
+        } else if(par_tag.contains("8")){
+            //non-EU residents activated
+
         }
 
-        //Opens database
-        if(db == null){
-            db = new DataBaseHelper(this);
-            db.openDataBase();
-        }
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        recyclerView.setHasFixedSize(true);
 
-        //Gets particles list
-        particles_list = db.getParticlesByTag(tags_i, language);
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
-        String[] subjects = new String[particles_list.size()];
-        for(int i = 0; i < subjects.length; i++) {
-            subjects[i] = particles_list.get(i).getSubjectText();
-        }
-        //subjects = db.getSubjectByID(id_subjects, language);
+        // specify an adapter
+        mAdapter = new MyRecyclerViewAdapterGroups(getApplicationContext(), dataSet);
+        recyclerView.setAdapter(mAdapter);
 
-        ArrayList<ArrayList<String>> childList = new ArrayList<>();
-        for(int i = 0; i < subjects.length; i++){
-            childList.add(particles_list.get(i).getTextArray());
-        }
-
-        adapter = new ExpandableAdapter(this, childList, subjects);
-        expandableListView.setAdapter(adapter);
     }
 
     @Override
