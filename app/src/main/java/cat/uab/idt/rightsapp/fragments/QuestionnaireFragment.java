@@ -23,6 +23,7 @@ import android.widget.TextView;
 //import com.google.firebase.analytics.FirebaseAnalytics;
 
 import cat.uab.idt.rightsapp.Constants;
+import cat.uab.idt.rightsapp.GroupActivity;
 import cat.uab.idt.rightsapp.ParticlesActivity;
 import cat.uab.idt.rightsapp.R;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
@@ -196,7 +197,8 @@ public class QuestionnaireFragment extends Fragment {
                             System.exit(0);
                         }*/
 
-                        Intent intent = new Intent(parentActivity.getApplicationContext(), ParticlesActivity.class);
+                        //Intent intent = new Intent(parentActivity.getApplicationContext(), ParticlesActivity.class);
+                        Intent intent = new Intent(parentActivity.getApplicationContext(), GroupActivity.class);
                         startActivity(intent);
                     } else {
                         //updates the fragment to the new question

@@ -82,4 +82,8 @@
     <string name="disclaimer_title">Aviso legal</string>
     <string name="no_entities_list">La búsqueda no ha retornado ningún resultado. Cambia los parámetros</string>
     <string name="do_not_show">No volver a mostrar éste mensaje</string>
+    <string name="citizens_rights">Derechos de los ciudadanos que han sido víctimas de un delito</string>
+    <string name="EU_citizens_rights">Derechos especialmente otorgados a los ciudadanos víctima de un delito con residencia en un país miembro de la UE</string>
+    <string name="no_EU_citizens_rights">Derechos especialmente otorgados a los ciudadanos víctima de un delito con residencia en un país no miembro de la UE </string>
+    <string name="sexual_attack_protocol">Protocolo de actuación ante un ataque sexual grave</string>
 </resources>

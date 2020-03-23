@@ -25,7 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /**
      * Database name
      */
-    private static String DB_NAME = "rightsapp_v5_utf16.db";
+    private static String DB_NAME = "rightsapp_v6_utf16.db";
 
     /**
      * Assets path for databases folder
@@ -493,21 +493,29 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     /**
      * Returns the particles related to the given tag
-     * @param id_tags the list of tags
+     * @param particlesMainTags the list of tags
      * @param language the language for the particles
      * @return an ArrayList with the particles related to given tags in specified language
      */
-    public ArrayList<ParticleModel> getParticlesByTag(int[] id_tags, String language){
+    public ArrayList<ParticleModel> getParticlesByTag(ArrayList<Integer> particlesMainTags, ArrayList<Integer> particlesResidenceTags, String language){
         int[] results;
 
-        String query = "SELECT * FROM " + DBContract.Particles_Tags.TABLE_NAME;
+        String query = "SELECT DISTINCT * FROM " + DBContract.Particles_MainTags.TABLE_NAME + " pm INNER JOIN " + DBContract.Particles_residenceTags.TABLE_NAME + " pr ON pm."
+                + DBContract.Particles_MainTags.COLUMN_NAME_ID_PARTICLE + "=pr." + DBContract.Particles_residenceTags.COLUMN_NAME_ID_PARTICLE;
 
-        if(id_tags != null){
-            query = query + " WHERE " + DBContract.Particles_Tags.COLUMN_NAME_ID_TAG + " IN (" + id_tags[0];
-            for(int i = 1; i < id_tags.length; i++){
-                query = query + "," + id_tags[i];
+        ArrayList<String> whereClause = new ArrayList<>();
+        for (int pm: particlesMainTags){
+            for(int pr: particlesResidenceTags){
+                whereClause.add("pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_TAG + "=" + pm + " AND pr." + DBContract.Particles_residenceTags.COLUMN_NAME_ID_TAG + "=" + pr);
             }
-            query = query + ")";
+        }
+
+        query = query + " WHERE ";
+        for(int i=0; i < whereClause.size(); i++){
+            query = query + whereClause.get(i);
+            if(i < whereClause.size() - 1){
+                query = query + " OR ";
+            }
         }
 
         Cursor cursor = myDataBase.rawQuery(query, null);
@@ -577,12 +585,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return results;
     }
 
-    public ArrayList<ParticleModel> getParticles(int[] id_particles, String language){
+    private ArrayList<ParticleModel> getParticles(int[] id_particles, String language){
         boolean previousClause = false;
         ArrayList<ParticleModel> results = new ArrayList<>();
 
         String query = "select " + DBContract.Particles.TABLE_NAME + ".*, " + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_TEXT + "_" + language
-                + DBContract.Subjects.COLUMN_NAME_PRIORITY + DBContract.Subjects.COLUMN_NAME_GROUP
+                + "," + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_PRIORITY
+                + "," + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_CLUSTER
                 + " from " + DBContract.Particles.TABLE_NAME + "," + DBContract.Subjects.TABLE_NAME;
 
         if(id_particles != null){
@@ -600,7 +609,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             query = query + " where ";
         }
 
-        query = query + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_ID + " = " + DBContract.Particles.TABLE_NAME + "." + DBContract.Particles.COLUMN_NAME_ID_SUBJEECT;
+        query = query + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_ID + " = " + DBContract.Particles.TABLE_NAME + "." + DBContract.Particles.COLUMN_NAME_ID_SUBJECT;
+        query = query + " order by " + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_CLUSTER + " ASC, "
+                + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_PRIORITY + " ASC";
 
         System.out.println("Query " + query);
 

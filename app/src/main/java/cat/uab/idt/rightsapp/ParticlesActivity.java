@@ -19,11 +19,6 @@ import cat.uab.idt.rightsapp.models.ParticleModel;
 
 public class ParticlesActivity extends AppCompatActivity{
 
-    private DataBaseHelper db = null;
-    private ArrayList<ParticleModel> particles_list = null;
-    private ExpandableListView expandableListView;
-    private ExpandableListAdapter adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +29,23 @@ public class ParticlesActivity extends AppCompatActivity{
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
+        int id_tag_user = 0;
+        //Main tags
+        ArrayList<Integer> particlesMainTags = new ArrayList<>();
+        //Residence tags
+        ArrayList<Integer> particlesResidenceTags = new ArrayList<>();
+
+        //Database descriptor
+        DataBaseHelper db = new DataBaseHelper(this);
+        db.openDataBase();
+
         //Gets elements from layout
-        expandableListView = findViewById(R.id.elv_particles);
+        ExpandableListView expandableListView = findViewById(R.id.elv_particles);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            id_tag_user = extras.getInt("group");
+        }
 
         // Gets preferences file
         Context context = getApplicationContext();
@@ -45,44 +55,63 @@ public class ParticlesActivity extends AppCompatActivity{
         //Gets the language stored in Preferences for the app
         String language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
 
-        //Gets current questions, answers and tags parameters
-        String par_questionID = sharedPreferences.getString(Constants.PAR_QUESTIONS, null);
-        String par_answersID = sharedPreferences.getString(Constants.PAR_ANSWERS, null);
+        //Gets tags
         String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
 
-        //Gets tags in string and int arrays
-        String[] tags_s;
-        int[] tags_i = null;
-        if(par_tag != null) {
-            tags_s = par_tag.split(",");
-            tags_i = new int[tags_s.length];
-            for(int i = 0; i < tags_s.length; i++){
-                tags_i[i] = Integer.parseInt(tags_s[i]);
-            }
+        if(par_tag.contains("2")){
+            //Terrorism
+            particlesMainTags.add(2);
+        }else if(par_tag.contains("3")){
+            //Violence against women
+            particlesMainTags.add(3);
+        }else if(par_tag.contains("4")){
+            //Domestic violence
+            particlesMainTags.add(4);
+        }else if(par_tag.contains("5)")){
+            //Violent crime
+            particlesMainTags.add(5);
+        }else if(par_tag.contains("1")){
+            //Common crime
+            particlesMainTags.add(1);
         }
 
-        //Opens database
-        if(db == null){
-            db = new DataBaseHelper(this);
-            db.openDataBase();
+        switch(id_tag_user){
+            case 1:
+                particlesResidenceTags.add(9);
+                break;
+            case 6:
+                //Sexual attack
+                particlesMainTags.add(6);
+                break;
+            case 7:
+                //UE Residents
+                particlesResidenceTags.add(7);
+                break;
+            case 8:
+                //Non UE residents
+                particlesResidenceTags.add(8);
+                break;
+            default:
+                //Error
         }
 
         //Gets particles list
-        particles_list = db.getParticlesByTag(tags_i, language);
+        ArrayList<ParticleModel> particles_list = db.getParticlesByTag(particlesMainTags, particlesResidenceTags, language);
 
         String[] subjects = new String[particles_list.size()];
         for(int i = 0; i < subjects.length; i++) {
             subjects[i] = particles_list.get(i).getSubjectText();
         }
-        //subjects = db.getSubjectByID(id_subjects, language);
 
         ArrayList<ArrayList<String>> childList = new ArrayList<>();
         for(int i = 0; i < subjects.length; i++){
             childList.add(particles_list.get(i).getTextArray());
         }
 
-        adapter = new ExpandableAdapter(this, childList, subjects);
+        ExpandableListAdapter adapter = new ExpandableAdapter(this, childList, subjects);
         expandableListView.setAdapter(adapter);
+
+        db.close();
     }
 
     @Override

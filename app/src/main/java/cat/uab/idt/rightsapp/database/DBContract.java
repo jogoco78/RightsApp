@@ -40,15 +40,15 @@ public final class DBContract {
     public static class Particles implements BaseColumns{
         public static final String TABLE_NAME = "particles";
         public static final String COLUMN_NAME_ID = "id";
-        public static final String COLUMN_NAME_TEXT_ES = "text";
-        public static final String COLUMN_NAME_ID_SUBJEECT = "id_subject";
+        public static final String COLUMN_NAME_TEXT = "text";
+        public static final String COLUMN_NAME_ID_SUBJECT = "id_subject";
     }
 
     public static class Subjects implements BaseColumns{
         public static final String TABLE_NAME="subjects";
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_TEXT = "text";
-        public static final String COLUMN_NAME_GROUP = "group";
+        public static final String COLUMN_NAME_CLUSTER = "cluster";
         public static final String COLUMN_NAME_PRIORITY = "priority";
     }
 
@@ -57,12 +57,25 @@ public final class DBContract {
         public static final String TABLE_NAME = "tags";
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_TAG = "tag";
-        public static final String COLUMN_NAME_DESCRIPTION_EN = "description_en";
     }
 
     /*Inner class that defines the particles_tags table */
-    public static class Particles_Tags implements BaseColumns{
+/*    public static class Particles_Tags implements BaseColumns{
         public static final String TABLE_NAME = "particles_tags";
+        public static final String COLUMN_NAME_ID_PARTICLE = "id_particle";
+        public static final String COLUMN_NAME_ID_TAG = "id_tag";
+    }*/
+
+    /*Inner class that defines the particles_tags table */
+    public static class Particles_MainTags implements BaseColumns{
+        public static final String TABLE_NAME = "particles_mainTags";
+        public static final String COLUMN_NAME_ID_PARTICLE = "id_particle";
+        public static final String COLUMN_NAME_ID_TAG = "id_tag";
+    }
+
+    /*Inner class that defines the particles_tags table */
+    public static class Particles_residenceTags implements BaseColumns{
+        public static final String TABLE_NAME = "particles_residenceTags";
         public static final String COLUMN_NAME_ID_PARTICLE = "id_particle";
         public static final String COLUMN_NAME_ID_TAG = "id_tag";
     }

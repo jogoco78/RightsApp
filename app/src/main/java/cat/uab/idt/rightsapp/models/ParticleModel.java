@@ -89,7 +89,7 @@ public class ParticleModel {
         this.subjectText = subjectText;
     }
 
-    public int getGroup() {
+    public int getCluster() {
         return group;
     }
 

@@ -1,75 +1,81 @@
 package cat.uab.idt.rightsapp.adapters;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
+import android.content.Context;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
-import cat.uab.idt.rightsapp.ParticlesActivity;
 import cat.uab.idt.rightsapp.R;
+import cat.uab.idt.rightsapp.models.TagModel;
 
-public class MyRecyclerViewAdapterGroups extends RecyclerView.Adapter<MyRecyclerViewAdapterGroups.MyViewHolder> {
+public class MyRecyclerViewAdapterGroups extends RecyclerView.Adapter<MyRecyclerViewAdapterGroups.ViewHolder> {
+    private ArrayList<TagModel> dataSet;
+    private LayoutInflater inflater;
+    private ItemClickListener clickListener;
 
-    private Context ctx;
-    private ArrayList<String> mDataset;
-    private RecyclerViewAdapter.ItemClickListener mClickListener;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView textView;
-        public MyViewHolder(TextView v) {
-            super(v);
-            textView = v;
+    //Data set is passed through the constructor
+    public MyRecyclerViewAdapterGroups(Context context, ArrayList<TagModel> dataSet){
+        this.inflater = LayoutInflater.from(context);
+        this.dataSet = dataSet;
+    }
+
+    //Inflates the row layout from xml
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+        View view = inflater.inflate(R.layout.rv_group_layout, parent, false);
+        return new ViewHolder(view);
+    }
+
+    //Binds the data set to the textview in each row
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position){
+        //String s = dataSet.get(position).getDescription();
+        TagModel tm = dataSet.get(position);
+        System.out.println("Query: Position: " + position + " Text: " + tm.getDescription());
+
+        holder.tv_group.setText(tm.getDescription());
+    }
+
+    //Stores and recycles views as they are scrolled off screen
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView tv_group;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            tv_group = itemView.findViewById(R.id.tv_group);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onItemClick(view, getAdapterPosition());
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public MyRecyclerViewAdapterGroups (Context ctx, ArrayList<String> myDataset) {
-        this.mDataset = myDataset;
-        this.ctx = ctx;
-    }
-
-    // Create new views (invoked by the layout manager)
-    @Override
-    public MyRecyclerViewAdapterGroups.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
-        TextView tv = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.rv_group_layout, parent, false);
-
-        MyViewHolder vh = new MyViewHolder(tv);
-        return vh;
-    }
-
-    // Replace the contents of a view (invoked by the layout manager)
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.textView.setText(mDataset.get(position));
-        holder.textView.setOnClickListener(new View.OnClickListener() {
-                                               @Override
-                                               public void onClick(View v) {
-                                                   // Here You Do Your Click Magic
-                                                   Intent intent=new Intent(ctx, ParticlesActivity.class);
-                                                   intent.putExtra("position", position);
-                                                   ctx.startActivity(intent);
-                                               }
-                                               });
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
+    //Returns the total number of rows
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return dataSet.size();
     }
 
+    //Convenience method for getting data at click position
+    public TagModel getItem(int pos) {
+        return dataSet.get(pos);
+    }
+
+    //Allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
+    //Parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
+    }
 }

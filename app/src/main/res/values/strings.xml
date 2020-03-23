@@ -93,5 +93,9 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="accept">Accept</string>
     <string name="must_accept_terms_and_conditions">You must accept the terms and conditions of the app to use it</string>
     <string name="no_entities_list">The search returns no results. Change the search criteria</string>
+    <string name="citizens_rights">Rights to citizens victim of a crime</string>
+    <string name="EU_citizens_rights">Rights specially granted to citizens victim of a crime that reside in another EU country</string>
+    <string name="no_EU_citizens_rights">Rights specially granted to citizens victim of a crime that reside in a non EU country </string>
+    <string name="sexual_attack_protocol">Protocol of action in a serious sexual attack</string>
 
 </resources>

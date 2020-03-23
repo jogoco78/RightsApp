@@ -2,6 +2,8 @@ package cat.uab.idt.rightsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,15 +13,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
 import cat.uab.idt.rightsapp.adapters.MyRecyclerViewAdapterGroups;
+import cat.uab.idt.rightsapp.models.TagModel;
 
-public class GroupActivity extends AppCompatActivity {
+public class GroupActivity extends AppCompatActivity implements MyRecyclerViewAdapterGroups.ItemClickListener{
 
+    private ArrayList<TagModel> dataSet;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private MyRecyclerViewAdapterGroups mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -46,18 +51,19 @@ public class GroupActivity extends AppCompatActivity {
         String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
 
 
-        ArrayList dataSet = new ArrayList<String>();
+        dataSet = new ArrayList<>();
+        dataSet.add(new TagModel(1, getResources().getString(R.string.citizens_rights)));
 
         if (par_tag.contains("6")){
             //Sexual attack tag is activated
-
+            dataSet.add(new TagModel(6, getResources().getString(R.string.sexual_attack_protocol)));
         }
         if (par_tag.contains("7")){
             //EU residents tag activated
-
+            dataSet.add(new TagModel(7, getResources().getString(R.string.EU_citizens_rights)));
         } else if(par_tag.contains("8")){
             //non-EU residents activated
-
+            dataSet.add(new TagModel(8, getResources().getString(R.string.no_EU_citizens_rights)));
         }
 
         // use this setting to improve performance if you know that changes
@@ -67,11 +73,46 @@ public class GroupActivity extends AppCompatActivity {
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
 
         // specify an adapter
-        mAdapter = new MyRecyclerViewAdapterGroups(getApplicationContext(), dataSet);
+        mAdapter = new MyRecyclerViewAdapterGroups(this.getBaseContext(), dataSet);
+        mAdapter.setClickListener(new MyRecyclerViewAdapterGroups.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getApplicationContext(), ParticlesActivity.class);
+                intent.putExtra("group", dataSet.get(position).getId_tag());
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(mAdapter);
+    }
 
+    @Override
+    public void onBackPressed(){
+        // Gets preferences file
+        Context context = getApplicationContext();
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        //Remove previous questions, answers and tags parameters
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(Constants.PAR_QUESTIONS);
+        editor.remove(Constants.PAR_ANSWERS);
+        editor.remove(Constants.PAR_TAGS);
+        editor.apply();
+
+        Intent intent = new Intent(getApplicationContext(), QuestionnaireActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(View view, int position){
+        Intent intent = new Intent(getApplicationContext(), ParticlesActivity.class);
+        intent.putExtra("group", dataSet.get(position).getId_tag());
+        startActivity(intent);
     }
 
     @Override
