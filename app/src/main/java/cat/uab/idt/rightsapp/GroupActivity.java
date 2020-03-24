@@ -23,9 +23,6 @@ import cat.uab.idt.rightsapp.models.TagModel;
 public class GroupActivity extends AppCompatActivity implements MyRecyclerViewAdapterGroups.ItemClickListener{
 
     private ArrayList<TagModel> dataSet;
-    private RecyclerView recyclerView;
-    private MyRecyclerViewAdapterGroups mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +30,7 @@ public class GroupActivity extends AppCompatActivity implements MyRecyclerViewAd
 
         setTitle(R.string.title_activity_subjects);
         setContentView(R.layout.activity_group);
-        recyclerView = (RecyclerView) findViewById(R.id.rv_particles_groups);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_particles_groups);
 
         //Sets the toolbar
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
@@ -50,20 +47,19 @@ public class GroupActivity extends AppCompatActivity implements MyRecyclerViewAd
         //Gets current questions, answers and tags parameters
         String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
 
-
         dataSet = new ArrayList<>();
-        dataSet.add(new TagModel(1, getResources().getString(R.string.citizens_rights)));
+        dataSet.add(new TagModel(Constants.TAG_COMMON_CRIME, getResources().getString(R.string.citizens_rights)));
 
-        if (par_tag.contains("6")){
+        if (par_tag.contains(String.valueOf(Constants.TAG_SEXUAL_ATTACK))){
             //Sexual attack tag is activated
-            dataSet.add(new TagModel(6, getResources().getString(R.string.sexual_attack_protocol)));
+            dataSet.add(new TagModel(Constants.TAG_SEXUAL_ATTACK, getResources().getString(R.string.sexual_attack_protocol)));
         }
-        if (par_tag.contains("7")){
+        if (par_tag.contains(String.valueOf(Constants.TAG_UE_RESIDENT))){
             //EU residents tag activated
-            dataSet.add(new TagModel(7, getResources().getString(R.string.EU_citizens_rights)));
-        } else if(par_tag.contains("8")){
+            dataSet.add(new TagModel(Constants.TAG_UE_RESIDENT, getResources().getString(R.string.EU_citizens_rights)));
+        } else if(par_tag.contains(String.valueOf(Constants.TAG_NON_EU_RESIDENT))){
             //non-EU residents activated
-            dataSet.add(new TagModel(8, getResources().getString(R.string.no_EU_citizens_rights)));
+            dataSet.add(new TagModel(Constants.TAG_NON_EU_RESIDENT, getResources().getString(R.string.no_EU_citizens_rights)));
         }
 
         // use this setting to improve performance if you know that changes
@@ -71,14 +67,13 @@ public class GroupActivity extends AppCompatActivity implements MyRecyclerViewAd
         recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-
         // specify an adapter
-        mAdapter = new MyRecyclerViewAdapterGroups(this.getBaseContext(), dataSet);
+        MyRecyclerViewAdapterGroups mAdapter = new MyRecyclerViewAdapterGroups(this.getBaseContext(), dataSet);
         mAdapter.setClickListener(new MyRecyclerViewAdapterGroups.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

@@ -176,29 +176,17 @@ public class QuestionnaireFragment extends Fragment {
                     //Gets the next question ID and updates the fragment
                     int id_next_question = db.getNextQuestionID(currentQuestionID, id_answer);
                     if (id_next_question == 0) {
-                        //the questionnaire is over - loads the next activity
-                        //System.out.println("TEST: Questions " + sharedPreferences.getString(Constants.PAR_QUESTIONS, null));
-                        //System.out.println("TEST: Answers " + sharedPreferences.getString(Constants.PAR_ANSWERS, null));
-                        //System.out.println("TEST: Tags " + sharedPreferences.getString(Constants.PAR_TAGS, null));
+                        //Finish the workflow
+                        Intent intent = null;
+                        if(par_tag.contains(String.valueOf(Constants.TAG_SEXUAL_ATTACK))
+                                || par_tag.contains(String.valueOf(Constants.TAG_UE_RESIDENT))
+                                || par_tag.contains(String.valueOf(Constants.TAG_NON_EU_RESIDENT))){
+                            intent = new Intent(parentActivity.getApplicationContext(), GroupActivity.class);
+                        } else{
+                            intent = new Intent(parentActivity.getApplicationContext(), ParticlesActivity.class);
+                            intent.putExtra("group", Constants.TAG_COMMON_CRIME);
+                        }
 
-                        /*TestQuestionnaire tq = new TestQuestionnaire(parentActivity, par_questionID, par_answersID, par_tag);
-                        try{
-                            if(tq.runTest()){
-                                System.out.println("TEST: OK!");
-                            }else {
-                                Log.d("Test", "Fail");
-                                Log.d("Test", par_questionID);
-                                Log.d("Test", par_answersID);
-                                Log.d("Test", par_tag);
-                            }
-
-                        }catch (IOException e){
-                            e.printStackTrace();
-                            System.exit(0);
-                        }*/
-
-                        //Intent intent = new Intent(parentActivity.getApplicationContext(), ParticlesActivity.class);
-                        Intent intent = new Intent(parentActivity.getApplicationContext(), GroupActivity.class);
                         startActivity(intent);
                     } else {
                         //updates the fragment to the new question

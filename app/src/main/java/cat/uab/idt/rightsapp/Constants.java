@@ -1,6 +1,6 @@
 package cat.uab.idt.rightsapp;
 
-public class Constants {
+public abstract class Constants {
     //Text constants
     public static final String NEW_LINE_SEPARATOR = "--";
 
@@ -18,6 +18,17 @@ public class Constants {
     public static final String PAR_QUESTIONS = "par_questions";
     public static final String PAR_ANSWERS = "par_answers";
     public static final String PAR_TAGS = "par_tags";
+
+    //Tags
+    public static final int TAG_COMMON_CRIME = 1;
+    public static final int TAG_TERRORISM = 2;
+    public static final int TAG_VIOLENCE_AGAINST_WOMEN = 3;
+    public static final int TAG_DOMESTIC_VIOLENCE = 4;
+    public static final int TAG_VIOLENT_CRIME = 5;
+    public static final int TAG_SEXUAL_ATTACK = 6;
+    public static final int TAG_UE_RESIDENT = 7;
+    public static final int TAG_NON_EU_RESIDENT = 8;
+    public static final int TAG_SPANISH_RESIDENT = 9;
 
     //Entities search criteria
     public static final String SEARCH_ENTITY_CRITERIA = "search_entity_criteria";

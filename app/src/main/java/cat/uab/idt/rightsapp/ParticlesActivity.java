@@ -17,7 +17,7 @@ import cat.uab.idt.rightsapp.adapters.ExpandableAdapter;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 import cat.uab.idt.rightsapp.models.ParticleModel;
 
-public class ParticlesActivity extends AppCompatActivity{
+public class ParticlesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,41 +58,45 @@ public class ParticlesActivity extends AppCompatActivity{
         //Gets tags
         String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
 
-        if(par_tag.contains("2")){
+        if(par_tag.contains(String.valueOf(Constants.TAG_TERRORISM))){
             //Terrorism
-            particlesMainTags.add(2);
-        }else if(par_tag.contains("3")){
+            particlesMainTags.add(Constants.TAG_TERRORISM);
+        }else if(par_tag.contains(String.valueOf(Constants.TAG_VIOLENCE_AGAINST_WOMEN))){
             //Violence against women
-            particlesMainTags.add(3);
-        }else if(par_tag.contains("4")){
+            particlesMainTags.add(Constants.TAG_VIOLENCE_AGAINST_WOMEN);
+        }else if(par_tag.contains(String.valueOf(Constants.TAG_DOMESTIC_VIOLENCE))){
             //Domestic violence
-            particlesMainTags.add(4);
-        }else if(par_tag.contains("5)")){
+            particlesMainTags.add(Constants.TAG_DOMESTIC_VIOLENCE);
+        }else if(par_tag.contains(String.valueOf(Constants.TAG_VIOLENT_CRIME))){
             //Violent crime
-            particlesMainTags.add(5);
-        }else if(par_tag.contains("1")){
+            particlesMainTags.add(Constants.TAG_VIOLENT_CRIME);
+        }else if(par_tag.contains(String.valueOf(Constants.TAG_COMMON_CRIME))){
             //Common crime
-            particlesMainTags.add(1);
+            particlesMainTags.add(Constants.TAG_COMMON_CRIME);
         }
 
         switch(id_tag_user){
-            case 1:
-                particlesResidenceTags.add(9);
+            case Constants.TAG_COMMON_CRIME:
+            case Constants.TAG_TERRORISM:
+            case Constants.TAG_VIOLENCE_AGAINST_WOMEN:
+            case Constants.TAG_DOMESTIC_VIOLENCE:
+            case Constants.TAG_VIOLENT_CRIME:
+                particlesResidenceTags.add(Constants.TAG_SPANISH_RESIDENT);
                 break;
-            case 6:
+            case Constants.TAG_SEXUAL_ATTACK:
                 //Sexual attack
-                particlesMainTags.add(6);
+                particlesMainTags.add(Constants.TAG_SEXUAL_ATTACK);
                 break;
-            case 7:
+            case Constants.TAG_UE_RESIDENT:
                 //UE Residents
-                particlesResidenceTags.add(7);
+                particlesResidenceTags.add(Constants.TAG_UE_RESIDENT);
                 break;
-            case 8:
+            case Constants.TAG_NON_EU_RESIDENT:
                 //Non UE residents
-                particlesResidenceTags.add(8);
+                particlesResidenceTags.add(Constants.TAG_NON_EU_RESIDENT);
                 break;
             default:
-                //Error
+
         }
 
         //Gets particles list
@@ -111,6 +115,7 @@ public class ParticlesActivity extends AppCompatActivity{
         ExpandableListAdapter adapter = new ExpandableAdapter(this, childList, subjects);
         expandableListView.setAdapter(adapter);
 
+        //Closes the database
         db.close();
     }
 

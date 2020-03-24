@@ -518,6 +518,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
         }
 
+        System.out.println("Query test: " + query);
         Cursor cursor = myDataBase.rawQuery(query, null);
         results = new int[cursor.getCount()];
 
