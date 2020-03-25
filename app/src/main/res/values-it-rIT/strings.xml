@@ -84,4 +84,9 @@
     <string name="no_EU_citizens_rights">Diritti speciali concessi ai cittadini vittime di reato residenti in un paese terzo</string>
     <string name="sexual_attack_protocol">Protocollo d\'azione per un grave attacco sessuale</string>
 
+    <!-- Alert dialogs -->
+    <string name="back_questionnaire">Se premi \"Accetta\" tornerai alla prima domanda nel questionario e le tue risposte attuali andranno perse.</string>
+
+    <!-- Menu bar -->
+    <string name="help">Aiuto</string>
 </resources>

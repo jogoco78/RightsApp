@@ -1,8 +1,12 @@
 package cat.uab.idt.rightsapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
@@ -68,13 +72,37 @@ public class QuestionnaireActivity extends AppCompatActivity {
         _outState.putInt(CURRENT_QUESTION_ID, currentQuestionID);
     }
 
+    @Override
     public void onBackPressed(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.back_questionnaire);
+
+        // Add the buttons
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                Intent intent = new Intent(getApplicationContext(), QuestionnaireActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //User clicked Cancel button - Do nothing
+            }
+        });
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    /*public void onBackPressed(){
         super.onBackPressed();
 
         if(currentQuestionID > 1){
            // currentQuestionID = ((QuestionnaireFragment)getSupportFragmentManager().findFragmentById(R.id.questionnaire_activity_framelayout)).getCurrentQuestionID();
         }
-    }
+    }*/
 
     public int getCurrentQuestionID() {
         return currentQuestionID;

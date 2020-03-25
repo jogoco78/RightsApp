@@ -1,9 +1,12 @@
 package cat.uab.idt.rightsapp;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -120,6 +123,23 @@ public class Emergency112CallActivity extends AppCompatActivity {
             case R.id.action_home:
                 intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.action_help:
+                //TODO: Set the action help text
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(R.string.help);
+
+                // Add the buttons
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button -- Do nothing
+
+                    }
+                });
+
+                // Create the AlertDialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 break;
             case R.id.settings_explanation:
                 intent = new Intent(getApplicationContext(), ExplanationActivity.class);

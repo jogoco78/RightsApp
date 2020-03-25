@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 import cat.uab.idt.rightsapp.adapters.MyRecyclerViewAdapterGroups;
 import cat.uab.idt.rightsapp.models.TagModel;
 
-public class GroupActivity extends AppCompatActivity implements MyRecyclerViewAdapterGroups.ItemClickListener{
+public class RightsClusterActivity extends AppCompatActivity implements MyRecyclerViewAdapterGroups.ItemClickListener{
 
     private ArrayList<TagModel> dataSet;
 
@@ -29,7 +31,7 @@ public class GroupActivity extends AppCompatActivity implements MyRecyclerViewAd
         super.onCreate(savedInstanceState);
 
         setTitle(R.string.title_activity_subjects);
-        setContentView(R.layout.activity_group);
+        setContentView(R.layout.activity_rightsapp_cluster);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_particles_groups);
 
         //Sets the toolbar
@@ -43,6 +45,30 @@ public class GroupActivity extends AppCompatActivity implements MyRecyclerViewAd
 
         //Gets the language stored in Preferences for the app
         String language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
+
+        //TODO: Alert dialog once selected the user could come back by pressing back button
+        //Gets if it is the first run in the current launch
+        //boolean isFirstRunBackQuestionnaire = sharedPreferences.getBoolean(Constants.FIRST_RUN_BACK_QUESTIONNAIRE, true);
+
+       /* if(isFirstRunBackQuestionnaire){
+            AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+            builder.setMessage(R.string.no_answer);
+
+            // Add the buttons
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked OK button - Do nothing
+
+                }
+            });
+            // Create the AlertDialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(Constants.FIRST_RUN_BACK_QUESTIONNAIRE, false);
+            editor.apply();
+        }*/
 
         //Gets current questions, answers and tags parameters
         String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
@@ -87,20 +113,26 @@ public class GroupActivity extends AppCompatActivity implements MyRecyclerViewAd
 
     @Override
     public void onBackPressed(){
-        // Gets preferences file
-        Context context = getApplicationContext();
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.back_questionnaire);
 
-        //Remove previous questions, answers and tags parameters
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(Constants.PAR_QUESTIONS);
-        editor.remove(Constants.PAR_ANSWERS);
-        editor.remove(Constants.PAR_TAGS);
-        editor.apply();
-
-        Intent intent = new Intent(getApplicationContext(), QuestionnaireActivity.class);
-        startActivity(intent);
+        // Add the buttons
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                Intent intent = new Intent(getApplicationContext(), QuestionnaireActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //User clicked Cancel button - Do nothing
+            }
+        });
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
@@ -133,6 +165,23 @@ public class GroupActivity extends AppCompatActivity implements MyRecyclerViewAd
             case R.id.action_home:
                 intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.action_help:
+                //TODO: Set the action help text
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(R.string.help);
+
+                // Add the buttons
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button -- Do nothing
+
+                    }
+                });
+
+                // Create the AlertDialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 break;
             case R.id.settings_explanation:
                 intent = new Intent(getApplicationContext(), ExplanationActivity.class);

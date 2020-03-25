@@ -20,10 +20,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-//import com.google.firebase.analytics.FirebaseAnalytics;
-
 import cat.uab.idt.rightsapp.Constants;
-import cat.uab.idt.rightsapp.GroupActivity;
+import cat.uab.idt.rightsapp.RightsClusterActivity;
 import cat.uab.idt.rightsapp.ParticlesActivity;
 import cat.uab.idt.rightsapp.R;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
@@ -156,21 +154,26 @@ public class QuestionnaireFragment extends Fragment {
 
                     if(currentQuestionID == 1){
                         //Shows a message for the list of crimes
-                        AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity);
-                        builder.setMessage(R.string.crime_list_message);
+                        boolean firstRunCrimeList = sharedPreferences.getBoolean(Constants.FIRST_RUN_CRIME_LIST, true);
+                        if(firstRunCrimeList) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity);
+                            builder.setMessage(R.string.crime_list_message);
 
-                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User clicked OK button
-                            }
-                        });
+                            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User clicked OK button
+                                }
+                            });
 
-                        // Create the AlertDialog
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+                            // Create the AlertDialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
 
-                        // Sets text button color to black
-                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                            // Sets text button color to black
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                            editor.putBoolean(Constants.FIRST_RUN_CRIME_LIST, false);
+                            editor.apply();
+                        }
                     }
 
                     //Gets the next question ID and updates the fragment
@@ -181,7 +184,7 @@ public class QuestionnaireFragment extends Fragment {
                         if(par_tag.contains(String.valueOf(Constants.TAG_SEXUAL_ATTACK))
                                 || par_tag.contains(String.valueOf(Constants.TAG_UE_RESIDENT))
                                 || par_tag.contains(String.valueOf(Constants.TAG_NON_EU_RESIDENT))){
-                            intent = new Intent(parentActivity.getApplicationContext(), GroupActivity.class);
+                            intent = new Intent(parentActivity.getApplicationContext(), RightsClusterActivity.class);
                         } else{
                             intent = new Intent(parentActivity.getApplicationContext(), ParticlesActivity.class);
                             intent.putExtra("group", Constants.TAG_COMMON_CRIME);

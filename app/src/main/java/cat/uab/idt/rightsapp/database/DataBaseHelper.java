@@ -500,25 +500,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public ArrayList<ParticleModel> getParticlesByTag(ArrayList<Integer> particlesMainTags, ArrayList<Integer> particlesResidenceTags, String language){
         int[] results;
 
-        String query = "SELECT DISTINCT * FROM " + DBContract.Particles_MainTags.TABLE_NAME + " pm INNER JOIN " + DBContract.Particles_residenceTags.TABLE_NAME + " pr ON pm."
-                + DBContract.Particles_MainTags.COLUMN_NAME_ID_PARTICLE + "=pr." + DBContract.Particles_residenceTags.COLUMN_NAME_ID_PARTICLE;
+        String select = "SELECT DISTINCT pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_PARTICLE
+                +  " FROM " + DBContract.Particles_MainTags.TABLE_NAME + " pm ";
 
-        ArrayList<String> whereClause = new ArrayList<>();
+        String innerJoin = "INNER JOIN " + DBContract.Particles_residenceTags.TABLE_NAME
+                + " pr ON pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_PARTICLE + "=pr."
+                + DBContract.Particles_residenceTags.COLUMN_NAME_ID_PARTICLE;
+
+        //String query = "SELECT DISTINCT pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_PARTICLE +  " * FROM " + DBContract.Particles_MainTags.TABLE_NAME + " pm INNER JOIN " + DBContract.Particles_residenceTags.TABLE_NAME + " pr ON pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_PARTICLE + "=pr." + DBContract.Particles_residenceTags.COLUMN_NAME_ID_PARTICLE;
+
+        //Constructs the where clauses
+        ArrayList<String> whereClauses = new ArrayList<>();
         for (int pm: particlesMainTags){
             for(int pr: particlesResidenceTags){
-                whereClause.add("pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_TAG + "=" + pm + " AND pr." + DBContract.Particles_residenceTags.COLUMN_NAME_ID_TAG + "=" + pr);
+                whereClauses.add("pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_TAG +
+                        "=" + pm + " AND pr." + DBContract.Particles_residenceTags.COLUMN_NAME_ID_TAG + "=" + pr);
+            }
+        }
+        String where = " WHERE ";
+        for(int i=0; i < whereClauses.size(); i++){
+            where = where + whereClauses.get(i);
+            if(i < whereClauses.size() - 1){
+                where = where + " OR ";
             }
         }
 
-        query = query + " WHERE ";
-        for(int i=0; i < whereClause.size(); i++){
-            query = query + whereClause.get(i);
-            if(i < whereClause.size() - 1){
-                query = query + " OR ";
-            }
-        }
-
+        //Constructs and launches the query
+        String query = select + innerJoin + where;
         System.out.println("Query test: " + query);
+        System.out.println("Query test where: " + where);
         Cursor cursor = myDataBase.rawQuery(query, null);
         results = new int[cursor.getCount()];
 

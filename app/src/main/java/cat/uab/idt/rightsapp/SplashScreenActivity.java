@@ -8,7 +8,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.core.os.ConfigurationCompat;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
@@ -41,6 +40,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         sharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
+        //Sets first run preferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(Constants.FIRST_RUN_CRIME_LIST, true);
+        editor.putBoolean(Constants.FIRST_RUN_BACK_CLUSTER, true);
+        editor.apply();
+
         //Sets the language stored in Preferences for the app
         language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
         if(language == null){
@@ -69,7 +74,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
             //Stores the language
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+            //SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(Constants.PREF_LANGUAGE, language);
             editor.apply();
         }else {
@@ -88,11 +93,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         agreed = sharedPreferences.getBoolean(Constants.AGREED, false);
         showExplanation = sharedPreferences.getBoolean(Constants.SHOW_EXPLANATION, true);
-
-        //Test code
-        //agreed = false;
-        //showExplanation = true;
-        //End test code
 
         if(!agreed){
             // Sets a delay for the splashscreen

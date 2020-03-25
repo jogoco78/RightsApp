@@ -86,4 +86,11 @@ O primeiro cenário refere-se à necessidade de fazer uma chamada de emergência
     <string name="EU_citizens_rights">Direitos especialmente concedidos a cidadãos vítimas de crimes residentes em um país membro da UE</string>
     <string name="no_EU_citizens_rights">Direitos especialmente concedidos a cidadãos vítimas de um crime que resida num país não pertencente à UE</string>
     <string name="sexual_attack_protocol">Protocolo de ação para um ataque sexual grave</string>
+
+    <!-- Alert dialogs -->
+    <string name="back_questionnaire">Se você pressionar \"Aceitar\", retornará à primeira pergunta do questionário e suas respostas atuais serão perdidas.</string>
+
+    <!-- Menu bar -->
+    <string name="help">Ajuda</string>
+
 </resources>

@@ -150,6 +150,23 @@ public class LanguageActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.action_help:
+                //TODO: Set the action help text
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(R.string.help);
+
+                // Add the buttons
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button -- Do nothing
+
+                    }
+                });
+
+                // Create the AlertDialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                break;
             case R.id.settings_explanation:
                 intent = new Intent(getApplicationContext(), ExplanationActivity.class);
                 startActivity(intent);

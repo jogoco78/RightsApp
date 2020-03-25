@@ -86,4 +86,11 @@
     <string name="EU_citizens_rights">Derechos especialmente otorgados a los ciudadanos víctima de un delito con residencia en un país miembro de la UE</string>
     <string name="no_EU_citizens_rights">Derechos especialmente otorgados a los ciudadanos víctima de un delito con residencia en un país no miembro de la UE </string>
     <string name="sexual_attack_protocol">Protocolo de actuación ante un ataque sexual grave</string>
+
+    <!-- Alert dialogs -->
+    <string name="back_questionnaire">Si pulsas \"Aceptar\" volverás a la primera pregunta del cuestionario y tus respuestas actuales se perderán.</string>
+
+    <!-- Menu bar -->
+    <string name="help">Ayuda</string>
+
 </resources>

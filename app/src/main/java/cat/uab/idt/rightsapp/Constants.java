@@ -14,6 +14,10 @@ public abstract class Constants {
     public static final String[] LANGUAGE_CODES = {"es","en","por","it"};
     public static final String[] REGIONS = {"ES","EN","PT","IT"};
 
+    //First runs
+    public static final String FIRST_RUN_CRIME_LIST = "first_run_crime_list";
+    public static final String FIRST_RUN_BACK_CLUSTER = "first_run_back_cluster";
+
     //Parameters
     public static final String PAR_QUESTIONS = "par_questions";
     public static final String PAR_ANSWERS = "par_answers";

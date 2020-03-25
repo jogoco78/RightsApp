@@ -1,8 +1,11 @@
 package cat.uab.idt.rightsapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
@@ -86,6 +89,23 @@ public class ExplanationActivity extends AppCompatActivity {
             case R.id.action_home:
                 intent = new Intent(getApplicationContext(), RightsAppActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.action_help:
+                //TODO: Set the action help text
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(R.string.help);
+
+                // Add the buttons
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button -- Do nothing
+
+                    }
+                });
+
+                // Create the AlertDialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 break;
             case R.id.settings_explanation:
                 intent = new Intent(getApplicationContext(), ExplanationActivity.class);
