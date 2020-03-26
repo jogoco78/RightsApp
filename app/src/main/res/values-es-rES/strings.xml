@@ -93,4 +93,11 @@
     <!-- Menu bar -->
     <string name="help">Ayuda</string>
 
+    <!-- Quick help texts -->
+    <string name="qh_rightsapp_activity">Escoja una de las tres opciones disponibles: 1) Realizar una llamada de emergencia al 112; 2) Obtener información personalizada a través de un questionario; y 3) Obtener una lista de las entidades de apoyo a las víctimas de delito, consulados y embajadas</string>
+    <string name="qh_call112_activity">Pulsando en el icono o en el botón \"Llamar\" realizará una llamada de emergencia al 112</string>
+    <string name="qh_entities_search_activity">Escoja los criterios de las entidades de apoyo a las víctimas, comisarias, consulados y/o embajadas que desee buscar</string>
+    <string name="qh_entities_list_activity">Dentro de la lista de entidades que cumplen los criterios de búsqueda que especificó en la pantalla anterior, escoja la que le resulte más conveniente para ver más detalles. La lista está ordenada por proximidad a su posición geográfica</string>
+    <string name="qh_entity_activity">En esta pantalla se muestran los detalles de la entidad que escogió en la lista de la pantalla anterior</string>
+
 </resources>

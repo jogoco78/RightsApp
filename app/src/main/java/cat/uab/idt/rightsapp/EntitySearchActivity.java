@@ -269,7 +269,7 @@ public class EntitySearchActivity extends AppCompatActivity {
             case R.id.action_help:
                 //TODO: Set the action help text
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.help);
+                builder.setMessage(R.string.qh_entities_search_activity);
 
                 // Add the buttons
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {

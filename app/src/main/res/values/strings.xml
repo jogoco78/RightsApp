@@ -105,4 +105,11 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <!-- Menu bar -->
     <string name="help">Help</string>
 
+    <!-- Quick help texts -->
+    <string name="qh_rightsapp_activity">Choose one of the three available options: 1) Make an emergency call to 112; 2) Obtain personalized information through a questionnaire; and 3) Obtain a list of crime victim support entities, consulates and embassies.</string>
+    <string name="qh_call112_activity">Pressing the icon or the \ "Call \" button you will make an emergency call to 112</string>
+    <string name="qh_entities_search_activity">Choose the criteria of the victim support entities, police stations, consulates and / or embassies you want to search for</string>
+    <string name="qh_entities_list_activity">From the list of entities that meet the search criteria that you specified on the previous screen, choose the one that is most convenient for you to see more details. The list is ordered by proximity to your geographical position</string>
+    <string name="qh_entity_activity">This screen shows the details of the entity you chose from the list on the previous screen</string>
+
 </resources>

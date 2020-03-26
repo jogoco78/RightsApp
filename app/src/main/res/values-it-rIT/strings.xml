@@ -89,4 +89,12 @@
 
     <!-- Menu bar -->
     <string name="help">Aiuto</string>
+
+    <!-- Quick help texts -->
+    <string name="qh_rightsapp_activity">Scegli una delle tre opzioni disponibili: 1) Effettua una chiamata di emergenza al 112; 2) Ottenere informazioni personalizzate attraverso un questionario; e 3) ottenere un elenco di entità, consolati ed ambasciate di sostegno alle vittime di reati.</string>
+    <string name="qh_call112_activity">Premendo l\'icona o il pulsante \"Chiama \" si effettuerà una chiamata di emergenza al 112</string>
+    <string name="qh_entities_search_activity">Scegli i criteri delle entità di supporto alle vittime, le stazioni di polizia, i consolati e / o le ambasciate che desideri cercare</string>
+    <string name="qh_entities_list_activity">Dall\'elenco di entità che soddisfano i criteri di ricerca specificati nella schermata precedente, scegliere quello più conveniente per visualizzare ulteriori dettagli. L\'elenco è ordinato per vicinanza alla posizione geografica</string>
+    <string name="qh_entity_activity">Questa schermata mostra i dettagli dell\'entità scelta dall\'elenco nella schermata precedente</string>
+
 </resources>

@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -84,7 +85,126 @@ public class QuestionnaireFragment extends Fragment {
         tv_question = fragmentView.findViewById(R.id.questionnaire_fragment_question);
         rg_answers = fragmentView.findViewById(R.id.questionnaire_radio_group);
 
-        Button mButton = fragmentView.findViewById(R.id.button_questionnaire_fragment);
+        ImageButton ib = fragmentView.findViewById(R.id.ib_questionnaire_next);
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                int id_answer = rg_answers.getCheckedRadioButtonId();
+
+                if(id_answer == -1) {
+                    //No answer is set by the user
+                    AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity);
+                    builder.setMessage(R.string.no_answer);
+
+                    // Add the buttons
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked OK button - Do nothing
+
+                        }
+                    });
+                    // Create the AlertDialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else {
+                    //One answer is set by the user
+                    if (db == null) {
+                        //Opens DB
+                        db = new DataBaseHelper(parentActivity);
+                        db.openDataBase();
+                    }
+
+                    //Gets preferences file
+                    Context context = parentActivity.getApplicationContext();
+                    SharedPreferences sharedPreferences = context.getSharedPreferences(
+                            getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+                    //Gets current questions, answers and tags parameters
+                    String par_questionID = sharedPreferences.getString(Constants.PAR_QUESTIONS, null);
+                    String par_answersID = sharedPreferences.getString(Constants.PAR_ANSWERS, null);
+                    String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
+
+                    if (par_questionID == null) {
+                        par_questionID = String.valueOf(currentQuestionID);
+                    } else {
+                        par_questionID = par_questionID + "," + String.valueOf(currentQuestionID);
+                    }
+
+                    if (par_answersID == null) {
+                        par_answersID = String.valueOf(id_answer);
+                    } else {
+                        par_answersID = par_answersID + "," + id_answer;
+                    }
+
+                    //Raise the tag, if any, in preferences
+                    int id_tag_raised = db.getTagRaisedID(currentQuestionID, id_answer);
+                    if (id_tag_raised != 0) {
+                        if (par_tag == null) {
+                            par_tag = String.valueOf(id_tag_raised);
+                        } else {
+                            par_tag = par_tag + "," + id_tag_raised;
+                        }
+                    }
+
+                    //Stores the parameters
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(Constants.PAR_QUESTIONS, par_questionID);
+                    editor.putString(Constants.PAR_ANSWERS, par_answersID);
+                    if (id_tag_raised != 0) editor.putString(Constants.PAR_TAGS, par_tag);
+                    editor.apply();
+
+                    if(currentQuestionID == 1){
+                        //Shows a message for the list of crimes
+                        boolean firstRunCrimeList = sharedPreferences.getBoolean(Constants.FIRST_RUN_CRIME_LIST, true);
+                        if(firstRunCrimeList) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity);
+                            builder.setMessage(R.string.crime_list_message);
+
+                            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User clicked OK button
+                                }
+                            });
+
+                            // Create the AlertDialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+
+                            // Sets text button color to black
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                            editor.putBoolean(Constants.FIRST_RUN_CRIME_LIST, false);
+                            editor.apply();
+                        }
+                    }
+
+                    //Gets the next question ID and updates the fragment
+                    int id_next_question = db.getNextQuestionID(currentQuestionID, id_answer);
+                    if (id_next_question == 0) {
+                        //Finish the workflow
+                        Intent intent = null;
+                        if(par_tag.contains(String.valueOf(Constants.TAG_SEXUAL_ATTACK))
+                                || par_tag.contains(String.valueOf(Constants.TAG_UE_RESIDENT))
+                                || par_tag.contains(String.valueOf(Constants.TAG_NON_EU_RESIDENT))){
+                            intent = new Intent(parentActivity.getApplicationContext(), RightsClusterActivity.class);
+                        } else{
+                            intent = new Intent(parentActivity.getApplicationContext(), ParticlesActivity.class);
+                            intent.putExtra("group", Constants.TAG_COMMON_CRIME);
+                        }
+
+                        startActivity(intent);
+                    } else {
+                        //updates the fragment to the new question
+                        parentActivity.setCurrentQuestionID(id_next_question);
+                        parentActivity.getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.questionnaire_activity_framelayout, new QuestionnaireFragment(), String.valueOf(id_answer))
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                }
+            }
+        });
+
+        /*Button mButton = fragmentView.findViewById(R.id.button_questionnaire_fragment);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,7 +321,7 @@ public class QuestionnaireFragment extends Fragment {
                     }
                 }
             }
-        });
+        });*/
 
         return fragmentView;
     }

@@ -27,7 +27,7 @@ public class MyRecyclerViewAdapterGroups extends RecyclerView.Adapter<MyRecycler
     //Inflates the row layout from xml
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View view = inflater.inflate(R.layout.rv_group_layout, parent, false);
+        View view = inflater.inflate(R.layout.rv_cluster_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -36,7 +36,6 @@ public class MyRecyclerViewAdapterGroups extends RecyclerView.Adapter<MyRecycler
     public void onBindViewHolder(ViewHolder holder, int position){
         //String s = dataSet.get(position).getDescription();
         TagModel tm = dataSet.get(position);
-        System.out.println("Query: Position: " + position + " Text: " + tm.getDescription());
 
         holder.tv_group.setText(tm.getDescription());
     }

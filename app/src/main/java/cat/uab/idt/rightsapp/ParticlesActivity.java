@@ -103,7 +103,7 @@ public class ParticlesActivity extends AppCompatActivity {
                 particlesResidenceTags.add(Constants.TAG_NON_EU_RESIDENT);
                 break;
             default:
-
+                //Error
         }
 
         //Gets particles list

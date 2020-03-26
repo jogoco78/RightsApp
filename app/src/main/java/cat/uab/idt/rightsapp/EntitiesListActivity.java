@@ -319,7 +319,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
             case R.id.action_help:
                 //TODO: Set the action help text
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.help);
+                builder.setMessage(R.string.qh_entities_list_activity);
 
                 // Add the buttons
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {

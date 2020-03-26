@@ -93,4 +93,12 @@ O primeiro cenário refere-se à necessidade de fazer uma chamada de emergência
     <!-- Menu bar -->
     <string name="help">Ajuda</string>
 
+    <!-- Quick help texts -->
+    <string name="qh_rightsapp_activity">Escolha uma das três opções disponíveis: 1) Faça uma chamada de emergência para 112; 2) Obter informações personalizadas através de um questionário; e 3) Obter uma lista de entidades de apoio às vítimas do crime, consulados e embaixadas.</string>
+    <string name="qh_call112_activity">Pressionar o ícone ou o botão \"Ligar\" fará uma chamada de emergência para 112</string>
+    <string name="qh_entities_search_activity">Escolha os critérios das entidades de apoio à vítima, delegacias, consulados e / ou embaixadas que você deseja procurar</string>
+    <string name="qh_entities_list_activity">Na lista de entidades que atendem aos critérios de pesquisa especificados na tela anterior, escolha o que for mais conveniente para você ver mais detalhes. A lista é ordenada por proximidade à sua posição geográfica</string>
+    <string name="qh_entity_activity">Essa tela mostra os detalhes da entidade que você escolheu da lista na tela anterior</string>
+
+
 </resources>
