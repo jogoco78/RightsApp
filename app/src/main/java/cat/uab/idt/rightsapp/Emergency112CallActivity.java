@@ -49,30 +49,11 @@ public class Emergency112CallActivity extends AppCompatActivity {
             }
         });
 
-        Button bt_back = findViewById(R.id.bt_back);
-        bt_back.setOnClickListener(new View.OnClickListener(){
+        ImageButton ib_back = findViewById(R.id.ib_call112_back);
+        ib_back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button bt_call = findViewById(R.id.bt_call112);
-        bt_call.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                int phonePermission = ActivityCompat.checkSelfPermission(Emergency112CallActivity.this, Manifest.permission.CALL_PHONE);
-
-                if (phonePermission != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(Emergency112CallActivity.this,
-                            new String[]{Manifest.permission.CALL_PHONE},
-                            REQUEST_PERMISSION_PHONE_CALL);
-                }else{
-                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:" + Constants.PHONE_EMERGENCIES));
-                    startActivity(callIntent);
-                }
+            public void onClick(View v) {
+                finish();
             }
         });
     }

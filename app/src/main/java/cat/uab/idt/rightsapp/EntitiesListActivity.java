@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
+//import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -21,7 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -36,15 +36,14 @@ import cat.uab.idt.rightsapp.models.EntityModel;
 
 public class EntitiesListActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener{
 
-    private String language;
     private final static int REQUEST_PERMISSION_GET_COORDINATES = 101;
-    private LocationManager locationManager;
+    //private LocationManager locationManager;
     private double longitude;
     private double latitude;
     private FusedLocationProviderClient fusedLocationClient;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter rv_adapter;
-    private RecyclerView.LayoutManager rv_layoutManager;
+    //private RecyclerView.LayoutManager rv_layoutManager;
     Activity activity = this;
     ArrayList<EntityModel> entities_list;
 
@@ -61,7 +60,8 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
 
         //Get elements from layout
         recyclerView = findViewById(R.id.rv_entities);
-        Button btn_entities_list_back = findViewById(R.id.btn_entities_list_back);
+        ImageButton ib_back = findViewById(R.id.ib_entities_list_back);
+        //Button btn_entities_list_back = findViewById(R.id.btn_entities_list_back);
 
         // Gets preferences file
         Context context = getApplicationContext();
@@ -69,19 +69,19 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         //Gets the language stored in Preferences for the app
-        language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
+        String language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
 
         //Gets the search criteria stored in intent
         String[] criteria = getIntent().getStringExtra(Constants.SEARCH_ENTITY_CRITERIA).split(",");
 
         //Opens DB
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
-        dataBaseHelper.openDataBase();
+        DataBaseHelper db = new DataBaseHelper(this);
+        db.openDataBase();
 
         //Populates the arraylist for recycleview
         entities_list = new ArrayList<>();
 
-        entities_list = dataBaseHelper.getEntitiesList(
+        entities_list = db.getEntitiesList(
                 new int[] {Integer.parseInt(criteria[0])},
                 new int[] {Integer.parseInt(criteria[1])},
                 new int[] {Integer.parseInt(criteria[2])},
@@ -91,46 +91,19 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLocation();
 
-        /*float[] results = new float[1];
-        for (int i = 0; i < entities_list.size(); i++){
-            Location.distanceBetween(longitude, latitude, entities_list.get(i).getLongitude(), entities_list.get(i).getLatitude(),results);
-            entities_list.get(i).setDistance(Math.round(results[0] / 10.0) / 100.0); //meters to kms and rounded two decimals
-        }
-
-        //Sort the entities list by distance
-        ArrayList<EntityModel> entities_list_sorted = new ArrayList<>();
-        int size = entities_list.size();
-        for(int i = 0; i < size; i++){
-            double min = Double.MAX_VALUE;
-            int s = 0;
-            for(int j = 0; j < entities_list.size(); j++){
-                if(entities_list.get(j).getDistance() < min){
-                    s = j;
-                    min = entities_list.get(j).getDistance();
-                }
+        ib_back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                finish();
             }
-            entities_list_sorted.add(entities_list.get(s));
-            entities_list.remove(s);
-        }
-        entities_list = null;
+        });
 
-        //Set up the recycler view
-        recyclerView.setHasFixedSize(true);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        rv_adapter = new RecyclerViewAdapter(this, entities_list_sorted);
-        rv_adapter.setClickListener(this);
-        recyclerView.setAdapter(rv_adapter);
-
-        RecyclerView.ItemDecoration divider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(divider);*/
-
-        btn_entities_list_back.setOnClickListener(new View.OnClickListener() {
+        /*btn_entities_list_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
     }
 
     @Override

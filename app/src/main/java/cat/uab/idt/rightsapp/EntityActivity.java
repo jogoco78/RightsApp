@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class EntityActivity extends AppCompatActivity {
@@ -54,9 +55,9 @@ public class EntityActivity extends AppCompatActivity {
         TextView tv_entity_address = findViewById(R.id.tv_address);
         TextView tv_entity_phone = findViewById(R.id.tv_entity_phone);
         TextView tv_entity_link = findViewById(R.id.tv_entity_link);
-        Button btn_call = findViewById(R.id.btn_call);
-        Button btn_navigate = findViewById(R.id.btn_navigate);
-        Button btn_back = findViewById(R.id.btn_entity_back);
+        ImageButton ib_call = findViewById(R.id.ib_entity_phone);
+        ImageButton ib_navigate = findViewById(R.id.ib_entity_navigate);
+        ImageButton ib_back = findViewById(R.id.ib_entity_back);
 
         tv_entity_name.setText(name);
         tv_entity_description.setText(description);
@@ -64,9 +65,9 @@ public class EntityActivity extends AppCompatActivity {
         tv_entity_phone.setText(phone_number);
         tv_entity_link.setText(link);
 
-        btn_call.setOnClickListener(new View.OnClickListener() {
+        ib_call.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 int phonePermission = ActivityCompat.checkSelfPermission(EntityActivity.this, Manifest.permission.CALL_PHONE);
 
                 if (phonePermission != PackageManager.PERMISSION_GRANTED) {
@@ -81,11 +82,11 @@ public class EntityActivity extends AppCompatActivity {
             }
         });
 
-        btn_navigate.setOnClickListener(new View.OnClickListener() {
+        ib_navigate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 // Create a Uri from an intent string. Use the result to create an Intent
-                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + longitude + "," + latitude);
+                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude);
 
                 // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
@@ -98,12 +99,13 @@ public class EntityActivity extends AppCompatActivity {
             }
         });
 
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        ib_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
     }
 
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

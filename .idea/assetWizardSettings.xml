@@ -47,8 +47,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Dropbox/Projects/RightsApp/WP3/Resources/select.svg" />
-                                      <entry key="outputName" value="ic_select" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Dropbox/Projects/RightsApp/WP3/Resources/navigate.svg" />
+                                      <entry key="outputName" value="ic_navigate" />
                                       <entry key="themeColor" value="000000" />
                                     </map>
                                   </option>
@@ -88,10 +88,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
                                       <entry key="foregroundImage" value="$USER_HOME$/Dropbox/Projects/RightsApp/logos/onlyLogo/RightsApp_onlyLogo_512x512.svg" />
-                                      <entry key="legacyIconShape" value="NONE" />
-                                      <entry key="previewDensity" value="HIGH" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -156,6 +153,11 @@
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

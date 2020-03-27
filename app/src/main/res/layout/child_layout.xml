@@ -7,10 +7,10 @@
         android:id="@+id/tv_child"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#07800d"
-        android:textSize="14sp"
-        android:text="child"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+        android:paddingBottom="10dp"
+        android:text="child"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
 </LinearLayout>

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,16 +33,13 @@ public class EntitySearchActivity extends AppCompatActivity {
     private Spinner sp_select_entity_country;
     private Spinner sp_select_entity_city;
 
-    private DataBaseHelper dataBaseHelper;
+    private DataBaseHelper db;
 
     private ArrayList<CategoryModel> categories_list;
     private ArrayList<CountryModel> countries_list;
     private ArrayList<CityModel> cities_list;
     private ArrayAdapter<CategoryModel> category_dataAdapter;
     private ArrayAdapter<CityModel> city_dataAdapter;
-
-    private SharedPreferences sharedPreferences;
-
 
     protected void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
@@ -61,19 +59,19 @@ public class EntitySearchActivity extends AppCompatActivity {
         sp_select_entity_country = findViewById(R.id.sp_entity_country);
         sp_select_entity_city = findViewById(R.id.sp_entity_city);
 
-        if (dataBaseHelper == null) {
+        if (db == null) {
             //Opens DB
-            dataBaseHelper = new DataBaseHelper(this);
-            dataBaseHelper.openDataBase();
+            db = new DataBaseHelper(this);
+            db.openDataBase();
         }
 
         //Gets preference file & language
-        sharedPreferences = getApplicationContext().getSharedPreferences(
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
 
         //Set initial values for categories spinner
-        categories_list = dataBaseHelper.getCategoriesList(null, language);
+        categories_list = db.getCategoriesList(null, language);
         CategoryModel cat_model = new CategoryModel(
                 0,
                 getResources().getString(R.string.all_categories),
@@ -85,7 +83,7 @@ public class EntitySearchActivity extends AppCompatActivity {
         category_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         //Set initial values for country spinner
-        countries_list = dataBaseHelper.getCountriesList(null, language);
+        countries_list = db.getCountriesList(null, language);
         CountryModel all_countries_option = new CountryModel(
                 0,
                 getResources().getString(R.string.all_countries),
@@ -98,7 +96,7 @@ public class EntitySearchActivity extends AppCompatActivity {
 
         // Set initial values for cities spinner
         cities_list = null;
-        cities_list = dataBaseHelper.getCitiesList(null, null, language, true);
+        cities_list = db.getCitiesList(null, null, language, true);
         CityModel all_cities_option = new CityModel(
                 0,
                 getResources().getString(R.string.all_cities),
@@ -121,9 +119,9 @@ public class EntitySearchActivity extends AppCompatActivity {
                 cities_list.clear();
 
                 if(categoryModel.getId() == 0){
-                    cities_list = dataBaseHelper.getCitiesList(new int[]{countryModel.getId()}, null, language, true);
+                    cities_list = db.getCitiesList(new int[]{countryModel.getId()}, null, language, true);
                 }else{
-                    cities_list = dataBaseHelper.getCitiesList(new int[]{countryModel.getId()},new int[]{categoryModel.getId()}, language, true);
+                    cities_list = db.getCitiesList(new int[]{countryModel.getId()},new int[]{categoryModel.getId()}, language, true);
                 }
 
                 CityModel all_cities_option = new CityModel(
@@ -155,9 +153,9 @@ public class EntitySearchActivity extends AppCompatActivity {
 
                 //Updates cities spinner
                 if(country_model.getId() == 0){
-                    cities_list = dataBaseHelper.getCitiesList(null, new int[]{categoryModel.getId()}, language, true);
+                    cities_list = db.getCitiesList(null, new int[]{categoryModel.getId()}, language, true);
                 }else{
-                    cities_list = dataBaseHelper.getCitiesList(new int[]{country_model.getId()}, new int[]{categoryModel.getId()}, language, true);
+                    cities_list = db.getCitiesList(new int[]{country_model.getId()}, new int[]{categoryModel.getId()}, language, true);
                 }
 
                 CityModel all_cities_option = new CityModel(
@@ -200,17 +198,16 @@ public class EntitySearchActivity extends AppCompatActivity {
             }
         });
 
-        //Sets the button and its listener
-        Button btn_continue = findViewById(R.id.btn_entity_next);
-        btn_continue.setOnClickListener(new View.OnClickListener() {
+        //Sets the image button and its listener
+        ImageButton ib_next = findViewById(R.id.ib_search_entity_next);
+        ib_next.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View v){
                 CategoryModel category_model = (CategoryModel) sp_select_entity_category.getSelectedItem();
                 CountryModel country_model = (CountryModel) sp_select_entity_country.getSelectedItem();
                 CityModel city_model = (CityModel) sp_select_entity_city.getSelectedItem();
 
-                int size = dataBaseHelper.getEntitiesList(
+                int size = db.getEntitiesList(
                         new int[] {category_model.getId()},
                         new int[] {country_model.getId()},
                         new int[] {city_model.getId()},
@@ -238,6 +235,14 @@ public class EntitySearchActivity extends AppCompatActivity {
                             "," + city_model.getId());
                     startActivity(intent);
                 }
+            }
+        });
+
+        ImageButton ib_back = findViewById(R.id.ib_search_entity_back);
+        ib_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
