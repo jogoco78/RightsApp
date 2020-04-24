@@ -242,7 +242,7 @@ public class EntitySearchActivity extends AppCompatActivity {
         ib_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
     }

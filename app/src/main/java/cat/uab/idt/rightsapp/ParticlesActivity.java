@@ -11,8 +11,10 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,15 @@ public class ParticlesActivity extends AppCompatActivity {
         //Sets the toolbar
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
+
+        ImageButton ib_particles_back = findViewById(R.id.ib_particles);
+
+        ib_particles_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         int id_tag_user = 0;
         //Main tags
@@ -61,7 +72,9 @@ public class ParticlesActivity extends AppCompatActivity {
         //Gets tags
         String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
 
-        if(par_tag.contains(String.valueOf(Constants.TAG_TERRORISM))){
+        if(id_tag_user == Constants.TAG_SEXUAL_ATTACK){
+            particlesMainTags.add(Constants.TAG_SEXUAL_ATTACK);
+        } else if(par_tag.contains(String.valueOf(Constants.TAG_TERRORISM))){
             //Terrorism
             particlesMainTags.add(Constants.TAG_TERRORISM);
         }else if(par_tag.contains(String.valueOf(Constants.TAG_VIOLENCE_AGAINST_WOMEN))){
@@ -88,11 +101,8 @@ public class ParticlesActivity extends AppCompatActivity {
             case Constants.TAG_VIOLENCE_AGAINST_WOMEN:
             case Constants.TAG_DOMESTIC_VIOLENCE:
             case Constants.TAG_VIOLENT_CRIME:
-                particlesResidenceTags.add(Constants.TAG_SPANISH_RESIDENT);
-                break;
             case Constants.TAG_SEXUAL_ATTACK:
-                //Sexual attack
-                particlesMainTags.add(Constants.TAG_SEXUAL_ATTACK);
+                particlesResidenceTags.add(Constants.TAG_SPANISH_RESIDENT);
                 break;
             case Constants.TAG_UE_RESIDENT:
                 //UE Residents

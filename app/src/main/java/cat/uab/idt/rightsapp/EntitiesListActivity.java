@@ -73,7 +73,6 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
 
         //Gets the search criteria stored in intent
         String[] criteria = getIntent().getStringExtra(Constants.SEARCH_ENTITY_CRITERIA).split(",");
-
         //Opens DB
         DataBaseHelper db = new DataBaseHelper(this);
         db.openDataBase();
@@ -161,6 +160,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
                                     entities_list.remove(s);
                                 }
                                 entities_list = null;
+                                System.out.println("TEST QUERY SORTED: " + entities_list_sorted.size());
 
                                 //Set up the recycler view
                                 recyclerView.setHasFixedSize(true);

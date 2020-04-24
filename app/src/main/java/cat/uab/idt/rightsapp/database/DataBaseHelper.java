@@ -434,8 +434,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
 
-
-
         return results;
     }
 
@@ -507,8 +505,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 + " pr ON pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_PARTICLE + "=pr."
                 + DBContract.Particles_residenceTags.COLUMN_NAME_ID_PARTICLE;
 
-        //String query = "SELECT DISTINCT pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_PARTICLE +  " * FROM " + DBContract.Particles_MainTags.TABLE_NAME + " pm INNER JOIN " + DBContract.Particles_residenceTags.TABLE_NAME + " pr ON pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_PARTICLE + "=pr." + DBContract.Particles_residenceTags.COLUMN_NAME_ID_PARTICLE;
-
         //Constructs the where clauses
         ArrayList<String> whereClauses = new ArrayList<>();
         for (int pm: particlesMainTags){
@@ -527,8 +523,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         //Constructs and launches the query
         String query = select + innerJoin + where;
-        System.out.println("Query test: " + query);
-        System.out.println("Query test where: " + where);
         Cursor cursor = myDataBase.rawQuery(query, null);
         results = new int[cursor.getCount()];
 
@@ -623,8 +617,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         query = query + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_ID + " = " + DBContract.Particles.TABLE_NAME + "." + DBContract.Particles.COLUMN_NAME_ID_SUBJECT;
         query = query + " order by " + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_CLUSTER + " ASC, "
                 + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_PRIORITY + " ASC";
-
-        System.out.println("Query " + query);
 
         Cursor cursor = myDataBase.rawQuery(query, null);
 
