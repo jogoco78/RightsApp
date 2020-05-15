@@ -25,7 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /**
      * Database name
      */
-    private static String DB_NAME = "rightsapp_v6_utf16.db";
+    private static String DB_NAME = "rightsapp_v7_utf16.db";
 
     /**
      * Assets path for databases folder
@@ -491,52 +491,41 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     /**
      * Returns the particles related to the given tag
-     * @param particlesMainTags the list of tags
+     * @param mainTag the list of tags
      * @param language the language for the particles
      * @return an ArrayList with the particles related to given tags in specified language
      */
-    public ArrayList<ParticleModel> getParticlesByTag(ArrayList<Integer> particlesMainTags, ArrayList<Integer> particlesResidenceTags, String language){
-        int[] results;
+    public ArrayList<ParticleModel> getParticlesByTag(int mainTag, int residenceTag, String language){
 
-        String select = "SELECT DISTINCT pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_PARTICLE
-                +  " FROM " + DBContract.Particles_MainTags.TABLE_NAME + " pm ";
+        String select = "select distinct pt." + DBContract.Particles_Tags.COLUMN_NAME_ID_PARTICLE
+                + ",pt." + DBContract.Particles_Tags.COLUMN_NAME_TAG_CODE
+                + " from " + DBContract.Particles_Tags.TABLE_NAME + " pt";
 
-        String innerJoin = "INNER JOIN " + DBContract.Particles_residenceTags.TABLE_NAME
-                + " pr ON pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_PARTICLE + "=pr."
-                + DBContract.Particles_residenceTags.COLUMN_NAME_ID_PARTICLE;
-
-        //Constructs the where clauses
-        ArrayList<String> whereClauses = new ArrayList<>();
-        for (int pm: particlesMainTags){
-            for(int pr: particlesResidenceTags){
-                whereClauses.add("pm." + DBContract.Particles_MainTags.COLUMN_NAME_ID_TAG +
-                        "=" + pm + " AND pr." + DBContract.Particles_residenceTags.COLUMN_NAME_ID_TAG + "=" + pr);
-            }
-        }
-        String where = " WHERE ";
-        for(int i=0; i < whereClauses.size(); i++){
-            where = where + whereClauses.get(i);
-            if(i < whereClauses.size() - 1){
-                where = where + " OR ";
-            }
+        String where = " where pt." + DBContract.Particles_Tags.COLUMN_NAME_TAG_CODE + " like \'";
+        if(residenceTag == 0){
+            where = where + mainTag + "%\'";
+        }else{
+            where = where + mainTag + residenceTag + "%\'";
         }
 
         //Constructs and launches the query
-        String query = select + innerJoin + where;
+        String query = select + where;
         Cursor cursor = myDataBase.rawQuery(query, null);
-        results = new int[cursor.getCount()];
+        int[] id_particles = new int[cursor.getCount()];
+        int[] tag_codes = new int[cursor.getCount()];
 
         if(cursor.moveToFirst()){
             // Loop through cursor results if the query has rows
             int index = 0;
             do {
-                results[index] = cursor.getInt(0);
+                id_particles[index] = cursor.getInt(0);
+                tag_codes[index] = cursor.getInt(1);
                 index++;
             } while (cursor.moveToNext());
         }
         cursor.close();
 
-        return getParticles(results, language);
+        return getParticles(id_particles, tag_codes, language);
     }
 
     /**
@@ -590,33 +579,32 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return results;
     }
 
-    private ArrayList<ParticleModel> getParticles(int[] id_particles, String language){
+    private ArrayList<ParticleModel> getParticles(int[] id_particles, int[] tag_codes, String language){
         boolean previousClause = false;
         ArrayList<ParticleModel> results = new ArrayList<>();
 
-        String query = "select " + DBContract.Particles.TABLE_NAME + ".*, " + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_TEXT + "_" + language
-                + "," + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_PRIORITY
-                + "," + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_CLUSTER
-                + " from " + DBContract.Particles.TABLE_NAME + "," + DBContract.Subjects.TABLE_NAME;
+        String select = "select distinct p.*,s." + DBContract.Subjects.COLUMN_NAME_TEXT + "_" + language
+                + " from " + DBContract.Particles.TABLE_NAME + " p," + DBContract.Subjects.TABLE_NAME + " s, " + DBContract.Particles_Tags.TABLE_NAME + " pt";
 
+        String where = "";
         if(id_particles != null){
             previousClause = true;
-            query = query + " WHERE " + DBContract.Particles.TABLE_NAME + "." + DBContract.Particles.COLUMN_NAME_ID + " IN (" + id_particles[0];
+            where = where + " WHERE p." + DBContract.Particles.COLUMN_NAME_ID + " IN (" + id_particles[0];
             for(int i = 1; i < id_particles.length; i++){
-                query = query + "," + id_particles[i];
+                where = where + "," + id_particles[i];
             }
-            query = query + ")";
+            where = where + ")";
         }
 
         if (previousClause) {
-            query = query + " and ";
+            where = where + " and ";
         }else{
-            query = query + " where ";
+            where = where + " where ";
         }
 
-        query = query + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_ID + " = " + DBContract.Particles.TABLE_NAME + "." + DBContract.Particles.COLUMN_NAME_ID_SUBJECT;
-        query = query + " order by " + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_CLUSTER + " ASC, "
-                + DBContract.Subjects.TABLE_NAME + "." + DBContract.Subjects.COLUMN_NAME_PRIORITY + " ASC";
+        where = where + "s." + DBContract.Subjects.COLUMN_NAME_ID + " = " + "p." + DBContract.Particles.COLUMN_NAME_ID_SUBJECT;
+
+        String query = select + where;
 
         Cursor cursor = myDataBase.rawQuery(query, null);
 
@@ -624,12 +612,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             // Loop through cursor results if the query has rows
             do {
                 ParticleModel pm = new ParticleModel();
+                if(tag_codes != null) pm.setTagCode(Integer.toString(tag_codes[cursor.getPosition()]));
                 pm.setId(cursor.getInt(0));
                 pm.setLanguage(language);
                 pm.setId_subject(cursor.getInt(5));
                 pm.setSubjectText(cursor.getString(6));
-                pm.setPriority(cursor.getInt(7));
-                pm.setGroup(cursor.getInt(8));
                 switch (language){
                     case "es":
                         pm.setText(cursor.getString(1));

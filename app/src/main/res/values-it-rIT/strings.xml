@@ -86,7 +86,6 @@
     <string name="sexual_attack_protocol">Protocollo d\'azione per un grave attacco sessuale</string>
 
     <!-- Alert dialogs -->
-    <string name="back_questionnaire">Se premi \"Accetta\" tornerai alla prima domanda nel questionario e le tue risposte attuali andranno perse.</string>
 
     <!-- Menu bar -->
     <string name="help">Aiuto</string>
@@ -97,5 +96,7 @@
     <string name="qh_entities_search_activity">Scegli i criteri delle entità di supporto alle vittime, le stazioni di polizia, i consolati e / o le ambasciate che desideri cercare</string>
     <string name="qh_entities_list_activity">Dall\'elenco di entità che soddisfano i criteri di ricerca specificati nella schermata precedente, scegliere quello più conveniente per visualizzare ulteriori dettagli. L\'elenco è ordinato per vicinanza alla posizione geografica</string>
     <string name="qh_entity_activity">Questa schermata mostra i dettagli dell\'entità scelta dall\'elenco nella schermata precedente</string>
+    <string name="back_questionnaire">Se premi Accetta, verrai reindirizzato alla schermata principale e le tue risposte attuali andranno perse.</string>
+    <string name="whats_next">Qual è il prossimo?</string>
 
 </resources>

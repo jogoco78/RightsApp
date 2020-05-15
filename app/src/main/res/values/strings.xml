@@ -46,11 +46,11 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="language">Language</string>
     <string name="select_language">Select the new language</string>
     <string name="about">About us</string>
-    <string name="about_us_body">The <b>RightsApp</b> app is the main outcome for the DG-Justice funded project “Mobile Technologies applied to protect victims of a crime within the EU Area of Justice: RightsApp for e-Justice” (<a href="http://rightsapp-project.eu" target="blank">http://rightsapp-project.eu</a>), which has received funding from the DG-Justice European Union’s Programme (2014-2020) under Grant Agreement No. 785854.
-        \n\nThe Consortium is mainly composed of two non-profit organizations within the Universitat Autònoma de Barcelona (UAB): the UAB Institute of Law and Technology (IDT-UAB, <a href="http://idt.uab.cat" target="blank">http://idt.uab.cat</a>) and the UAB International Welcome Point (IWP-UAB, <a href="https://www.uab.cat/international-welcome-point/" target="blank">https://www.uab.cat/international-welcome-point/</a>).
-        \n\nThe <b>UAB Institute of Law and Technology (IDT-UAB)</b> is a research centre promoting cutting-edge research on law and technology from an interdisciplinary perspective. Its core mission is that of fostering research devoted to providing legal professionals, institutions, organizations, and citizens with appropriate technologies to enhance their legal work or to improve the exercise of their rights. Appropriate technologies in this context imply that research is user oriented, so that both the technological design and its developments are tailored to the needs of the end users and not the opposite.
-        \n\nThe <b>UAB International Welcome Point (IWP-UAB)</b> is an office designed by the International Relationships Office to provide services to all foreigner members of the UAB community. Thus, giving support for the students, lecturers, administrative staff and services staff from other countries. It provides practical information like legal procedures for EU and non-EU citizens, health cover for EU citizens, budget for living in Barcelona and useful addresses. Moreover, the IWP provides support on foreigners stay and work permit renewal applications, coordinates assistance among UAB offices and assistance to international postgraduate grant holders.
-        \n\nMoreover, the <b>UAB Faculty of Law </b>(FoL, <a href="https://www.uab.cat/dret/">https://www.uab.cat/dret/</a>), <b>LAST-JD Erasmus Mundus</b> (LAST-JD) and the <b>Catalan Society of Victimology</b> (CSV, <a href="https://www.victimologia.cat/">https://www.victimologia.cat/</a>)  also contribute to qualitative and quantitative research and dissemination as well. The UAB Faculty of Law every year receives more than 60 students from other countries to study abroad in its student mobility programs (Erasmus Programme) and every year about 2.600 individuals enrol at its degrees and post degree courses. The Catalan Society of Victimology groups together lawyers, psychologists, doctors, social workers, among others. </string>
+    <string name="about_us_body">The <a href="http://rightsapp-project.eu" target="blank">http://rightsapp-project.eu</a> app is the main outcome for the DG-Justice funded project “Mobile Technologies applied to protect victims of a crime within the EU Area of Justice: RightsApp for e-Justice” (<a href="http://idt.uab.cat" target="blank">http://idt.uab.cat</a>), which has received funding from the DG-Justice European Union’s Programme (2014-2020) under Grant Agreement No. 785854.
+        \n\nThe Consortium is mainly composed of two non-profit organizations within the Universitat Autònoma de Barcelona (UAB): the UAB Institute of Law and Technology (IDT-UAB, <a href="https://www.uab.cat/international-welcome-point/" target="blank">https://www.uab.cat/international-welcome-point/</a>) and the UAB International Welcome Point (IWP-UAB, <a href="https://www.uab.cat/dret/">https://www.uab.cat/dret/</a>).
+        \n\nThe <a href="https://www.victimologia.cat/">https://www.victimologia.cat/</a> is a research centre promoting cutting-edge research on law and technology from an interdisciplinary perspective. Its core mission is that of fostering research devoted to providing legal professionals, institutions, organizations, and citizens with appropriate technologies to enhance their legal work or to improve the exercise of their rights. Appropriate technologies in this context imply that research is user oriented, so that both the technological design and its developments are tailored to the needs of the end users and not the opposite.
+        \n\nThe <b>RightsApp</b> is an office designed by the International Relationships Office to provide services to all foreigner members of the UAB community. Thus, giving support for the students, lecturers, administrative staff and services staff from other countries. It provides practical information like legal procedures for EU and non-EU citizens, health cover for EU citizens, budget for living in Barcelona and useful addresses. Moreover, the IWP provides support on foreigners stay and work permit renewal applications, coordinates assistance among UAB offices and assistance to international postgraduate grant holders.
+        \n\nMoreover, the <b>UAB Institute of Law and Technology (IDT-UAB)</b>(FoL, <b>UAB International Welcome Point (IWP-UAB)</b>), <b>UAB Faculty of Law </b> (LAST-JD) and the <b>LAST-JD Erasmus Mundus</b> (CSV, <b>Catalan Society of Victimology</b>)  also contribute to qualitative and quantitative research and dissemination as well. The UAB Faculty of Law every year receives more than 60 students from other countries to study abroad in its student mobility programs (Erasmus Programme) and every year about 2.600 individuals enrol at its degrees and post degree courses. The Catalan Society of Victimology groups together lawyers, psychologists, doctors, social workers, among others. </string>
     <string name="title_activity_questionnaire">Questionnaire</string>
     <string name="questionnaire_title">Questionnaire</string>
     <string name="title_activity_questionnaire_fragment">QuestionnaireFragment</string>
@@ -100,7 +100,7 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="sexual_attack_protocol">Protocol of action in a serious sexual attack</string>
 
     <!-- Alert dialogs -->
-    <string name="back_questionnaire">If you press \"Accept\" you will be redirected to the first question of the questionnaire and your current answers will be lost.</string>
+    <string name="back_questionnaire">If you press Accept you will be redirected to the main screen and your current answers will be lost.</string>
 
     <!-- Menu bar -->
     <string name="help">Help</string>
@@ -111,5 +111,17 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="qh_entities_search_activity">Choose the criteria of the victim support entities, police stations, consulates and / or embassies you want to search for</string>
     <string name="qh_entities_list_activity">From the list of entities that meet the search criteria that you specified on the previous screen, choose the one that is most convenient for you to see more details. The list is ordered by proximity to your geographical position</string>
     <string name="qh_entity_activity">This screen shows the details of the entity you chose from the list on the previous screen</string>
+
+    <!-- Clusters texts -->
+    <string name="terrorism_cluster_1">Test of cluster text</string>
+    <string name="whats_next">What\'s next?</string>
+    <string name="title_activity_whats_next">WhatsNextActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>

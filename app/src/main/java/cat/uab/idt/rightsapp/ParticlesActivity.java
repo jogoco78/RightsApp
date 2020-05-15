@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
@@ -24,6 +25,10 @@ import cat.uab.idt.rightsapp.models.ParticleModel;
 
 public class ParticlesActivity extends AppCompatActivity {
 
+    private int id_tag_selected = 0;
+    private int id_tag_cluster_selected = 0;
+    private int main_tag = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,19 +40,7 @@ public class ParticlesActivity extends AppCompatActivity {
         setSupportActionBar(toolbarRightsApp);
 
         ImageButton ib_particles_back = findViewById(R.id.ib_particles);
-
-        ib_particles_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        int id_tag_user = 0;
-        //Main tags
-        ArrayList<Integer> particlesMainTags = new ArrayList<>();
-        //Residence tags
-        ArrayList<Integer> particlesResidenceTags = new ArrayList<>();
+        Button btn_whatsnext = findViewById(R.id.btn_whatsnext);
 
         //Database descriptor
         DataBaseHelper db = new DataBaseHelper(this);
@@ -56,9 +49,15 @@ public class ParticlesActivity extends AppCompatActivity {
         //Gets elements from layout
         ExpandableListView expandableListView = findViewById(R.id.elv_particles);
 
+        //Tag or cluster selected by the user
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            id_tag_user = extras.getInt("group");
+            main_tag = extras.getInt(Constants.MAIN_TAG);
+            id_tag_selected = extras.getInt(Constants.SELECTED_TAG);
+            if(id_tag_selected > 9){
+                id_tag_cluster_selected = id_tag_selected % 10;
+                id_tag_selected = id_tag_selected / 10;
+            }
         }
 
         // Gets preferences file
@@ -69,55 +68,15 @@ public class ParticlesActivity extends AppCompatActivity {
         //Gets the language stored in Preferences for the app
         String language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
 
-        //Gets tags
-        String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
-
-        if(id_tag_user == Constants.TAG_SEXUAL_ATTACK){
-            particlesMainTags.add(Constants.TAG_SEXUAL_ATTACK);
-        } else if(par_tag.contains(String.valueOf(Constants.TAG_TERRORISM))){
-            //Terrorism
-            particlesMainTags.add(Constants.TAG_TERRORISM);
-        }else if(par_tag.contains(String.valueOf(Constants.TAG_VIOLENCE_AGAINST_WOMEN))){
-            //Violence against women
-            particlesMainTags.add(Constants.TAG_VIOLENCE_AGAINST_WOMEN);
-        }else if(par_tag.contains(String.valueOf(Constants.TAG_DOMESTIC_VIOLENCE))){
-            //Domestic violence
-            particlesMainTags.add(Constants.TAG_DOMESTIC_VIOLENCE);
-            if(par_tag.contains(String.valueOf(Constants.TAG_VIOLENT_CRIME))) {
-                //In addition to domestic violence tag, Violent crime could arise
-                particlesMainTags.add(Constants.TAG_VIOLENT_CRIME);
-            }
-        }else if(par_tag.contains(String.valueOf(Constants.TAG_VIOLENT_CRIME))){
-            //Violent crime
-            particlesMainTags.add(Constants.TAG_VIOLENT_CRIME);
-        }else if(par_tag.contains(String.valueOf(Constants.TAG_COMMON_CRIME))){
-            //Common crime
-            particlesMainTags.add(Constants.TAG_COMMON_CRIME);
-        }
-
-        switch(id_tag_user){
-            case Constants.TAG_COMMON_CRIME:
-            case Constants.TAG_TERRORISM:
-            case Constants.TAG_VIOLENCE_AGAINST_WOMEN:
-            case Constants.TAG_DOMESTIC_VIOLENCE:
-            case Constants.TAG_VIOLENT_CRIME:
-            case Constants.TAG_SEXUAL_ATTACK:
-                particlesResidenceTags.add(Constants.TAG_SPANISH_RESIDENT);
-                break;
-            case Constants.TAG_UE_RESIDENT:
-                //UE Residents
-                particlesResidenceTags.add(Constants.TAG_UE_RESIDENT);
-                break;
-            case Constants.TAG_NON_EU_RESIDENT:
-                //Non UE residents
-                particlesResidenceTags.add(Constants.TAG_NON_EU_RESIDENT);
-                break;
-            default:
-                //Error
-        }
-
         //Gets particles list
-        ArrayList<ParticleModel> particles_list = db.getParticlesByTag(particlesMainTags, particlesResidenceTags, language);
+        ArrayList<ParticleModel> particles_list = null;
+        if(id_tag_selected != Constants.TAG_UE_RESIDENT && id_tag_selected != Constants.TAG_NON_EU_RESIDENT){
+            particles_list = db.getParticlesByTag(id_tag_selected, Constants.TAG_SPANISH_RESIDENT, language);
+        }else{
+            particles_list = db.getParticlesByTag(main_tag, id_tag_selected, language);
+        }
+
+        particles_list = sortParticles(particles_list);
 
         String[] subjects = new String[particles_list.size()];
         for(int i = 0; i < subjects.length; i++) {
@@ -134,6 +93,44 @@ public class ParticlesActivity extends AppCompatActivity {
 
         //Closes the database
         db.close();
+
+        //Buttons listeners
+        ib_particles_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        btn_whatsnext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), WhatsNextActivity.class);
+                //intent.putExtra("mainTag", main_tag);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private ArrayList<ParticleModel> sortParticles(ArrayList<ParticleModel> source){
+        int order = 0;
+        int index = 0;
+        int size = source.size();
+        ArrayList<ParticleModel> destination = new ArrayList<>();
+
+        for(int i = 0; i < size; i++){
+            order = source.get(0).getOrder();
+            index = 0;
+            for (ParticleModel particle:  source){
+                if(order >= particle.getOrder()){
+                    order = particle.getOrder();
+                    index = source.indexOf(particle);
+                }
+            }
+            destination.add(source.get(index));
+            source.remove(index);
+        }
+
+        return destination;
     }
 
     @Override

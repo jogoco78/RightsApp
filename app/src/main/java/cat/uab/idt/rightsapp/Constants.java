@@ -34,6 +34,9 @@ public abstract class Constants {
     public static final int TAG_NON_EU_RESIDENT = 8;
     public static final int TAG_SPANISH_RESIDENT = 9;
 
+    //Clusters
+    public static final int TAG_CLUSTER_TERRORISM = 21;
+
     //Entities search criteria
     public static final String SEARCH_ENTITY_CRITERIA = "search_entity_criteria";
 
@@ -50,6 +53,11 @@ public abstract class Constants {
 
     //Phone numbers
     public static final String PHONE_EMERGENCIES = "112";
+
+    //Information in intents extras
+    public static final String MAIN_TAG = "main_tag";
+    public static final String SIDE_TAG = "side_tag";
+    public static final String SELECTED_TAG = "selected_tag";
 
 
 

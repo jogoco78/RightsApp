@@ -10,21 +10,19 @@ public class ParticleModel {
     private String text;
     private int id_subject;
     private String subjectText;
-    private int group;
-    private int priority;
+    private String tagCode;
     private String language;
 
     public ParticleModel(){
         this.initialize();
     }
 
-    public ParticleModel(int id, String text, int id_subject, String subjectText, int group, int priority, String language){
+    public ParticleModel(int id, String text, int id_subject, String subjectText, String tagCode, String language){
         this.id = id;
         this.text = text;
         this.id_subject = id_subject;
         this.subjectText = subjectText;
-        this.group = group;
-        this.priority = priority;
+        this.tagCode = tagCode;
         this.language = language;
     }
 
@@ -33,8 +31,31 @@ public class ParticleModel {
         this.language = null;
         this.text = null;
         this.id_subject = 0;
-        this.group = Integer.MAX_VALUE;
-        this.priority = Integer.MAX_VALUE;
+        this.tagCode = null;
+    }
+
+    public int getMainTag(){
+        //first digit
+        return Integer.parseInt(tagCode.substring(0,1));
+    }
+
+    public int getResidenceTag(){
+        //second digit
+        return Integer.parseInt(tagCode.substring(1,2));
+    }
+
+    public int getCluster(){
+        //third digit
+        return Integer.parseInt(tagCode.substring(2,3));
+    }
+
+    public int getOrder(){
+        //fourth and fifth digit
+        return Integer.parseInt(tagCode.substring(3,5));
+    }
+
+    public void setTagCode(String tagCode){
+        this.tagCode = tagCode;
     }
 
     public int getId() {
@@ -89,20 +110,5 @@ public class ParticleModel {
         this.subjectText = subjectText;
     }
 
-    public int getCluster() {
-        return group;
-    }
-
-    public void setGroup(int group) {
-        this.group = group;
-    }
-
-    public int getPriority() {
-        return priority;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
 
 }

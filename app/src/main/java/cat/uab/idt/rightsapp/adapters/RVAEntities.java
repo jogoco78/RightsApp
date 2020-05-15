@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import cat.uab.idt.rightsapp.R;
 import cat.uab.idt.rightsapp.models.EntityModel;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RVAEntities extends RecyclerView.Adapter<RVAEntities.ViewHolder> {
     private ArrayList<EntityModel> dataSet;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public RecyclerViewAdapter(Context context, ArrayList<EntityModel> data) {
+    public RVAEntities(Context context, ArrayList<EntityModel> data) {
         this.mInflater = LayoutInflater.from(context);
         this.dataSet = data;
     }

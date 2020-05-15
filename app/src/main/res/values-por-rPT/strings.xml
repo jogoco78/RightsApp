@@ -89,7 +89,7 @@ O primeiro cenário refere-se à necessidade de fazer uma chamada de emergência
     <string name="sexual_attack_protocol">Protocolo de ação para um ataque sexual grave</string>
 
     <!-- Alert dialogs -->
-    <string name="back_questionnaire">Se você pressionar \"Aceitar\", retornará à primeira pergunta do questionário e suas respostas atuais serão perdidas.</string>
+    <string name="back_questionnaire">Se você pressionar Aceitar, será redirecionado para a tela principal e suas respostas atuais serão perdidas.</string>
 
     <!-- Menu bar -->
     <string name="help">Ajuda</string>
@@ -100,6 +100,7 @@ O primeiro cenário refere-se à necessidade de fazer uma chamada de emergência
     <string name="qh_entities_search_activity">Escolha os critérios das entidades de apoio à vítima, delegacias, consulados e / ou embaixadas que você deseja procurar</string>
     <string name="qh_entities_list_activity">Na lista de entidades que atendem aos critérios de pesquisa especificados na tela anterior, escolha o que for mais conveniente para você ver mais detalhes. A lista é ordenada por proximidade à sua posição geográfica</string>
     <string name="qh_entity_activity">Essa tela mostra os detalhes da entidade que você escolheu da lista na tela anterior</string>
+    <string name="whats_next">Qual é o próximo?</string>
 
 
 </resources>

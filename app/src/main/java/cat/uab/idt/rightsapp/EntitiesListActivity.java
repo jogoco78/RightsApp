@@ -29,12 +29,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 
-import cat.uab.idt.rightsapp.adapters.RecyclerViewAdapter;
+import cat.uab.idt.rightsapp.adapters.RVAEntities;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 import cat.uab.idt.rightsapp.models.EntityModel;
 
 
-public class EntitiesListActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener{
+public class EntitiesListActivity extends AppCompatActivity implements RVAEntities.ItemClickListener{
 
     private final static int REQUEST_PERMISSION_GET_COORDINATES = 101;
     //private LocationManager locationManager;
@@ -42,7 +42,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
     private double latitude;
     private FusedLocationProviderClient fusedLocationClient;
     private RecyclerView recyclerView;
-    private RecyclerViewAdapter rv_adapter;
+    private RVAEntities rv_adapter;
     //private RecyclerView.LayoutManager rv_layoutManager;
     Activity activity = this;
     ArrayList<EntityModel> entities_list;
@@ -166,8 +166,8 @@ public class EntitiesListActivity extends AppCompatActivity implements RecyclerV
                                 recyclerView.setHasFixedSize(true);
 
                                 recyclerView.setLayoutManager(new LinearLayoutManager(activity.getBaseContext()));
-                                rv_adapter = new RecyclerViewAdapter(activity.getBaseContext(), entities_list_sorted);
-                                rv_adapter.setClickListener(new RecyclerViewAdapter.ItemClickListener() {
+                                rv_adapter = new RVAEntities(activity.getBaseContext(), entities_list_sorted);
+                                rv_adapter.setClickListener(new RVAEntities.ItemClickListener() {
                                     @Override
                                     public void onItemClick(View view, int position) {
                                         //Toast.makeText(this, "You clicked " + rv_adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();

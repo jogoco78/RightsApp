@@ -181,16 +181,7 @@ public class QuestionnaireFragment extends Fragment {
                     int id_next_question = db.getNextQuestionID(currentQuestionID, id_answer);
                     if (id_next_question == 0) {
                         //Finish the workflow
-                        Intent intent = null;
-                        if(par_tag.contains(String.valueOf(Constants.TAG_SEXUAL_ATTACK))
-                                || par_tag.contains(String.valueOf(Constants.TAG_UE_RESIDENT))
-                                || par_tag.contains(String.valueOf(Constants.TAG_NON_EU_RESIDENT))){
-                            intent = new Intent(parentActivity.getApplicationContext(), RightsClusterActivity.class);
-                        } else{
-                            intent = new Intent(parentActivity.getApplicationContext(), ParticlesActivity.class);
-                            intent.putExtra("group", Constants.TAG_COMMON_CRIME);
-                        }
-
+                        Intent intent = new Intent(parentActivity.getApplicationContext(), RightsClusterActivity.class);
                         startActivity(intent);
                     } else {
                         //updates the fragment to the new question

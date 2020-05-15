@@ -1,25 +1,25 @@
 package cat.uab.idt.rightsapp.adapters;
 
-import android.view.LayoutInflater;
 import android.content.Context;
+import android.view.LayoutInflater;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 
 import cat.uab.idt.rightsapp.R;
-import cat.uab.idt.rightsapp.models.TagModel;
 
-public class MyRecyclerViewAdapterGroups extends RecyclerView.Adapter<MyRecyclerViewAdapterGroups.ViewHolder> {
-    private ArrayList<TagModel> dataSet;
+public class RVAWhatsNext extends RecyclerView.Adapter<RVAWhatsNext.ViewHolder>{
+    private ArrayList dataSet;
     private LayoutInflater inflater;
-    private ItemClickListener clickListener;
-
+    private RVAWhatsNext.ItemClickListener clickListener;
 
     //Data set is passed through the constructor
-    public MyRecyclerViewAdapterGroups(Context context, ArrayList<TagModel> dataSet){
+    public RVAWhatsNext(Context context, ArrayList dataSet){
         this.inflater = LayoutInflater.from(context);
         this.dataSet = dataSet;
     }
@@ -27,26 +27,25 @@ public class MyRecyclerViewAdapterGroups extends RecyclerView.Adapter<MyRecycler
     //Inflates the row layout from xml
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View view = inflater.inflate(R.layout.rv_cluster_layout, parent, false);
+        View view = inflater.inflate(R.layout.rv_whats_next_row, parent, false);
         return new ViewHolder(view);
     }
 
-    //Binds the data set to the textview in each row
+    //Binds the data sete to the textview in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
-        //String s = dataSet.get(position).getDescription();
-        TagModel tm = dataSet.get(position);
+        //TODO: Set the position of data set
 
-        holder.tv_group.setText(tm.getDescription());
+        holder.tv_whats_next.setText("");
     }
 
     //Stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tv_group;
+        TextView tv_whats_next;
 
         ViewHolder(View itemView) {
             super(itemView);
-            tv_group = itemView.findViewById(R.id.tv_group);
+            tv_whats_next = itemView.findViewById(R.id.rv_whats_next);
 
             itemView.setOnClickListener(this);
         }
@@ -64,9 +63,9 @@ public class MyRecyclerViewAdapterGroups extends RecyclerView.Adapter<MyRecycler
     }
 
     //Convenience method for getting data at click position
-    public TagModel getItem(int pos) {
-        return dataSet.get(pos);
-    }
+    //public TagModel getItem(int pos) {
+       // return dataSet.get(pos);
+    //}
 
     //Allows clicks events to be caught
     public void setClickListener(ItemClickListener itemClickListener) {
@@ -77,4 +76,5 @@ public class MyRecyclerViewAdapterGroups extends RecyclerView.Adapter<MyRecycler
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
+
 }

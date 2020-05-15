@@ -52,33 +52,33 @@ public final class DBContract {
         public static final String COLUMN_NAME_PRIORITY = "priority";
     }
 
-    /*Inner class that defines the tags table*/
+    /* Inner class that defines the tags table*/
     public static class Tags implements BaseColumns{
         public static final String TABLE_NAME = "tags";
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_TAG = "tag";
     }
 
-    /*Inner class that defines the particles_tags table */
-/*    public static class Particles_Tags implements BaseColumns{
+    /* Inner class that defines the particles_tags table */
+    public static class Particles_Tags implements BaseColumns{
         public static final String TABLE_NAME = "particles_tags";
+        public static final String COLUMN_NAME_ID_PARTICLE = "id_particle";
+        public static final String COLUMN_NAME_TAG_CODE = "tag_code";
+    }
+
+    /*Inner class that defines the particles_tags table */
+   /* public static class Particles_MainTags implements BaseColumns{
+        public static final String TABLE_NAME = "particles_mainTags";
         public static final String COLUMN_NAME_ID_PARTICLE = "id_particle";
         public static final String COLUMN_NAME_ID_TAG = "id_tag";
     }*/
 
     /*Inner class that defines the particles_tags table */
-    public static class Particles_MainTags implements BaseColumns{
-        public static final String TABLE_NAME = "particles_mainTags";
-        public static final String COLUMN_NAME_ID_PARTICLE = "id_particle";
-        public static final String COLUMN_NAME_ID_TAG = "id_tag";
-    }
-
-    /*Inner class that defines the particles_tags table */
-    public static class Particles_residenceTags implements BaseColumns{
+   /* public static class Particles_residenceTags implements BaseColumns{
         public static final String TABLE_NAME = "particles_residenceTags";
         public static final String COLUMN_NAME_ID_PARTICLE = "id_particle";
         public static final String COLUMN_NAME_ID_TAG = "id_tag";
-    }
+    }*/
 
     /*Inner class that defines the entities table*/
     public static class Entities implements BaseColumns{

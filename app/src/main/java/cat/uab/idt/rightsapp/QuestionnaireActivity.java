@@ -82,8 +82,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
-                Intent intent = new Intent(getApplicationContext(), QuestionnaireActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -92,6 +91,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 //User clicked Cancel button - Do nothing
             }
         });
+
         // Create the AlertDialog
         AlertDialog dialog = builder.create();
         dialog.show();

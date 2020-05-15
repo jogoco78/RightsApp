@@ -19,10 +19,16 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import cat.uab.idt.rightsapp.adapters.MyRecyclerViewAdapterGroups;
+import cat.uab.idt.rightsapp.adapters.RVAGroups;
 import cat.uab.idt.rightsapp.models.TagModel;
 
-public class RightsClusterActivity extends AppCompatActivity implements MyRecyclerViewAdapterGroups.ItemClickListener{
+public class RightsClusterActivity extends AppCompatActivity implements RVAGroups.ItemClickListener{
+    //Clusters definition
+    /*private final String[] terrorism_clusters = {};
+    private final String[] violence_against_women_clusters = {};
+    private final String[] domestic_violence_clusters = {};
+    private final String[] violent_crime_clusters = {};
+    private final String[] common_crime_clusters = {};*/
 
     private ArrayList<TagModel> dataSet;
 
@@ -46,40 +52,41 @@ public class RightsClusterActivity extends AppCompatActivity implements MyRecycl
         //Gets the language stored in Preferences for the app
         String language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
 
-        //TODO: Alert dialog once selected the user could come back by pressing back button
-        //Gets if it is the first run in the current launch
-        //boolean isFirstRunBackQuestionnaire = sharedPreferences.getBoolean(Constants.FIRST_RUN_BACK_QUESTIONNAIRE, true);
-
-       /* if(isFirstRunBackQuestionnaire){
-            AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
-            builder.setMessage(R.string.no_answer);
-
-            // Add the buttons
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // User clicked OK button - Do nothing
-
-                }
-            });
-            // Create the AlertDialog
-            AlertDialog dialog = builder.create();
-            dialog.show();
-
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(Constants.FIRST_RUN_BACK_QUESTIONNAIRE, false);
-            editor.apply();
-        }*/
-
         //Gets current questions, answers and tags parameters
         String par_tag = sharedPreferences.getString(Constants.PAR_TAGS, null);
 
         dataSet = new ArrayList<>();
-        dataSet.add(new TagModel(Constants.TAG_COMMON_CRIME, getResources().getString(R.string.citizens_rights)));
 
-        if (par_tag.contains(String.valueOf(Constants.TAG_SEXUAL_ATTACK))){
-            //Sexual attack tag is activated
-            dataSet.add(new TagModel(Constants.TAG_SEXUAL_ATTACK, getResources().getString(R.string.sexual_attack_protocol)));
+        if(par_tag.contains(String.valueOf(Constants.TAG_TERRORISM))){
+            //Terrorism
+            dataSet.add(new TagModel(Constants.TAG_TERRORISM, getResources().getString(R.string.citizens_rights)));
+            //dataSet.add(new TagModel(Constants.TAG_CLUSTER_TERRORISM, getResources().getString(R.string.terrorism_cluster_1)));
+        }else if(par_tag.contains(String.valueOf(Constants.TAG_VIOLENCE_AGAINST_WOMEN))){
+            //Violence against women
+            dataSet.add(new TagModel(Constants.TAG_VIOLENCE_AGAINST_WOMEN, getResources().getString(R.string.citizens_rights)));
+            if (par_tag.contains(String.valueOf(Constants.TAG_SEXUAL_ATTACK))){
+                //Sexual attack cluster
+                dataSet.add(new TagModel(Constants.TAG_SEXUAL_ATTACK, getResources().getString(R.string.sexual_attack_protocol)));
+            }
+        }else if(par_tag.contains(String.valueOf(Constants.TAG_DOMESTIC_VIOLENCE))){
+            //Domestic violence
+            dataSet.add(new TagModel(Constants.TAG_DOMESTIC_VIOLENCE, getResources().getString(R.string.citizens_rights)));
+            if (par_tag.contains(String.valueOf(Constants.TAG_SEXUAL_ATTACK))){
+                //Sexual attack cluster
+                dataSet.add(new TagModel(Constants.TAG_SEXUAL_ATTACK, getResources().getString(R.string.sexual_attack_protocol)));
+            }
+        }else if(par_tag.contains(String.valueOf(Constants.TAG_VIOLENT_CRIME))){
+            //Violent crime
+            dataSet.add(new TagModel(Constants.TAG_VIOLENT_CRIME, getResources().getString(R.string.citizens_rights)));
+            if (par_tag.contains(String.valueOf(Constants.TAG_SEXUAL_ATTACK))){
+                //Sexual attack cluster
+                dataSet.add(new TagModel(Constants.TAG_SEXUAL_ATTACK, getResources().getString(R.string.sexual_attack_protocol)));
+            }
+        }else if(par_tag.contains(String.valueOf(Constants.TAG_COMMON_CRIME))){
+            //Common crime
+            dataSet.add(new TagModel(Constants.TAG_COMMON_CRIME, getResources().getString(R.string.citizens_rights)));
         }
+
         if (par_tag.contains(String.valueOf(Constants.TAG_UE_RESIDENT))){
             //EU residents tag activated
             dataSet.add(new TagModel(Constants.TAG_UE_RESIDENT, getResources().getString(R.string.EU_citizens_rights)));
@@ -99,12 +106,14 @@ public class RightsClusterActivity extends AppCompatActivity implements MyRecycl
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         // specify an adapter
-        MyRecyclerViewAdapterGroups mAdapter = new MyRecyclerViewAdapterGroups(this.getBaseContext(), dataSet);
-        mAdapter.setClickListener(new MyRecyclerViewAdapterGroups.ItemClickListener() {
+        RVAGroups mAdapter = new RVAGroups(this.getBaseContext(), dataSet);
+        mAdapter.setClickListener(new RVAGroups.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getApplicationContext(), ParticlesActivity.class);
-                intent.putExtra("group", dataSet.get(position).getId_tag());
+                intent.putExtra(Constants.SELECTED_TAG, dataSet.get(position).getId_tag());
+                //TODO: Pass the side tag
+                intent.putExtra(Constants.MAIN_TAG, dataSet.get(0).getId_tag());
                 startActivity(intent);
             }
         });
@@ -120,8 +129,7 @@ public class RightsClusterActivity extends AppCompatActivity implements MyRecycl
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
-                Intent intent = new Intent(getApplicationContext(), QuestionnaireActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -138,7 +146,8 @@ public class RightsClusterActivity extends AppCompatActivity implements MyRecycl
     @Override
     public void onItemClick(View view, int position){
         Intent intent = new Intent(getApplicationContext(), ParticlesActivity.class);
-        intent.putExtra("group", dataSet.get(position).getId_tag());
+        intent.putExtra("tag_selected", dataSet.get(position).getId_tag());
+        intent.putExtra("mainTag", dataSet.get(0).getId_tag());
         startActivity(intent);
     }
 
