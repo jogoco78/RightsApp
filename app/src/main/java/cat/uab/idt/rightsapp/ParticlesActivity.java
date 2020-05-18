@@ -42,24 +42,6 @@ public class ParticlesActivity extends AppCompatActivity {
         ImageButton ib_particles_back = findViewById(R.id.ib_particles);
         Button btn_whatsnext = findViewById(R.id.btn_whatsnext);
 
-        //Database descriptor
-        DataBaseHelper db = new DataBaseHelper(this);
-        db.openDataBase();
-
-        //Gets elements from layout
-        ExpandableListView expandableListView = findViewById(R.id.elv_particles);
-
-        //Tag or cluster selected by the user
-        Bundle extras = getIntent().getExtras();
-        if(extras != null){
-            main_tag = extras.getInt(Constants.MAIN_TAG);
-            id_tag_selected = extras.getInt(Constants.SELECTED_TAG);
-            if(id_tag_selected > 9){
-                id_tag_cluster_selected = id_tag_selected % 10;
-                id_tag_selected = id_tag_selected / 10;
-            }
-        }
-
         // Gets preferences file
         Context context = getApplicationContext();
         SharedPreferences sharedPreferences = context.getSharedPreferences(
@@ -67,6 +49,21 @@ public class ParticlesActivity extends AppCompatActivity {
 
         //Gets the language stored in Preferences for the app
         String language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
+
+        //Database descriptor
+        DataBaseHelper db = new DataBaseHelper(this);
+        db.openDataBase();
+
+        //Gets elements from layout
+        ExpandableListView expandableListView = findViewById(R.id.elv_particles);
+
+        //Tags and/or cluster selected by the user
+        id_tag_selected = sharedPreferences.getInt(Constants.SELECTED_TAG, 0);
+        if(id_tag_selected > 9){
+            id_tag_cluster_selected = id_tag_selected % 10;
+            id_tag_selected = id_tag_selected / 10;
+        }
+        main_tag = sharedPreferences.getInt(Constants.MAIN_TAG, 0);
 
         //Gets particles list
         ArrayList<ParticleModel> particles_list = null;
@@ -105,7 +102,6 @@ public class ParticlesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), WhatsNextActivity.class);
-                //intent.putExtra("mainTag", main_tag);
                 startActivity(intent);
             }
         });
@@ -134,6 +130,13 @@ public class ParticlesActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(getApplicationContext(), RightsClusterActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_app_bar, menu);
@@ -155,6 +158,7 @@ public class ParticlesActivity extends AppCompatActivity {
                 break;
             case R.id.action_home:
                 intent = new Intent(getApplicationContext(), RightsAppActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
             case R.id.action_help:

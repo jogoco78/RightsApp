@@ -12,16 +12,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
 import cat.uab.idt.rightsapp.adapters.RVAWhatsNext;
+import cat.uab.idt.rightsapp.models.WhatsNextModel;
 
 public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext.ItemClickListener {
+
+    private ArrayList<WhatsNextModel> dataSet = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,9 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
+        // Sets the back button
+        ImageButton ib_back_whats_next = findViewById(R.id.ib_back_whats_next);
+
         // Gets preferences file
         Context context = getApplicationContext();
         SharedPreferences sharedPreferences = context.getSharedPreferences(
@@ -41,11 +49,33 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
         //Gets the language stored in Preferences for the app
         String language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
 
-        ArrayList dataSet = new ArrayList();
+        //Gets the tags
+        int main_tag = sharedPreferences.getInt(Constants.MAIN_TAG, 0);
+        int side_tag = sharedPreferences.getInt(Constants.SIDE_TAG, 0);
+        int residence_tag = sharedPreferences.getInt(Constants.RESIDENCE_TAG, Constants.TAG_SPANISH_RESIDENT);
+
+        //Set the data set
+        dataSet = new ArrayList<>();
+
+        //Sets the data set container
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_whats_next);
 
+        //Common scenarios
+        dataSet.add(new WhatsNextModel(0, getResources().getString(R.string.phone_112)));
+        dataSet.add(new WhatsNextModel(1, getResources().getString(R.string.victims_association)));
+        dataSet.add(new WhatsNextModel(2, getResources().getString(R.string.police_station)));
 
-        //TODO: Fill in the data set
+        if(main_tag == Constants.TAG_VIOLENCE_AGAINST_WOMEN){
+            dataSet.add(new WhatsNextModel(3, getResources().getString(R.string.phone_against_violence)));
+        }
+
+        if(main_tag == Constants.TAG_SEXUAL_ATTACK || side_tag == Constants.TAG_SEXUAL_ATTACK){
+            dataSet.add(new WhatsNextModel(4, getResources().getString(R.string.hospital)));
+        }
+
+        if(residence_tag != Constants.TAG_SPANISH_RESIDENT){
+            dataSet.add(new WhatsNextModel(5, getResources().getString(R.string.consulate_embassy)));
+        }
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -66,11 +96,23 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
             }
         });
         recyclerView.setAdapter(mAdapter);
+
+        ib_back_whats_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
     public void onItemClick(View view, int position){
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        finish();
     }
 
     @Override
@@ -95,6 +137,7 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
                 break;
             case R.id.action_home:
                 intent = new Intent(getApplicationContext(), RightsAppActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
             case R.id.action_help:

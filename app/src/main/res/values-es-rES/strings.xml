@@ -89,6 +89,7 @@
 
     <!-- Alert dialogs -->
     <string name="back_questionnaire">Si pulsas Aceptar volverás a la pantalla principal y tus respuestas actuales se perderán.</string>
+    <string name="exit_app">Si pulsas Aceptar se cerrará la aplicación. ¿Quieres cerrar la aplicación?</string>
 
     <!-- Menu bar -->
     <string name="help">Ayuda</string>
@@ -104,4 +105,11 @@
     <string name="terrorism_cluster_1">Prueba de texto de cluster</string>
     <string name="whats_next">Y ahora qué</string>
 
+    <!-- What's next strings -->
+    <string name="phone_112">Realiza una llamada de emergencia al 112</string>
+    <string name="victims_association">Acude a una oficina de atención a las víctimas de delito para recibir más información</string>
+    <string name="police_station">Acude a una comisaria para poner una denuncia</string>
+    <string name="phone_against_violence">Llama al teléfono contra el maltrato</string>
+    <string name="hospital">Acude a un hospital</string>
+    <string name="consulate_embassy">Acude a tu consulado o embajada para recibir más información</string>
 </resources>

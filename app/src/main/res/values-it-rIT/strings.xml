@@ -99,4 +99,13 @@
     <string name="back_questionnaire">Se premi Accetta, verrai reindirizzato alla schermata principale e le tue risposte attuali andranno perse.</string>
     <string name="whats_next">Qual è il prossimo?</string>
 
+    <!-- What's next strings -->
+    <string name="phone_112">Effettuare una chiamata di emergenza al 112</string>
+    <string name="victims_association">Vai a un ufficio di assistenza alle vittime di reato per ricevere maggiori informazioni</string>
+    <string name="police_station">Vai a una stazione di polizia per presentare un reclamo</string>
+    <string name="phone_against_violence">Chiama il telefono contro gli abusi</string>
+    <string name="hospital">Vai in ospedale</string>
+    <string name="consulate_embassy">Vai al tuo consolato o ambasciata per ricevere maggiori informazioni</string>
+    <string name="exit_app">Premere OK per chiudere l\'applicazione. Vuoi chiudere l\'applicazione?</string>
+
 </resources>

@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,12 @@ public class RightsClusterActivity extends AppCompatActivity implements RVAGroup
     private final String[] violent_crime_clusters = {};
     private final String[] common_crime_clusters = {};*/
 
+    private int main_tag = 0;
+    private int side_tag = 0;
+    private int residence_tag = Constants.TAG_SPANISH_RESIDENT;
+
+    private SharedPreferences.Editor editor = null;
+
     private ArrayList<TagModel> dataSet;
 
     @Override
@@ -43,6 +50,9 @@ public class RightsClusterActivity extends AppCompatActivity implements RVAGroup
         //Sets the toolbar
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
+
+        //Sets the back button
+        ImageButton ib_back_cluster = findViewById(R.id.ib_back_cluster);
 
         // Gets preferences file
         Context context = getApplicationContext();
@@ -60,40 +70,57 @@ public class RightsClusterActivity extends AppCompatActivity implements RVAGroup
         if(par_tag.contains(String.valueOf(Constants.TAG_TERRORISM))){
             //Terrorism
             dataSet.add(new TagModel(Constants.TAG_TERRORISM, getResources().getString(R.string.citizens_rights)));
+            main_tag = Constants.TAG_TERRORISM;
             //dataSet.add(new TagModel(Constants.TAG_CLUSTER_TERRORISM, getResources().getString(R.string.terrorism_cluster_1)));
         }else if(par_tag.contains(String.valueOf(Constants.TAG_VIOLENCE_AGAINST_WOMEN))){
             //Violence against women
             dataSet.add(new TagModel(Constants.TAG_VIOLENCE_AGAINST_WOMEN, getResources().getString(R.string.citizens_rights)));
+            main_tag = Constants.TAG_VIOLENCE_AGAINST_WOMEN;
             if (par_tag.contains(String.valueOf(Constants.TAG_SEXUAL_ATTACK))){
                 //Sexual attack cluster
                 dataSet.add(new TagModel(Constants.TAG_SEXUAL_ATTACK, getResources().getString(R.string.sexual_attack_protocol)));
+                side_tag = Constants.TAG_SEXUAL_ATTACK;
             }
         }else if(par_tag.contains(String.valueOf(Constants.TAG_DOMESTIC_VIOLENCE))){
             //Domestic violence
             dataSet.add(new TagModel(Constants.TAG_DOMESTIC_VIOLENCE, getResources().getString(R.string.citizens_rights)));
+            main_tag = Constants.TAG_DOMESTIC_VIOLENCE;
             if (par_tag.contains(String.valueOf(Constants.TAG_SEXUAL_ATTACK))){
                 //Sexual attack cluster
                 dataSet.add(new TagModel(Constants.TAG_SEXUAL_ATTACK, getResources().getString(R.string.sexual_attack_protocol)));
+                side_tag = Constants.TAG_SEXUAL_ATTACK;
             }
         }else if(par_tag.contains(String.valueOf(Constants.TAG_VIOLENT_CRIME))){
             //Violent crime
             dataSet.add(new TagModel(Constants.TAG_VIOLENT_CRIME, getResources().getString(R.string.citizens_rights)));
+            main_tag = Constants.TAG_VIOLENT_CRIME;
             if (par_tag.contains(String.valueOf(Constants.TAG_SEXUAL_ATTACK))){
                 //Sexual attack cluster
                 dataSet.add(new TagModel(Constants.TAG_SEXUAL_ATTACK, getResources().getString(R.string.sexual_attack_protocol)));
+                side_tag = Constants.TAG_SEXUAL_ATTACK;
             }
         }else if(par_tag.contains(String.valueOf(Constants.TAG_COMMON_CRIME))){
             //Common crime
             dataSet.add(new TagModel(Constants.TAG_COMMON_CRIME, getResources().getString(R.string.citizens_rights)));
+            main_tag = Constants.TAG_COMMON_CRIME;
         }
 
         if (par_tag.contains(String.valueOf(Constants.TAG_UE_RESIDENT))){
             //EU residents tag activated
             dataSet.add(new TagModel(Constants.TAG_UE_RESIDENT, getResources().getString(R.string.EU_citizens_rights)));
+            residence_tag = Constants.TAG_UE_RESIDENT;
         } else if(par_tag.contains(String.valueOf(Constants.TAG_NON_EU_RESIDENT))){
             //non-EU residents activated
             dataSet.add(new TagModel(Constants.TAG_NON_EU_RESIDENT, getResources().getString(R.string.no_EU_citizens_rights)));
+            residence_tag = Constants.TAG_NON_EU_RESIDENT;
         }
+
+        //Stores the tags from the questionnaire
+        editor = sharedPreferences.edit();
+        editor.putInt(Constants.MAIN_TAG, main_tag);
+        editor.putInt(Constants.SIDE_TAG, side_tag);
+        editor.putInt(Constants.RESIDENCE_TAG, residence_tag);
+        editor.apply();
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -110,14 +137,22 @@ public class RightsClusterActivity extends AppCompatActivity implements RVAGroup
         mAdapter.setClickListener(new RVAGroups.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                editor.putInt(Constants.SELECTED_TAG, dataSet.get(position).getId_tag());
+                editor.apply();
                 Intent intent = new Intent(getApplicationContext(), ParticlesActivity.class);
-                intent.putExtra(Constants.SELECTED_TAG, dataSet.get(position).getId_tag());
-                //TODO: Pass the side tag
-                intent.putExtra(Constants.MAIN_TAG, dataSet.get(0).getId_tag());
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
         });
         recyclerView.setAdapter(mAdapter);
+
+        //Sets the back button listener
+        ib_back_cluster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -129,7 +164,9 @@ public class RightsClusterActivity extends AppCompatActivity implements RVAGroup
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
-                finish();
+                Intent intent = new Intent(getApplicationContext(), RightsAppActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -145,10 +182,10 @@ public class RightsClusterActivity extends AppCompatActivity implements RVAGroup
 
     @Override
     public void onItemClick(View view, int position){
-        Intent intent = new Intent(getApplicationContext(), ParticlesActivity.class);
+        /*Intent intent = new Intent(getApplicationContext(), ParticlesActivity.class);
         intent.putExtra("tag_selected", dataSet.get(position).getId_tag());
         intent.putExtra("mainTag", dataSet.get(0).getId_tag());
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     @Override
@@ -173,6 +210,7 @@ public class RightsClusterActivity extends AppCompatActivity implements RVAGroup
                 break;
             case R.id.action_home:
                 intent = new Intent(getApplicationContext(), RightsAppActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
             case R.id.action_help:

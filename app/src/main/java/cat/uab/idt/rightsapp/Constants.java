@@ -57,6 +57,7 @@ public abstract class Constants {
     //Information in intents extras
     public static final String MAIN_TAG = "main_tag";
     public static final String SIDE_TAG = "side_tag";
+    public static final String RESIDENCE_TAG = "residence_tag";
     public static final String SELECTED_TAG = "selected_tag";
 
 

@@ -101,6 +101,7 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
 
     <!-- Alert dialogs -->
     <string name="back_questionnaire">If you press Accept you will be redirected to the main screen and your current answers will be lost.</string>
+    <string name="exit_app">Pressing OK will close the application. Do you want to close the application?</string>
 
     <!-- Menu bar -->
     <string name="help">Help</string>
@@ -124,4 +125,11 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <!-- What's next strings -->
+    <string name="phone_112">Make an emergency call to 112</string>
+    <string name="victims_association">Go to a victim assistance office to receive more information</string>
+    <string name="police_station">Go to a police station to file a complaint</string>
+    <string name="phone_against_violence">Call the phone against women abuse</string>
+    <string name="hospital">Go to a hospital</string>
+    <string name="consulate_embassy">Go to your consulate or embassy to receive more information</string>
 </resources>

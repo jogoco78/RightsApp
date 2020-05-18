@@ -102,5 +102,14 @@ O primeiro cenário refere-se à necessidade de fazer uma chamada de emergência
     <string name="qh_entity_activity">Essa tela mostra os detalhes da entidade que você escolheu da lista na tela anterior</string>
     <string name="whats_next">Qual é o próximo?</string>
 
+    <!-- What's next strings -->
+    <string name="phone_112">Faça uma chamada de emergência para 112</string>
+    <string name="victims_association">Vá a um escritório de atendimento a vítimas de crimes para obter mais informações</string>
+    <string name="police_station">Vá a uma delegacia para registrar uma reclamação</string>
+    <string name="phone_against_violence">Ligue para o telefone contra abuso</string>
+    <string name="hospital">Ir a um hospital</string>
+    <string name="consulate_embassy">Vá ao seu consulado ou embaixada para obter mais informações</string>
+    <string name="exit_app">Pressionar OK fechará o aplicativo. Deseja fechar o aplicativo?</string>
+
 
 </resources>

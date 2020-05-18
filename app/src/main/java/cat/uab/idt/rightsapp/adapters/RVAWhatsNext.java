@@ -12,14 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import cat.uab.idt.rightsapp.R;
+import cat.uab.idt.rightsapp.models.WhatsNextModel;
 
 public class RVAWhatsNext extends RecyclerView.Adapter<RVAWhatsNext.ViewHolder>{
-    private ArrayList dataSet;
+    private ArrayList<WhatsNextModel> dataSet;
     private LayoutInflater inflater;
     private RVAWhatsNext.ItemClickListener clickListener;
 
     //Data set is passed through the constructor
-    public RVAWhatsNext(Context context, ArrayList dataSet){
+    public RVAWhatsNext(Context context, ArrayList<WhatsNextModel> dataSet){
         this.inflater = LayoutInflater.from(context);
         this.dataSet = dataSet;
     }
@@ -31,12 +32,10 @@ public class RVAWhatsNext extends RecyclerView.Adapter<RVAWhatsNext.ViewHolder>{
         return new ViewHolder(view);
     }
 
-    //Binds the data sete to the textview in each row
+    //Binds the data set to the textview in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
-        //TODO: Set the position of data set
-
-        holder.tv_whats_next.setText("");
+        holder.tv_whats_next.setText(dataSet.get(position).getMessage());
     }
 
     //Stores and recycles views as they are scrolled off screen
@@ -45,7 +44,7 @@ public class RVAWhatsNext extends RecyclerView.Adapter<RVAWhatsNext.ViewHolder>{
 
         ViewHolder(View itemView) {
             super(itemView);
-            tv_whats_next = itemView.findViewById(R.id.rv_whats_next);
+            tv_whats_next = itemView.findViewById(R.id.tv_whats_next);
 
             itemView.setOnClickListener(this);
         }
