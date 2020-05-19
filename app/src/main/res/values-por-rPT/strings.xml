@@ -111,5 +111,6 @@ O primeiro cenário refere-se à necessidade de fazer uma chamada de emergência
     <string name="consulate_embassy">Vá ao seu consulado ou embaixada para obter mais informações</string>
     <string name="exit_app">Pressionar OK fechará o aplicativo. Deseja fechar o aplicativo?</string>
 
-
+    <!-- CallActivity strings -->
+    <string name="phone_call">Se você pressionar o botão abaixo, fará uma ligação </string>
 </resources>

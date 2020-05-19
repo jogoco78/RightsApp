@@ -108,4 +108,7 @@
     <string name="consulate_embassy">Vai al tuo consolato o ambasciata per ricevere maggiori informazioni</string>
     <string name="exit_app">Premere OK per chiudere l\'applicazione. Vuoi chiudere l\'applicazione?</string>
 
+    <!-- CallActivity strings -->
+    <string name="phone_call">Se si preme il pulsante in basso, si effettuerà una chiamata </string>
+
 </resources>

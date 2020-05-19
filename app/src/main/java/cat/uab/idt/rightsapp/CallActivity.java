@@ -33,14 +33,16 @@ public class CallActivity extends AppCompatActivity {
         setSupportActionBar(toolbarRightsApp);
 
         //Gets the number from the intent
-        String phone_number = getIntent().getStringExtra(Constants.PHONE_NUMBER);
+        final String phone_number = getIntent().getStringExtra(Constants.PHONE_NUMBER_KEY);
 
         //Get elements in the layout
         TextView tv_phone_call = findViewById(R.id.tv_call_phone);
         Button btn_phone_call = findViewById(R.id.btn_phone_call);
         ImageButton ib_back_phone_call = findViewById(R.id.ib_back_phone_call);
 
+        tv_phone_call.setText(getResources().getString(R.string.phone_call) + " " + phone_number);
 
+        btn_phone_call.setText(" " + phone_number);
         btn_phone_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,17 +54,18 @@ public class CallActivity extends AppCompatActivity {
                             REQUEST_PERMISSION_PHONE_CALL);
                 }else{
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:" + Constants.PHONE_EMERGENCIES));
+                    callIntent.setData(Uri.parse("tel:" + phone_number));
                     startActivity(callIntent);
                 }
             }
         });
 
-
-
-
-
-
+        ib_back_phone_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -86,6 +89,11 @@ public class CallActivity extends AppCompatActivity {
             // other 'case' lines to check for other
             // permissions this app might request.
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        finish();
     }
 
     @Override

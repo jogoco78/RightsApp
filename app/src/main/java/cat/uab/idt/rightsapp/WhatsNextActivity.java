@@ -117,6 +117,10 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
                         startActivity(intent);
                         break;
                     case 3:
+                        //Call phone against women abuse
+                        intent = new Intent(getApplicationContext(), CallActivity.class);
+                        intent.putExtra(Constants.PHONE_NUMBER_KEY, Constants.PHONE_VAW);
+                        startActivity(intent);
                         break;
                     case 4:
                         //Go to hospital

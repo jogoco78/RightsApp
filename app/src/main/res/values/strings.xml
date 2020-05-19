@@ -132,4 +132,7 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="phone_against_violence">Call the phone against women abuse</string>
     <string name="hospital">Go to a hospital</string>
     <string name="consulate_embassy">Go to your consulate or embassy to receive more information</string>
+
+    <!-- CallActivity strings -->
+    <string name="phone_call">If you press the button below you will make a call to </string>
 </resources>

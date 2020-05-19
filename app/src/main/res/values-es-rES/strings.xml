@@ -112,4 +112,7 @@
     <string name="phone_against_violence">Llama al teléfono contra el maltrato</string>
     <string name="hospital">Acude a un hospital</string>
     <string name="consulate_embassy">Acude a tu consulado o embajada para recibir más información</string>
+
+    <!-- CallActivity strings -->
+    <string name="phone_call">Si pulsas el botón de más abajo harás una llamada al </string>
 </resources>
