@@ -92,7 +92,14 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
         mAdapter.setClickListener(new RVAWhatsNext.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                switch (position){
+                    case 0:
+                        //Emergency call
+                        Intent intent = new Intent(getApplicationContext(), Emergency112CallActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
 
+                }
             }
         });
         recyclerView.setAdapter(mAdapter);
