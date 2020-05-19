@@ -53,6 +53,7 @@ public abstract class Constants {
 
     //Phone numbers
     public static final String PHONE_EMERGENCIES = "112";
+    public static final String PHONE_NUMBER = "phone_number";
 
     //Information in intents extras
     public static final String MAIN_TAG = "main_tag";

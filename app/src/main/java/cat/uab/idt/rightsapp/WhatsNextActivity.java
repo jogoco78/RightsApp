@@ -92,13 +92,51 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
         mAdapter.setClickListener(new RVAWhatsNext.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                Intent intent;
                 switch (position){
                     case 0:
                         //Emergency call
-                        Intent intent = new Intent(getApplicationContext(), Emergency112CallActivity.class);
+                        intent = new Intent(getApplicationContext(), Emergency112CallActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
-
+                        break;
+                    case 1:
+                        //Victims assistance office
+                        intent = new Intent(getApplicationContext(), EntitiesListActivity.class);
+                        intent.putExtra(Constants.SEARCH_ENTITY_CRITERIA, Integer.toString(2) +
+                                "," + Integer.toString(0) +
+                                "," + Integer.toString(0));
+                        startActivity(intent);
+                        break;
+                    case 2:
+                        //Police station
+                        intent = new Intent(getApplicationContext(), EntitiesListActivity.class);
+                        intent.putExtra(Constants.SEARCH_ENTITY_CRITERIA, Integer.toString(1) +
+                                "," + Integer.toString(0) +
+                                "," + Integer.toString(0));
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        //Go to hospital
+                        intent = new Intent(getApplicationContext(), EntitiesListActivity.class);
+                        intent.putExtra(Constants.SEARCH_ENTITY_CRITERIA, Integer.toString(3) +
+                                "," + Integer.toString(0) +
+                                "," + Integer.toString(0));
+                        startActivity(intent);
+                        break;
+                    case 5:
+                        //Consulate or embassy
+                        intent = new Intent(getApplicationContext(), EntitiesListActivity.class);
+                        intent.putExtra(Constants.SEARCH_ENTITY_CRITERIA, Integer.toString(4) +
+                                "," + Integer.toString(0) +
+                                "," + Integer.toString(0));
+                        startActivity(intent);
+                        break;
+                    default:
+                        //Error
+                        break;
                 }
             }
         });
