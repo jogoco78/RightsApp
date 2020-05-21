@@ -3,6 +3,7 @@
     <string name="country">País</string>
     <string name="terms_and_conditions">Términos y condiciones</string>
 
+    <!-- TERMS AND CONDITIONS -->
     <string name="title_activity_terms_and_conditions">Términos y Condiciones de uso</string>
     <string name="terms_and_conditions_appOwnership_title">Titularidad de la app</string>
     <string name="terms_and_conditions_appOwnership_body">Esta app está operada por la Universitat Autònoma de Barcelona – Instituto de Derecho y Tecnología (en adelante, UAB-IDT) en representación del consorcio de RightsApp. UAB-IDT tiene su sede en:\nUniversitat Autònoma de Barcelona – Instituto de Derecho y Tecnología (UAB-IDT)\nidt@uab.cat\nCampus de la UAB. Edifici B\nCerdanyola del Vallès (Bellaterra), Spain\n</string>
@@ -21,25 +22,41 @@
     <string name="terms_and_conditions_PPChanges_title">Cambios en la política de privacidad</string>
     <string name="terms_and_conditions_PPChanges_body">A pesar de que muchos de los cambios que se puedan realizar en la política de privacidad serán menores y poco frecuentes, la política de privacidad puede cambiar en el momento y de la forma que UAB-IDT estime oportuna.\nUAB-IDT recomienda encarecidamente que los usuarios de la app comprueben esta pantalla frecuentemente por si se produjese cualquier cambio en la política de privacidad. El uso continuado de la app después de cualquier cambio en su política de privacidad supondrá la aceptación del mismo.</string>
 
-
-    <string name="ok">Aceptar</string>
-    <string name="cancel">Cancelar</string>
+    <!-- HOW TO USE THE APP -->
     <string name="explanation_title">Cómo usar la app</string>
-    <string name="explanation_body_preferences_title">Menú de preferencias</string>
-    <string name="explanation_body_preferences_body">"Al iniciar la aplicación RightsApp (en adelante, la “app”), en primer lugar, deben aceptarse los Términos y condiciones de la misma. Dentro de estos Términos y condiciones está incluida la política de privacidad. UAB-IDT recomienda encarecidamente una lectura detenida de estos términos y condiciones que siempre estarán disponibles en el menú “Preferencias”.El menú “Preferencias” está compuesto por 4 secciones diferentes:\n\t<br>Idioma</br>: la aplicación está disponible en cuatro idiomas: español, inglés, portugués e italiano. Se puede cambiar el idioma de la aplicación) en esta pantalla (excepto durante la respuesta al cuestionario).\n\t<br>Cómo utilizar la app</br>: nos muestra esta explicación en el idioma que esté activo en ese momento.\n\t<br>Términos y condiciones</br>: nos muestra los Términos y condiciones de uso de la app. Estos incluyen la Política de privacidad de ésta.\n\t<br>Sobre nosotros</br>: contiene la descripción del consorcio RightsApp y las diferentes formas de contacto disponibles.\n"</string>
-    <string name="explanation_body_howTo_title">Funcionamiento de la app</string>
-    <string name="explanation_body_howTo_body">"La app incluye tres situaciones diferentes en las que el usuario que ha sido víctima de un delito dentro de la Unión Europea se puede encontrar La primera de ellas es la necesidad de realizar una llamada de emergencia al 112. Con tan sólo pulsar un botón el usuario podrá realizar una llamada de emergencia al 112.\nLa segunda situación consiste en la necesidad de obtener información relativa a los derechos del ciudadano de la Unión Europea que ha sido víctima de un delito. Con el fin de obtener esta información de forma particularizada, el usuario tendrá que rellenar un pequeño cuestionario (con un mínimo de X y un máximo de Y preguntas). Una vez respondido este cuestionario, los derechos que asisten al usuario en su situación concreta aparecerán agrupados por temática (esta agrupación se debe al tamaño de las pantallas de algunos dispositivos móviles, con el fin de facilitar la visualización). Una vez pulsado el título de una temática cualquiera, se desplegará una definición más detallada de los derechos que asisten al usuario respecto de esa temática.\nLa última situación es la necesidad de que el ciudadano que ha sido víctima de un delito pueda obtener la información relativa a las instituciones y centros donde se le puede prestar asistencia. Primero, el usuario deberá escoger tres parámetros para facilitar la búsqueda de estas instituciones y centros. El primer parámetro es el tipo de entidad que está buscando, el segundo indica en que país, y por último en que ciudad. Por el momento, están disponibles las entidades y centros que prestan asistencia a las víctimas de delitos en la Comunidad Autónoma de Cataluña. Una vez establecidos estos parámetros, aparecerá una lista ordenada de menos a más distancia con respecto a la ubicación del usuario. Una vez seleccionada una de las instituciones o centros de asistencia, la app ofrecerá la posibilidad de llamar a ese centro concreto, navegar hasta él (mediante GoogleMaps) o volver atrás para realizar otra búsqueda."</string>
-    <string name="next">Siguiente</string>
-    <string name="emergency_call">Llamada de emergencia</string>
-    <string name="get_information">Obtener información</string>
-    <string name="emergency_112">112 Emergencias</string>
-    <string name="language">Idioma</string>
+    <string name="explanation_preferences_title">Menú de preferencias</string>
+    <!--<string name="explanation_preferences_body">"Al iniciar la aplicación RightsApp (en adelante, la “app”), en primer lugar, deben aceptarse los Términos y condiciones de la misma. Dentro de estos Términos y condiciones está incluida la política de privacidad. UAB-IDT recomienda encarecidamente una lectura detenida de estos términos y condiciones que siempre estarán disponibles en el menú “Preferencias”.El menú “Preferencias” está compuesto por 4 secciones diferentes:</string> -->
+    <string name="explanation_preferences_body">"El menú “Preferencias” está compuesto por 4 secciones diferentes:</string>
+    <string name="explanation_preferences_first_scenario">Idioma: la aplicación está disponible en cuatro idiomas: español, inglés, portugués e italiano. Se puede cambiar el idioma de la aplicación) en esta pantalla (excepto durante la respuesta al cuestionario).</string>
+    <string name="explanation_preferences_second_scenario">Cómo utilizar la app: nos muestra esta explicación en el idioma que esté activo en ese momento.</string>
+    <string name="explanation_preferences_third_scenario">Términos y condiciones: nos muestra los Términos y condiciones de uso de la app. Estos incluyen la Política de privacidad de ésta.</string>
+    <string name="explanation_preferences_fourth_scenario">Sobre nosotros: contiene la descripción del consorcio RightsApp y las diferentes formas de contacto disponibles.</string>
+
+    <string name="explanation_howTo_title">Funcionamiento de la app</string>
+    <string name="explanation_howTo_body">La app incluye tres situaciones diferentes en las que el usuario que ha sido víctima de un delito dentro de la Unión Europea se puede encontrar: </string>
+    <string name="explanation_howTo_first">Primera situación: La primera de ellas es la necesidad de realizar una llamada de emergencia al 112. Con tan sólo pulsar un botón el usuario podrá realizar una llamada de emergencia al 112.</string>
+    <string name="explanation_howTo_second">Segunda situación: La segunda situación consiste en la necesidad de obtener información relativa a los derechos del ciudadano de la Unión Europea que ha sido víctima de un delito. Con el fin de obtener esta información de forma particularizada, el usuario tendrá que rellenar un pequeño cuestionario (con un máximo de 6 preguntas). Una vez respondido este cuestionario, los derechos que asisten al usuario en su situación concreta aparecerán agrupados por temática (esta agrupación se debe al tamaño de las pantallas de algunos dispositivos móviles, con el fin de facilitar la visualización). Una vez pulsado el título de una temática cualquiera, se desplegará una definición más detallada de los derechos que asisten al usuario respecto de esa temática.\n</string>
+    <string name="explanation_howTo_third">Tercera situación: La última situación es la necesidad de que el ciudadano que ha sido víctima de un delito pueda obtener la información relativa a las instituciones y centros donde se le puede prestar asistencia. Primero, el usuario deberá escoger tres parámetros para facilitar la búsqueda de estas instituciones y centros. El primer parámetro es el tipo de entidad que está buscando, el segundo indica en que país, y por último en que ciudad. Por el momento, están disponibles las entidades y centros que prestan asistencia a las víctimas de delitos en la Comunidad Autónoma de Cataluña. Una vez establecidos estos parámetros, aparecerá una lista ordenada de menos a más distancia con respecto a la ubicación del usuario. Una vez seleccionada una de las instituciones o centros de asistencia, la app ofrecerá la posibilidad de llamar a ese centro concreto, navegar hasta él (mediante GoogleMaps) o volver atrás para realizar otra búsqueda.</string>
+
+    <!-- ABOUT US -->
     <string name="about">Sobre nosotros</string>
     <string name="about_us_body">La aplicación <b>RightsApp</b> es el principal resultado del proyecto “Mobile Technologies applied to protect victims of a crime within the EU Area of Justice: RightsApp for e-Justice” (<a href="http://rightsapp-project.eu">http://rightsapp-project.eu</a>) financiado por el Programa “DG-Justice European Union’s Programme (2014-2020)” con el número de Grant Agreement 785854.
         \n\nEl Consorcio está principalmente formado por dos entidades sin ánimo de lucro que forman parte de la Universidad Autónoma de Barcelona (UAB, <a href="http://uab.cat">http://uab.cat</a>): el Instituto de Derecho y Tecnología de la UAB (IDT-UAB, <a href="http://idt.uab.cat">http://idt.uab.cat</a>) y el International Welcome Point de la UAB (IWP-UAB, <a href="https://www.uab.cat/international-welcome-point/">https://www.uab.cat/international-welcome-point/</a>).
         \n\n<b>El Instituto de Derecho y Tecnología de la UAB (IDT-UAB)</b> es un centro de investigación que promueve la investigación pionera dentro del derecho y la tecnología desde un punto de vista interdisciplinar. Su misión principal es fomentar la investigación dedicada a proveer a los profesionales del mundo legal, instituciones, organizaciones, y ciudadanos con las tecnologías apropiadas para mejorar su trabajo legal o mejorar el ejercicio de sus derechos. Las tecnologías adecuadas a este contexto implican que la investigación esté centrada en el usuario, de esta manera, tanto el diseño de la tecnología como sus progresos están adaptados a las necesidades de los usuarios finales y no al revés.
         \n\n<b>El International Welcome Point de la UAB (IWP-UAB)</b> es una oficina diseñada por la Oficina de Relaciones Institucionales de la UAB para proporcionar servicios a todos los miembros extranjeros de la Comunidad de la UAB. Ofreciendo así ayuda a todos los estudiantes, profesores, personal administrativo y personal de servicios de otros países. El IWP-UAB provee información practica tales como procedimientos legales para ciudadanos de la UE y de fuera de la UE, cobertura sanitaria para los ciudadanos de la UE, presupuesto para vivir en Barcelona y direcciones relevantes. Además, el IWP-UAB provee de ayuda a los extranjeros con la renovación del permiso de residencia y trabajo, coordina la ayuda que proporcionan las diferentes oficinas de la UAB y ofrece ayuda a posgraduados y beneficiarios de becas de otros países.
         \n\nPor otra parte, la <b>Facultad de Derecho de la UAB</b> (FoL, <a href="https://www.uab.cat/dret/">https://www.uab.cat/dret/</a>), <b>LAST-JD Erasmus Mundus</b> (LAST-JD) and <b>Catalan Society of Victimology</b> (CSV, <a href="https://www.victimologia.cat">https://www.victimologia.cat</a>) también están contribuyendo a la investigación tanto cualitativa como cuantitativa. La Facultad de Derecho de la UAB recibe cada año más de 60 estudiantes foráneos dentro de sus programas de movilidad (Erasmus Programme) y cada año alrededor de 2.600 personas se apuntan a alguno de sus grados o posgrados. La Sociedad Catalana de Victimología agrupa a juristas, psicólogos, doctores, trabajadores sociales, entre otros.</string>
+
+    <!-- BUTTONS TEXT -->
+    <string name="ok">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="next">Siguiente</string>ç
+
+    <!-- ACTIVITIES -->
+    <string name="emergency_call">Llamada de emergencia</string>
+    <string name="get_information">Obtener información</string>
+    <string name="emergency_112">112 Emergencias</string>
+    <string name="language">Idioma</string>
+
     <string name="select_language">Selecciona el idioma</string>
     <string name="questionnaire_title">Cuestionario</string>
     <string name="no_answer">Debes seleccionar una opción</string>
@@ -82,30 +99,30 @@
     <string name="no_entities_list">La búsqueda no retorna ningún resultado con los criterios especificados. Por favor, cambie los criterios y vuelava a realizar la búsqueda.</string>
     <string name="disclaimer_title">Aviso legal</string>
     <string name="do_not_show">No volver a mostrar éste mensaje</string>
+
+    <!-- CLUSTERS TEXTS -->
     <string name="citizens_rights">Derechos de los ciudadanos que han sido víctimas de un delito</string>
     <string name="EU_citizens_rights">Derechos especialmente otorgados a los ciudadanos víctima de un delito con residencia en un país miembro de la UE</string>
     <string name="no_EU_citizens_rights">Derechos especialmente otorgados a los ciudadanos víctima de un delito con residencia en un país no miembro de la UE </string>
     <string name="sexual_attack_protocol">Protocolo de actuación ante un ataque sexual grave</string>
+    <string name="terrorism_cluster_1">Prueba de texto de cluster</string>
 
-    <!-- Alert dialogs -->
+    <!-- ALERT DIALOGS -->
     <string name="back_questionnaire">Si pulsas Aceptar volverás a la pantalla principal y tus respuestas actuales se perderán.</string>
     <string name="exit_app">Si pulsas Aceptar se cerrará la aplicación. ¿Quieres cerrar la aplicación?</string>
 
-    <!-- Menu bar -->
+    <!-- MENU BAR -->
     <string name="help">Ayuda</string>
 
-    <!-- Quick help texts -->
+    <!-- QUICK HELP TEXTS -->
     <string name="qh_rightsapp_activity">Escoja una de las tres opciones disponibles: 1) Realizar una llamada de emergencia al 112; 2) Obtener información personalizada a través de un questionario; y 3) Obtener una lista de las entidades de apoyo a las víctimas de delito, consulados y embajadas</string>
     <string name="qh_call112_activity">Pulsando en el icono o en el botón \"Llamar\" realizará una llamada de emergencia al 112</string>
     <string name="qh_entities_search_activity">Escoja los criterios de las entidades de apoyo a las víctimas, comisarias, consulados y/o embajadas que desee buscar</string>
     <string name="qh_entities_list_activity">Dentro de la lista de entidades que cumplen los criterios de búsqueda que especificó en la pantalla anterior, escoja la que le resulte más conveniente para ver más detalles. La lista está ordenada por proximidad a su posición geográfica</string>
     <string name="qh_entity_activity">En esta pantalla se muestran los detalles de la entidad que escogió en la lista de la pantalla anterior</string>
 
-    <!-- Clusters texts -->
-    <string name="terrorism_cluster_1">Prueba de texto de cluster</string>
+    <!-- WHAT'S NEXT TEXTS -->
     <string name="whats_next">Y ahora qué</string>
-
-    <!-- What's next strings -->
     <string name="phone_112">Realiza una llamada de emergencia al 112</string>
     <string name="victims_association">Acude a una oficina de atención a las víctimas de delito para recibir más información</string>
     <string name="police_station">Acude a una comisaria para poner una denuncia</string>
@@ -113,6 +130,6 @@
     <string name="hospital">Acude a un hospital</string>
     <string name="consulate_embassy">Acude a tu consulado o embajada para recibir más información</string>
 
-    <!-- CallActivity strings -->
+    <!-- CALLACTIVITY STRINGS -->
     <string name="phone_call">Si pulsas el botón de más abajo harás una llamada al </string>
 </resources>

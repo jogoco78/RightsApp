@@ -3,7 +3,7 @@
     <string name="country">Country</string>
     <string name="preference_file_key" translatable="false">cat.uab.idt.rightsapp.preferences</string>
 
-    <!-- Terms and conditions -->
+    <!-- TERMS AND CONDITIONS -->
     <string name="terms_and_conditions">Terms and conditions</string>
     <string name="title_activity_terms_and_conditions">Terms and conditions</string>
     <string name="terms_and_conditions_appOwnership_title">Ownership of the app</string>
@@ -24,33 +24,45 @@
     <string name="terms_and_conditions_PPChanges_body">Although most changes are likely to be minor, UAB-IDT may change its Privacy Policy from time to time, and in UAB-IDT\'s sole discretion. 
 UAB-IDT encourages visitors to frequently check this screen for any changes to its Privacy Policy. Your continued use of this site after any change in this Privacy Policy will constitute your acceptance of such change.</string>
 
-    <!-- Buttons -->
-    <string name="ok">Accept</string>
-    <string name="cancel">Cancel</string>
-    <string name="next">Continue</string>
-
-    <!-- explanation -->
+    <!-- HOW TO USE THE APP -->
     <string name="explanation_title">How to use the app</string>
-    <string name="explanation_body_preferences_title">Preference menu</string>
-    <string name="explanation_body_preferences_body">When you start the RightsApp application (hereinafter, the "app"), you must first accept the Terms and conditions of the app. Within these Terms and conditions you can find the privacy policy. UAB-IDT strongly recommends you to carefully review these terms and conditions that will always be available in the "Preferences" menu. The Preferences menu consists of 4 different sections:\n\tLanguage: the app is available in four languages: Spanish, English, Portuguese and Italian. You can change the language of the app (except during the questionnaire response) on this screen.\n\tHow to use the app: it shows this explanation in the language active at that moment.\n\tTerms and conditions: This screen shows the Terms and conditions of use of the app. This includes the Privacy policy.\n\tAbout us: it contains the description of the RightsApp consortium and the available ways to contact the consortium.\n</string>
+    <string name="explanation_preferences_title">Preference menu</string>
+    <!--<string name="explanation_preferences_body">When you start the RightsApp application (hereinafter, the "app"), you must first accept the Terms and conditions of the app. Within these Terms and conditions you can find the privacy policy. UAB-IDT strongly recommends you to carefully review these terms and conditions that will always be available in the "Preferences" menu. The Preferences menu consists of 4 different sections:</string> -->
+    <string name="explanation_preferences_body">The Preferences menu consists of 4 different sections:</string>
+    <string name="explanation_preferences_first_scenario">Language: the app is available in four languages: Spanish, English, Portuguese and Italian. You can change the language of the app (except during the questionnaire response) on this screen.</string>
+    <string name="explanation_preferences_second_scenario">How to use the app: it shows this explanation in the language active at that moment.</string>
+    <string name="explanation_preferences_third_scenario">Terms and conditions: This screen shows the Terms and conditions of use of the app. This includes the Privacy policy.</string>
+    <string name="explanation_preferences_fourth_scenario">About us: it contains the description of the RightsApp consortium and the available ways to contact the consortium.</string>
 
-    <string name="explanation_body_howTo_title">How the app works</string>
-    <string name="explanation_body_howTo_body">The app includes three different scenarios in which the user that has been victim of a crime within the European Union can found himself/herself. The first scenario is the need to make an emergency call to 112.With just a push of a button the user can make an emergency call to 112.\nThe second scenario is the need to be provided with information regarding rights of European Union citizens\' who have been victims of a crime. In order to obtain particularized information, the user has to fill in a small questionnaire (with a minimum of X and a maximum of Y questions). Once the user has answered this questionnaire, the rights that assist the user in her/his specific situation will appear grouped by subject (this grouping is due to the size of mobile devices’ screens, in order to facilitate the visualization). Once the title of any subject has been pressed, a more detailed definition of the rights that assist the user with respect to that subject will be displayed.\nIn the latter scenario the app provides the citizen who has been the victim of a crime with information regarding entities and centres that provide crime victim support. First, the user chooses three parameters to facilitate the search among these institutions and centres. The first parameter is the type of entity you are looking for, the second indicates in which country, and finally in which city. At the moment, only entities and centres that provide assistance to victims of crime in the Autonomous Community of Catalonia are available. Once these parameters are established, an ordered list will appear from less to more distant with respect to the user\'s location. Once one of the entities or assistance centres has been selected, the app will offer the possibility of calling that particular entity or centre, navigating to it (using GoogleMaps) or going back to carry out another search.</string>
+    <string name="explanation_howTo_title">How the app works</string>
+    <string name="explanation_howTo_body">The app includes three different scenarios in which the user that has been victim of a crime within the European Union can found himself/herself. </string>
+    <string name="explanation_howTo_first">First scenario: This scenario is the need to make an emergency call to 112. With just a push of a button the user can make an emergency call to 112.</string>
+    <string name="explanation_howTo_second">Second scenario: This scenario is the need to be provided with information regarding rights of European Union citizens\' who have been victims of a crime. In order to obtain particularized information, the user has to fill in a small questionnaire (with a minimum of X and a maximum of Y questions). Once the user has answered this questionnaire, the rights that assist the user in her/his specific situation will appear grouped by subject (this grouping is due to the size of mobile devices’ screens, in order to facilitate the visualization). Once the title of any subject has been pressed, a more detailed definition of the rights that assist the user with respect to that subject will be displayed.\n</string>
+    <string name="explanation_howTo_third">Third scenario: In the latter scenario the app provides the citizen who has been the victim of a crime with information regarding entities and centres that provide crime victim support. First, the user chooses three parameters to facilitate the search among these institutions and centres. The first parameter is the type of entity you are looking for, the second indicates in which country, and finally in which city. At the moment, only entities and centres that provide assistance to victims of crime in the Autonomous Community of Catalonia are available. Once these parameters are established, an ordered list will appear from less to more distant with respect to the user\'s location. Once one of the entities or assistance centres has been selected, the app will offer the possibility of calling that particular entity or centre, navigating to it (using GoogleMaps) or going back to carry out another search.</string>
+
     <string name="do_not_show">Do not show this message again</string>
 
-    <!-- activities -->
-    <string name="emergency_call">Emergency call</string>
-    <string name="get_information">Get information</string>
-    <string name="emergency_112">112 Emergency</string>
-
-    <string name="language">Language</string>
-    <string name="select_language">Select the new language</string>
+    <!-- ABOUT US -->
     <string name="about">About us</string>
     <string name="about_us_body">The <a href="http://rightsapp-project.eu" target="blank">http://rightsapp-project.eu</a> app is the main outcome for the DG-Justice funded project “Mobile Technologies applied to protect victims of a crime within the EU Area of Justice: RightsApp for e-Justice” (<a href="http://idt.uab.cat" target="blank">http://idt.uab.cat</a>), which has received funding from the DG-Justice European Union’s Programme (2014-2020) under Grant Agreement No. 785854.
         \n\nThe Consortium is mainly composed of two non-profit organizations within the Universitat Autònoma de Barcelona (UAB): the UAB Institute of Law and Technology (IDT-UAB, <a href="https://www.uab.cat/international-welcome-point/" target="blank">https://www.uab.cat/international-welcome-point/</a>) and the UAB International Welcome Point (IWP-UAB, <a href="https://www.uab.cat/dret/">https://www.uab.cat/dret/</a>).
         \n\nThe <a href="https://www.victimologia.cat/">https://www.victimologia.cat/</a> is a research centre promoting cutting-edge research on law and technology from an interdisciplinary perspective. Its core mission is that of fostering research devoted to providing legal professionals, institutions, organizations, and citizens with appropriate technologies to enhance their legal work or to improve the exercise of their rights. Appropriate technologies in this context imply that research is user oriented, so that both the technological design and its developments are tailored to the needs of the end users and not the opposite.
         \n\nThe <b>RightsApp</b> is an office designed by the International Relationships Office to provide services to all foreigner members of the UAB community. Thus, giving support for the students, lecturers, administrative staff and services staff from other countries. It provides practical information like legal procedures for EU and non-EU citizens, health cover for EU citizens, budget for living in Barcelona and useful addresses. Moreover, the IWP provides support on foreigners stay and work permit renewal applications, coordinates assistance among UAB offices and assistance to international postgraduate grant holders.
         \n\nMoreover, the <b>UAB Institute of Law and Technology (IDT-UAB)</b>(FoL, <b>UAB International Welcome Point (IWP-UAB)</b>), <b>UAB Faculty of Law </b> (LAST-JD) and the <b>LAST-JD Erasmus Mundus</b> (CSV, <b>Catalan Society of Victimology</b>)  also contribute to qualitative and quantitative research and dissemination as well. The UAB Faculty of Law every year receives more than 60 students from other countries to study abroad in its student mobility programs (Erasmus Programme) and every year about 2.600 individuals enrol at its degrees and post degree courses. The Catalan Society of Victimology groups together lawyers, psychologists, doctors, social workers, among others. </string>
+
+    <!-- BUTTONS TEXT -->
+    <string name="ok">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="next">Continue</string>
+
+    <!-- ACTIVITIES -->
+    <string name="emergency_call">Emergency call</string>
+    <string name="get_information">Get information</string>
+    <string name="emergency_112">112 Emergency</string>
+
+    <string name="language">Language</string>
+    <string name="select_language">Select the new language</string>
+
     <string name="title_activity_questionnaire">Questionnaire</string>
     <string name="questionnaire_title">Questionnaire</string>
     <string name="title_activity_questionnaire_fragment">QuestionnaireFragment</string>
@@ -77,7 +89,7 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="language_name_portuguese">Portuguese</string>
     <string name="language_name_italian">Italian</string>
     <string name="emergency_call_text">If you have been victim of a crime and you need assistance, make an emergency call to 112</string>
-    <string name="questionnaire_text">Get tailored information about your rights as crime victim thorugh our questionnaire</string>
+    <string name="questionnaire_text">Get tailored information about your rights as crime victim through our questionnaire</string>
     <string name="navigate_text">Get information and navigate to different assistance entities</string>
     <string name="title_activity_about_us">About us</string>
     <string name="title_activity_explanation">How to use the app</string>
@@ -89,43 +101,36 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="link">Link</string>
     <string name="email">E-mail</string>
     <string name="disclaimer_title">Disclaimer</string>
-    <string name="disclaimer_body"></string>
     <string name="terms_and_conditions_checkbox">I have read and accept the terms and conditions from the app</string>
     <string name="accept">Accept</string>
     <string name="must_accept_terms_and_conditions">You must accept the terms and conditions of the app to use it</string>
     <string name="no_entities_list">The search returns no results. Please, change the search criteria and launch again the query</string>
+
+    <!-- CLUSTERS TEXTS -->
     <string name="citizens_rights">Rights to citizens victim of a crime</string>
     <string name="EU_citizens_rights">Rights specially granted to citizens victim of a crime that reside in another EU country</string>
     <string name="no_EU_citizens_rights">Rights specially granted to citizens victim of a crime that reside in a non EU country </string>
     <string name="sexual_attack_protocol">Protocol of action in a serious sexual attack</string>
+    <string name="terrorism_cluster_1">Test of cluster text</string>
 
-    <!-- Alert dialogs -->
+    <string name="title_activity_whats_next">WhatsNextActivity</string>
+
+    <!-- ALERT DIALOGS -->
     <string name="back_questionnaire">If you press Accept you will be redirected to the main screen and your current answers will be lost.</string>
     <string name="exit_app">Pressing OK will close the application. Do you want to close the application?</string>
 
-    <!-- Menu bar -->
+    <!-- MENU BAR -->
     <string name="help">Help</string>
 
-    <!-- Quick help texts -->
+    <!-- QUICK HELP TEXTS -->
     <string name="qh_rightsapp_activity">Choose one of the three available options: 1) Make an emergency call to 112; 2) Obtain personalized information through a questionnaire; and 3) Obtain a list of crime victim support entities, consulates and embassies.</string>
     <string name="qh_call112_activity">Pressing the icon or the \ "Call \" button you will make an emergency call to 112</string>
     <string name="qh_entities_search_activity">Choose the criteria of the victim support entities, police stations, consulates and / or embassies you want to search for</string>
     <string name="qh_entities_list_activity">From the list of entities that meet the search criteria that you specified on the previous screen, choose the one that is most convenient for you to see more details. The list is ordered by proximity to your geographical position</string>
     <string name="qh_entity_activity">This screen shows the details of the entity you chose from the list on the previous screen</string>
 
-    <!-- Clusters texts -->
-    <string name="terrorism_cluster_1">Test of cluster text</string>
+    <!-- WHAT'S NEXT TEXTS -->
     <string name="whats_next">What\'s next?</string>
-    <string name="title_activity_whats_next">WhatsNextActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-
-    <!-- What's next strings -->
     <string name="phone_112">Make an emergency call to 112</string>
     <string name="victims_association">Go to a victim assistance office to receive more information</string>
     <string name="police_station">Go to a police station to file a complaint</string>
@@ -133,6 +138,16 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="hospital">Go to a hospital</string>
     <string name="consulate_embassy">Go to your consulate or embassy to receive more information</string>
 
-    <!-- CallActivity strings -->
+    <!-- CALLACTIVITY STRINGS -->
     <string name="phone_call">If you press the button below you will make a call to </string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
+
+
