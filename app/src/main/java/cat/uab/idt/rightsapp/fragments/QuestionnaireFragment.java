@@ -15,15 +15,13 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import cat.uab.idt.rightsapp.Constants;
-import cat.uab.idt.rightsapp.RightsClusterActivity;
-import cat.uab.idt.rightsapp.ParticlesActivity;
+import cat.uab.idt.rightsapp.ParticlesClusterActivity;
 import cat.uab.idt.rightsapp.R;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 import cat.uab.idt.rightsapp.QuestionnaireActivity;
@@ -181,7 +179,7 @@ public class QuestionnaireFragment extends Fragment {
                     int id_next_question = db.getNextQuestionID(currentQuestionID, id_answer);
                     if (id_next_question == 0) {
                         //Finish the workflow
-                        Intent intent = new Intent(parentActivity.getApplicationContext(), RightsClusterActivity.class);
+                        Intent intent = new Intent(parentActivity.getApplicationContext(), ParticlesClusterActivity.class);
                         startActivity(intent);
                     } else {
                         //updates the fragment to the new question

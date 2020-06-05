@@ -20,10 +20,10 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
-import cat.uab.idt.rightsapp.adapters.RVAGroups;
+import cat.uab.idt.rightsapp.adapters.RVAParticlesCluster;
 import cat.uab.idt.rightsapp.models.TagModel;
 
-public class RightsClusterActivity extends AppCompatActivity implements RVAGroups.ItemClickListener{
+public class ParticlesClusterActivity extends AppCompatActivity implements RVAParticlesCluster.ItemClickListener{
     //Clusters definition
     /*private final String[] terrorism_clusters = {};
     private final String[] violence_against_women_clusters = {};
@@ -44,7 +44,7 @@ public class RightsClusterActivity extends AppCompatActivity implements RVAGroup
         super.onCreate(savedInstanceState);
 
         setTitle(R.string.title_activity_subjects);
-        setContentView(R.layout.activity_rightsapp_cluster);
+        setContentView(R.layout.activity_particles_cluster);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_particles_groups);
 
         //Sets the toolbar
@@ -133,13 +133,14 @@ public class RightsClusterActivity extends AppCompatActivity implements RVAGroup
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         // specify an adapter
-        RVAGroups mAdapter = new RVAGroups(this.getBaseContext(), dataSet);
-        mAdapter.setClickListener(new RVAGroups.ItemClickListener() {
+        RVAParticlesCluster mAdapter = new RVAParticlesCluster(this.getBaseContext(), dataSet);
+        mAdapter.setClickListener(new RVAParticlesCluster.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 editor.putInt(Constants.SELECTED_TAG, dataSet.get(position).getId_tag());
                 editor.apply();
-                Intent intent = new Intent(getApplicationContext(), ParticlesActivity.class);
+                //Intent intent = new Intent(getApplicationContext(), ParticlesActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ParticlesSubjectsListActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }

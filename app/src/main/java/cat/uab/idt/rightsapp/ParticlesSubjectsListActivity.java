@@ -1,106 +1,117 @@
 package cat.uab.idt.rightsapp;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
-import cat.uab.idt.rightsapp.adapters.ExpandableAdapter;
+import cat.uab.idt.rightsapp.adapters.RVAParticlesCluster;
+import cat.uab.idt.rightsapp.adapters.RVASubjectsList;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 import cat.uab.idt.rightsapp.models.ParticleModel;
 
-public class ParticlesActivity extends AppCompatActivity {
+public class ParticlesSubjectsListActivity extends AppCompatActivity implements RVASubjectsList.ItemClickListener {
 
     private int id_tag_selected = 0;
     private int id_tag_cluster_selected = 0;
     private int main_tag = 0;
 
+    private SharedPreferences.Editor editor = null;
+
+    private ArrayList<ParticleModel> dataSet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.title_activity_subjects);
-        setContentView(R.layout.activity_particles);
+        setContentView(R.layout.activity_particles_subjects_list);
 
         //Sets the toolbar
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
-        ImageButton ib_particles_back = findViewById(R.id.ib_particles);
-        Button btn_whatsnext = findViewById(R.id.btn_whatsnext);
+        ImageButton ib_back_subjects_list = findViewById(R.id.ib_back_subjects_list);
+        Button btn_whats_next_subjects_list = findViewById(R.id.btn_whats_next_subjects_list);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_subjects_list);
 
         // Gets preferences file
         Context context = getApplicationContext();
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
+        //Sets editor
+        editor = sharedPreferences.edit();
+
         //Gets the language stored in Preferences for the app
         String language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
+
+        main_tag = sharedPreferences.getInt(Constants.MAIN_TAG, 0);
+        id_tag_selected = sharedPreferences.getInt(Constants.SELECTED_TAG, 0);
 
         //Database descriptor
         DataBaseHelper db = new DataBaseHelper(this);
         db.openDataBase();
 
-        //Gets elements from layout
-        ExpandableListView expandableListView = findViewById(R.id.elv_particles);
-
-        //Tags and/or cluster selected by the user
-        id_tag_selected = sharedPreferences.getInt(Constants.SELECTED_TAG, 0);
-        if(id_tag_selected > 9){
-            id_tag_cluster_selected = id_tag_selected % 10;
-            id_tag_selected = id_tag_selected / 10;
-        }
-        main_tag = sharedPreferences.getInt(Constants.MAIN_TAG, 0);
-
         //Gets particles list
-        ArrayList<ParticleModel> particles_list = null;
         if(id_tag_selected != Constants.TAG_UE_RESIDENT && id_tag_selected != Constants.TAG_NON_EU_RESIDENT){
-            particles_list = db.getParticlesByTag(id_tag_selected, Constants.TAG_SPANISH_RESIDENT, language);
+            dataSet = db.getParticlesByTag(id_tag_selected, Constants.TAG_SPANISH_RESIDENT, language);
         }else{
-            particles_list = db.getParticlesByTag(main_tag, id_tag_selected, language);
+            dataSet = db.getParticlesByTag(main_tag, id_tag_selected, language);
         }
+        dataSet = sortParticles(dataSet);
 
-        particles_list = sortParticles(particles_list);
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        recyclerView.setHasFixedSize(true);
 
-        String[] subjects = new String[particles_list.size()];
-        for(int i = 0; i < subjects.length; i++) {
-            subjects[i] = particles_list.get(i).getSubjectText();
-        }
+        // use a linear layout manager
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-        ArrayList<ArrayList<String>> childList = new ArrayList<>();
-        for(int i = 0; i < subjects.length; i++){
-            childList.add(particles_list.get(i).getTextArray());
-        }
-
-        ExpandableListAdapter adapter = new ExpandableAdapter(this, childList, subjects);
-        expandableListView.setAdapter(adapter);
-
-        //Closes the database
-        db.close();
-
-        //Buttons listeners
-        ib_particles_back.setOnClickListener(new View.OnClickListener() {
+        // specify an adapter
+        RVASubjectsList mAdapter = new RVASubjectsList(this.getBaseContext(), dataSet);
+        mAdapter.setClickListener(new RVASubjectsList.ItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemClick(View view, int position) {
+                editor.putInt(Constants.SELECTED_PARTICLE, dataSet.get(position).getId());
+                editor.apply();
+                Intent intent = new Intent(getApplicationContext(), ParticleDetailsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(mAdapter);
+
+        //Sets the back button listener
+        ib_back_subjects_list.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
                 onBackPressed();
             }
         });
-        btn_whatsnext.setOnClickListener(new View.OnClickListener() {
+
+        //Sets the whats next button listener
+        btn_whats_next_subjects_list.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 Intent intent = new Intent(getApplicationContext(), WhatsNextActivity.class);
                 startActivity(intent);
             }
@@ -131,10 +142,19 @@ public class ParticlesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        Intent intent = new Intent(getApplicationContext(), ParticlesClusterActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        finish();
+    }
+
+    @Override
+    public void onItemClick(View view, int position){
+        editor.putInt(Constants.SELECTED_PARTICLE, dataSet.get(position).getId());
+        System.out.println("TEST: " + dataSet.get(position).getId());
+        editor.apply();
+        Intent intent = new Intent(getApplicationContext(), ParticleDetailsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -203,5 +223,4 @@ public class ParticlesActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

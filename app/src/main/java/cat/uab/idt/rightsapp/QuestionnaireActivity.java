@@ -63,6 +63,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
         editor.remove(Constants.MAIN_TAG);
         editor.remove(Constants.SIDE_TAG);
         editor.remove(Constants.RESIDENCE_TAG);
+        editor.remove(Constants.SELECTED_PARTICLE);
         editor.apply();
 
         tv_title.setText(R.string.questionnaire_title);

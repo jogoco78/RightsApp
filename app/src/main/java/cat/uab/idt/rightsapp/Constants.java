@@ -3,6 +3,7 @@ package cat.uab.idt.rightsapp;
 public abstract class Constants {
     //Text constants
     public static final String NEW_LINE_SEPARATOR = "--";
+    public static final String NEW_LINE_BULLET_SEPARATOR = "|";
 
     //Initial explanation and terms of use
     public static final String AGREED = "agreed";
@@ -61,6 +62,7 @@ public abstract class Constants {
     public static final String SIDE_TAG = "side_tag";
     public static final String RESIDENCE_TAG = "residence_tag";
     public static final String SELECTED_TAG = "selected_tag";
+    public static final String SELECTED_PARTICLE = "selected_particle";
 
 
 

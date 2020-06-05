@@ -3,13 +3,6 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="cat.uab.idt.rightsapp">
 
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <dist:module dist:instant="true" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,9 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".CallActivity"></activity>
+        <activity android:name=".ParticleDetailsActivity"></activity>
+        <activity android:name=".ParticlesSubjectsListActivity" />
+        <activity android:name=".CallActivity" />
         <activity android:name=".WhatsNextActivity" />
-        <activity android:name=".RightsClusterActivity" /> <!-- android:theme="@style/AppTheme"> -->
+        <activity android:name=".ParticlesClusterActivity" /> <!-- android:theme="@style/AppTheme"> -->
         <activity android:name=".ParticlesActivity" />
         <activity android:name=".EntityActivity" />
         <activity
@@ -45,5 +40,12 @@
         <activity android:name=".AboutUsActivity" />
         <activity android:name=".LanguageActivity" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <dist:module dist:instant="true" />
 
 </manifest>

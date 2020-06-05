@@ -1,46 +1,53 @@
 package cat.uab.idt.rightsapp;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-import cat.uab.idt.rightsapp.adapters.ExpandableAdapter;
 import cat.uab.idt.rightsapp.database.DataBaseHelper;
 import cat.uab.idt.rightsapp.models.ParticleModel;
 
-public class ParticlesActivity extends AppCompatActivity {
+public class ParticleDetailsActivity extends AppCompatActivity {
 
-    private int id_tag_selected = 0;
-    private int id_tag_cluster_selected = 0;
-    private int main_tag = 0;
+    private String[] particle_texts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.title_activity_subjects);
-        setContentView(R.layout.activity_particles);
+        setContentView(R.layout.activity_particle_details);
 
         //Sets the toolbar
         Toolbar toolbarRightsApp = findViewById(R.id.toolbar_rights_app);
         setSupportActionBar(toolbarRightsApp);
 
-        ImageButton ib_particles_back = findViewById(R.id.ib_particles);
-        Button btn_whatsnext = findViewById(R.id.btn_whatsnext);
+        ConstraintLayout cl = findViewById(R.id.cl_particle_details);
+        TextView tv_particle_details = new TextView(this);
+        tv_particle_details.setId(View.generateViewId());
+        cl.addView(tv_particle_details);
+
+        Button btn_whats_next_particle_details = findViewById(R.id.btn_whats_next_particle_details);
+        ImageButton ib_back_particle_details = findViewById(R.id.ib_back_particle_details);
 
         // Gets preferences file
         Context context = getApplicationContext();
@@ -50,90 +57,71 @@ public class ParticlesActivity extends AppCompatActivity {
         //Gets the language stored in Preferences for the app
         String language = sharedPreferences.getString(Constants.PREF_LANGUAGE, null);
 
+        int id_particle = sharedPreferences.getInt(Constants.SELECTED_PARTICLE, 0);
+
         //Database descriptor
         DataBaseHelper db = new DataBaseHelper(this);
         db.openDataBase();
 
-        //Gets elements from layout
-        ExpandableListView expandableListView = findViewById(R.id.elv_particles);
+        ArrayList<ParticleModel> particles = db.getParticles(new int[] {id_particle}, language);
+        particle_texts = particles.get(0).getTextSplit();
 
-        //Tags and/or cluster selected by the user
-        id_tag_selected = sharedPreferences.getInt(Constants.SELECTED_TAG, 0);
-        if(id_tag_selected > 9){
-            id_tag_cluster_selected = id_tag_selected % 10;
-            id_tag_selected = id_tag_selected / 10;
+        //Constraint params for textview
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+        );
+        tv_particle_details.setLayoutParams(params);
+
+        //Constraints in the layout
+        ConstraintSet cs = new ConstraintSet();
+        cs.clone(cl);
+
+        //Constraint
+        cs.connect(tv_particle_details.getId(),ConstraintSet.TOP,toolbarRightsApp.getId(),ConstraintSet.BOTTOM,50);
+        cs.connect(tv_particle_details.getId(),ConstraintSet.LEFT,cl.getId(),ConstraintSet.LEFT, 16);
+        cs.connect(tv_particle_details.getId(),ConstraintSet.RIGHT,cl.getId(),ConstraintSet.RIGHT, 16);
+        cs.connect(tv_particle_details.getId(),ConstraintSet.BOTTOM,btn_whats_next_particle_details.getId(),ConstraintSet.TOP, 16);
+        cs.applyTo(cl);
+
+        int flag = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE;
+
+        SpannableStringBuilder ssb = new SpannableStringBuilder();
+
+        for(int i = 0; i < particle_texts.length; i++){
+            ssb.append(particle_texts[i]+"\n\n");
+            System.out.println("TEXT: " + particle_texts[i]);
         }
-        main_tag = sharedPreferences.getInt(Constants.MAIN_TAG, 0);
 
-        //Gets particles list
-        ArrayList<ParticleModel> particles_list = null;
-        if(id_tag_selected != Constants.TAG_UE_RESIDENT && id_tag_selected != Constants.TAG_NON_EU_RESIDENT){
-            particles_list = db.getParticlesByTag(id_tag_selected, Constants.TAG_SPANISH_RESIDENT, language);
-        }else{
-            particles_list = db.getParticlesByTag(main_tag, id_tag_selected, language);
-        }
+        tv_particle_details.setText(ssb, TextView.BufferType.SPANNABLE);
+        tv_particle_details.setTextSize((float) 18.0);
+        tv_particle_details.setLineSpacing((float) 5.0,(float) 1.0);
 
-        particles_list = sortParticles(particles_list);
 
-        String[] subjects = new String[particles_list.size()];
-        for(int i = 0; i < subjects.length; i++) {
-            subjects[i] = particles_list.get(i).getSubjectText();
-        }
 
-        ArrayList<ArrayList<String>> childList = new ArrayList<>();
-        for(int i = 0; i < subjects.length; i++){
-            childList.add(particles_list.get(i).getTextArray());
-        }
 
-        ExpandableListAdapter adapter = new ExpandableAdapter(this, childList, subjects);
-        expandableListView.setAdapter(adapter);
+       // tv_particle_details.setText(particles.get(0).getText());
 
-        //Closes the database
-        db.close();
-
-        //Buttons listeners
-        ib_particles_back.setOnClickListener(new View.OnClickListener() {
+        //Sets buttons listeners
+        btn_whats_next_particle_details.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        btn_whatsnext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 Intent intent = new Intent(getApplicationContext(), WhatsNextActivity.class);
                 startActivity(intent);
             }
         });
-    }
 
-    private ArrayList<ParticleModel> sortParticles(ArrayList<ParticleModel> source){
-        int order = 0;
-        int index = 0;
-        int size = source.size();
-        ArrayList<ParticleModel> destination = new ArrayList<>();
-
-        for(int i = 0; i < size; i++){
-            order = source.get(0).getOrder();
-            index = 0;
-            for (ParticleModel particle:  source){
-                if(order >= particle.getOrder()){
-                    order = particle.getOrder();
-                    index = source.indexOf(particle);
-                }
+        ib_back_particle_details.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onBackPressed();
             }
-            destination.add(source.get(index));
-            source.remove(index);
-        }
-
-        return destination;
+        });
     }
 
     @Override
     public void onBackPressed(){
-        Intent intent = new Intent(getApplicationContext(), ParticlesClusterActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -203,5 +191,4 @@ public class ParticlesActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }
