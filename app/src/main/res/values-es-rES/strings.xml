@@ -51,6 +51,11 @@
     <string name="cancel">Cancelar</string>
     <string name="next">Siguiente</string>ç
 
+    <!-- TITLES -->
+    <string name="title_particle_details">Detalles</string>
+    <string name="title_particle_situation">Escenarios</string>
+
+
     <!-- ACTIVITIES -->
     <string name="emergency_call">Llamada de emergencia</string>
     <string name="get_information">Obtener información</string>
@@ -101,10 +106,10 @@
     <string name="do_not_show">No volver a mostrar éste mensaje</string>
 
     <!-- CLUSTERS TEXTS -->
-    <string name="citizens_rights">Derechos de los ciudadanos que han sido víctimas de un delito</string>
-    <string name="EU_citizens_rights">Derechos especialmente otorgados a los ciudadanos víctima de un delito con residencia en un país miembro de la UE</string>
-    <string name="no_EU_citizens_rights">Derechos especialmente otorgados a los ciudadanos víctima de un delito con residencia en un país no miembro de la UE </string>
-    <string name="sexual_attack_protocol">Protocolo de actuación ante un ataque sexual grave</string>
+    <string name="citizens_rights">Derechos que tienes o puedes tener como víctima de un delito</string>
+    <string name="EU_citizens_rights">Tienes derechos como residente en la Unión Europea</string>
+    <string name="no_EU_citizens_rights">Tienes derechos como no residente en la Unión Europea</string>
+    <string name="sexual_attack_protocol">Esto es lo que debes hacer si eres víctima de un ataque sexual grave</string>
     <string name="terrorism_cluster_1">Prueba de texto de cluster</string>
 
     <!-- ALERT DIALOGS -->
@@ -132,4 +137,6 @@
 
     <!-- CALLACTIVITY STRINGS -->
     <string name="phone_call">Si pulsas el botón de más abajo harás una llamada al </string>
+    <string name="phone_016">Atención telefónica gratuita y profesional las 24 horas del día de los 365 días del año para mujeres víctima de violencia de género y su entorno.\n\nInformación sobre que hacer en caso de maltrato, recursos y derechos de las víctimas en materia de empleo, servicios sociales, ayudas económicas, recursos de información, de asistencia y de acogida. </string>
+    <string name="phone_112b">Atención telefónica gratuita y profesional las 24 horas del día de los 365 días del año para toda la Unión Europea y para cualquier tipo de emergencia.\n\nPermite la localización inmediata de quien llama y activar todas las agencias de manera simultánea mejorando los tiempos de respuesta. </string>
 </resources>

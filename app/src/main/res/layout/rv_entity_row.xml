@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:drawableRight="@drawable/ic_select"
         android:drawablePadding="8dp"
+        android:fontFamily="@font/roboto_black"
         android:text="TextView"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
 

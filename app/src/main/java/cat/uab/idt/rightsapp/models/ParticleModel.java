@@ -1,7 +1,6 @@
 package cat.uab.idt.rightsapp.models;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import cat.uab.idt.rightsapp.Constants;
 
@@ -80,20 +79,20 @@ public class ParticleModel {
     }
 
     public String[] getTextSplit(){
-        return text.split("\\|");
+        return text.split(Constants.NEW_LINE_PARAGRAPH_SEPARATOR);
     }
 
-    public ArrayList<String> getTextArray(){
+   /* public ArrayList<String> getTextArray(){
         ArrayList<String> results = new ArrayList<>();
         //String t = text.replaceAll(Constants.NEW_LINE_SEPARATOR, "\n");
-        String[] split = text.split(Constants.NEW_LINE_BULLET_SEPARATOR);
+        String[] split = text.split(Constants.NEW_LINE_PARAGRAPH_SEPARATOR);
 
-        /*for (String text : split){
+        for (String text : split){
             results.add(text.replaceAll(Constants.NEW_LINE_SEPARATOR, "\n"));
-        }*/
+        }
 
         return(results);
-    }
+    }*/
 
     public void setText(String text) {
         this.text = text;

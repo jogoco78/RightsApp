@@ -46,7 +46,8 @@ public class RightsAppActivity extends AppCompatActivity {
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 //END Analytics
 
-                Intent intent = new Intent(getApplicationContext(), Emergency112CallActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CallActivity.class);
+                intent.putExtra(Constants.PHONE_NUMBER_KEY, Constants.PHONE_EMERGENCIES);
                 startActivity(intent);
             }
         });
@@ -79,8 +80,11 @@ public class RightsAppActivity extends AppCompatActivity {
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Call112Button");
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "mainscreen");
 
-                Intent intent = new Intent(getApplicationContext(), Emergency112CallActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CallActivity.class);
+                intent.putExtra(Constants.PHONE_NUMBER_KEY, Constants.PHONE_EMERGENCIES);
                 startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(), Emergency112CallActivity.class);
+                //startActivity(intent);
             }
         });
 

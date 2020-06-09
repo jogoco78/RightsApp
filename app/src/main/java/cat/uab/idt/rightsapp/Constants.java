@@ -3,7 +3,7 @@ package cat.uab.idt.rightsapp;
 public abstract class Constants {
     //Text constants
     public static final String NEW_LINE_SEPARATOR = "--";
-    public static final String NEW_LINE_BULLET_SEPARATOR = "|";
+    public static final String NEW_LINE_PARAGRAPH_SEPARATOR = "\\|";
 
     //Initial explanation and terms of use
     public static final String AGREED = "agreed";
@@ -51,6 +51,7 @@ public abstract class Constants {
     public static final String ENTITY_CITY = "entity_city";
     public static final String ENTITY_COUNTRY = "entity_country";
     public static final String ENTITY_LINK = "entity_link";
+    public static final String ENTITY_EMAIL = "entity_email";
 
     //Phone numbers
     public static final String PHONE_EMERGENCIES = "112";

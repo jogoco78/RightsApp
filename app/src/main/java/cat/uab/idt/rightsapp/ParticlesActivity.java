@@ -82,7 +82,7 @@ public class ParticlesActivity extends AppCompatActivity {
 
         ArrayList<ArrayList<String>> childList = new ArrayList<>();
         for(int i = 0; i < subjects.length; i++){
-            childList.add(particles_list.get(i).getTextArray());
+            //childList.add(particles_list.get(i).getTextArray());
         }
 
         ExpandableListAdapter adapter = new ExpandableAdapter(this, childList, subjects);

@@ -55,6 +55,10 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="cancel">Cancel</string>
     <string name="next">Continue</string>
 
+    <!-- TITLES -->
+    <string name="title_particle_details">Details</string>
+    <string name="title_particle_situation">Scenarios</string>
+
     <!-- ACTIVITIES -->
     <string name="emergency_call">Emergency call</string>
     <string name="get_information">Get information</string>
@@ -107,10 +111,10 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="no_entities_list">The search returns no results. Please, change the search criteria and launch again the query</string>
 
     <!-- CLUSTERS TEXTS -->
-    <string name="citizens_rights">Rights to citizens victim of a crime</string>
-    <string name="EU_citizens_rights">Rights specially granted to citizens victim of a crime that reside in another EU country</string>
-    <string name="no_EU_citizens_rights">Rights specially granted to citizens victim of a crime that reside in a non EU country </string>
-    <string name="sexual_attack_protocol">Protocol of action in a serious sexual attack</string>
+    <string name="citizens_rights">Rights you have or can have as a victim of a crime</string>
+    <string name="EU_citizens_rights">You have rights as a resident in the European Union</string>
+    <string name="no_EU_citizens_rights">You have rights as a non-resident in the European Union</string>
+    <string name="sexual_attack_protocol">This is what you should do if you are the victim of a serious sexual attack</string>
     <string name="terrorism_cluster_1">Test of cluster text</string>
 
     <string name="title_activity_whats_next">WhatsNextActivity</string>
@@ -140,6 +144,9 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
 
     <!-- CALLACTIVITY STRINGS -->
     <string name="phone_call">If you press the button below you will make a call to </string>
+    <string name="phone_016">Free and professional telephone service 24 hours a day, 365 days a year for women victims of gender violence and their environment.\n\nInformation on what to do in case of abuse, resources and rights of victims in terms of employment, social services, financial aid, information resources, assistance and shelter. </string>
+    <string name="phone_112b">Free and professional telephone attention 24 hours a day, 365 days a year for the entire European Union and for any type of emergency.\n\nAllows the immediate location of the caller and activate all the agencies simultaneously, improving response times. </string>
+
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

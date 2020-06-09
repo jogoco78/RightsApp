@@ -96,7 +96,8 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
                 switch (position){
                     case 0:
                         //Emergency call
-                        intent = new Intent(getApplicationContext(), Emergency112CallActivity.class);
+                        intent = new Intent(getApplicationContext(), CallActivity.class);
+                        intent.putExtra(Constants.PHONE_NUMBER_KEY, Constants.PHONE_EMERGENCIES);
                         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
@@ -120,6 +121,7 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
                         //Call phone against women abuse
                         intent = new Intent(getApplicationContext(), CallActivity.class);
                         intent.putExtra(Constants.PHONE_NUMBER_KEY, Constants.PHONE_VAW);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case 4:

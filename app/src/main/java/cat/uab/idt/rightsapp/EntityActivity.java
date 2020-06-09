@@ -26,6 +26,7 @@ public class EntityActivity extends AppCompatActivity {
     private String phone_number;
     private double longitude;
     private double latitude;
+    private String email = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class EntityActivity extends AppCompatActivity {
         phone_number = getIntent().getStringExtra(Constants.ENTITY_PHONE);
         String position = getIntent().getStringExtra(Constants.ENTITY_POSITION);
         String link = getIntent().getStringExtra(Constants.ENTITY_LINK);
+        email = getIntent().getStringExtra(Constants.ENTITY_EMAIL);
 
         longitude = Double.parseDouble(position.split(",")[0]);
         latitude = Double.parseDouble(position.split(",")[1]);
@@ -55,17 +57,27 @@ public class EntityActivity extends AppCompatActivity {
         TextView tv_entity_address = findViewById(R.id.tv_address);
         TextView tv_entity_phone = findViewById(R.id.tv_entity_phone);
         TextView tv_entity_link = findViewById(R.id.tv_entity_link);
-        ImageButton ib_call = findViewById(R.id.ib_entity_phone);
-        ImageButton ib_navigate = findViewById(R.id.ib_entity_navigate);
+        TextView tv_entity_email = findViewById(R.id.tv_entity_email);
         ImageButton ib_back = findViewById(R.id.ib_entity_back);
 
         tv_entity_name.setText(name);
         tv_entity_description.setText(description);
         tv_entity_address.setText(address);
         tv_entity_phone.setText(phone_number);
-        tv_entity_link.setText(link);
 
-        ib_call.setOnClickListener(new View.OnClickListener() {
+        if(tv_entity_link != null){
+            tv_entity_link.setText(link);
+        }else{
+            tv_entity_link.setVisibility(View.GONE);
+        }
+
+        if (email != null){
+            tv_entity_email.setText(email);
+        }else{
+            tv_entity_email.setVisibility(View.GONE);
+        }
+
+        tv_entity_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int phonePermission = ActivityCompat.checkSelfPermission(EntityActivity.this, Manifest.permission.CALL_PHONE);
@@ -82,7 +94,7 @@ public class EntityActivity extends AppCompatActivity {
             }
         });
 
-        ib_navigate.setOnClickListener(new View.OnClickListener() {
+        tv_entity_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Create a Uri from an intent string. Use the result to create an Intent
@@ -96,6 +108,20 @@ public class EntityActivity extends AppCompatActivity {
 
                 // Attempt to start an activity that can handle the Intent
                 startActivity(mapIntent);
+            }
+        });
+
+        tv_entity_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+                //intent.putExtra(Intent.EXTRA_SUBJECT, "Subject here");
+                //intent.putExtra(Intent.EXTRA_TEXT,"Body Here");
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
             }
         });
 

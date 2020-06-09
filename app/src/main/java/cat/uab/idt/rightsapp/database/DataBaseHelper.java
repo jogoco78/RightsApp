@@ -602,7 +602,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             where = where + " where ";
         }
 
-        where = where + " p." + DBContract.Particles.COLUMN_NAME_ID + " = s." + DBContract.Subjects.COLUMN_NAME_ID;
+        where = where + " p." + DBContract.Particles.COLUMN_NAME_ID_SUBJECT + " = s." + DBContract.Subjects.COLUMN_NAME_ID;
 
         String query = select + where;
         Cursor cursor = myDataBase.rawQuery(query, null);
@@ -616,67 +616,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return results;
-        /*
-        boolean previousClause = false;
-        ArrayList<ParticleModel> results = new ArrayList<>();
 
-        String select = "select distinct p.*,s." + DBContract.Subjects.COLUMN_NAME_TEXT + "_" + language
-                + " from " + DBContract.Particles.TABLE_NAME + " p," + DBContract.Subjects.TABLE_NAME + " s, " + DBContract.Particles_Tags.TABLE_NAME + " pt";
-
-        String where = "";
-        if(id_particles != null){
-            previousClause = true;
-            where = where + " WHERE p." + DBContract.Particles.COLUMN_NAME_ID + " IN (" + id_particles[0];
-            for(int i = 1; i < id_particles.length; i++){
-                where = where + "," + id_particles[i];
-            }
-            where = where + ")";
-        }
-
-        if (previousClause) {
-            where = where + " and ";
-        }else{
-            where = where + " where ";
-        }
-
-        where = where + "s." + DBContract.Subjects.COLUMN_NAME_ID + " = " + "p." + DBContract.Particles.COLUMN_NAME_ID_SUBJECT;
-
-        String query = select + where;
-
-        Cursor cursor = myDataBase.rawQuery(query, null);
-
-        if(cursor.moveToFirst()){
-            // Loop through cursor results if the query has rows
-            do {
-                ParticleModel pm = new ParticleModel();
-                if(tag_codes != null) pm.setTagCode(Integer.toString(tag_codes[cursor.getPosition()]));
-                pm.setId(cursor.getInt(0));
-                pm.setLanguage(language);
-                pm.setId_subject(cursor.getInt(5));
-                pm.setSubjectText(cursor.getString(6));
-                switch (language){
-                    case "es":
-                        pm.setText(cursor.getString(1));
-                        break;
-                    case "en":
-                        pm.setText(cursor.getString(2));
-                        break;
-                    case "por":
-                        pm.setText(cursor.getString(3));
-                        break;
-                    case "it":
-                        pm.setText(cursor.getString(4));
-                        break;
-                    default:
-                        //do default
-                        break;
-                }
-                results.add(pm);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        return results;*/
     }
 
     /********************************************************************************************

@@ -18,34 +18,36 @@
     <TextView
         android:id="@+id/tv_call_phone"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/roboto_regular"
+        android:lineSpacingExtra="8sp"
         android:text="TextView"
-        android:textSize="24sp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/ib_back_phone_call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_rights_app" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_phone_call" />
 
     <Button
         android:id="@+id/btn_phone_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@android:color/transparent"
+        android:layout_marginTop="70dp"
+        android:background="@android:color/darker_gray"
         android:drawableLeft="@drawable/ic_phone"
+        android:drawablePadding="20dp"
+        android:fontFamily="@font/roboto_black"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:text="Button"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_call_phone" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_rights_app" />
 
     <ImageButton
         android:id="@+id/ib_back_phone_call"

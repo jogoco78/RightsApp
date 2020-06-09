@@ -5,14 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.method.ScrollingMovementMethod;
+import android.text.style.UnderlineSpan;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +40,7 @@ public class ParticleDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.title_activity_subjects);
+        setTitle(R.string.title_particle_details);
         setContentView(R.layout.activity_particle_details);
 
         //Sets the toolbar
@@ -42,8 +48,11 @@ public class ParticleDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbarRightsApp);
 
         ConstraintLayout cl = findViewById(R.id.cl_particle_details);
+        TextView tv_particle_title = new TextView(this);
         TextView tv_particle_details = new TextView(this);
         tv_particle_details.setId(View.generateViewId());
+        tv_particle_title.setId(View.generateViewId());
+        cl.addView(tv_particle_title);
         cl.addView(tv_particle_details);
 
         Button btn_whats_next_particle_details = findViewById(R.id.btn_whats_next_particle_details);
@@ -64,43 +73,65 @@ public class ParticleDetailsActivity extends AppCompatActivity {
         db.openDataBase();
 
         ArrayList<ParticleModel> particles = db.getParticles(new int[] {id_particle}, language);
+        String title = particles.get(0).getSubjectText();
         particle_texts = particles.get(0).getTextSplit();
 
-        //Constraint params for textview
-        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT
+        db.close();
+
+        //Constraint params_title for details
+        ConstraintLayout.LayoutParams params_title = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT
         );
-        tv_particle_details.setLayoutParams(params);
+        tv_particle_title.setLayoutParams(params_title);
+
+        //Constraint params_details for details
+        ConstraintLayout.LayoutParams params_details = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT,
+                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT
+        );
+        tv_particle_details.setLayoutParams(params_details);
 
         //Constraints in the layout
         ConstraintSet cs = new ConstraintSet();
         cs.clone(cl);
 
-        //Constraint
-        cs.connect(tv_particle_details.getId(),ConstraintSet.TOP,toolbarRightsApp.getId(),ConstraintSet.BOTTOM,50);
-        cs.connect(tv_particle_details.getId(),ConstraintSet.LEFT,cl.getId(),ConstraintSet.LEFT, 16);
-        cs.connect(tv_particle_details.getId(),ConstraintSet.RIGHT,cl.getId(),ConstraintSet.RIGHT, 16);
+        //Constraints title
+        cs.connect(tv_particle_title.getId(),ConstraintSet.TOP,toolbarRightsApp.getId(),ConstraintSet.BOTTOM,50);
+        cs.connect(tv_particle_title.getId(),ConstraintSet.LEFT,cl.getId(),ConstraintSet.LEFT, 20);
+        cs.connect(tv_particle_title.getId(),ConstraintSet.RIGHT,cl.getId(),ConstraintSet.RIGHT, 20);
+
+        //Constraint details
+        cs.connect(tv_particle_details.getId(),ConstraintSet.TOP,tv_particle_title.getId(),ConstraintSet.BOTTOM,40);
+        cs.connect(tv_particle_details.getId(),ConstraintSet.LEFT,cl.getId(),ConstraintSet.LEFT, 20);
+        cs.connect(tv_particle_details.getId(),ConstraintSet.RIGHT,cl.getId(),ConstraintSet.RIGHT, 20);
         cs.connect(tv_particle_details.getId(),ConstraintSet.BOTTOM,btn_whats_next_particle_details.getId(),ConstraintSet.TOP, 16);
         cs.applyTo(cl);
 
         int flag = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE;
-
         SpannableStringBuilder ssb = new SpannableStringBuilder();
 
-        for(int i = 0; i < particle_texts.length; i++){
-            ssb.append(particle_texts[i]+"\n\n");
-            System.out.println("TEXT: " + particle_texts[i]);
-        }
+        ssb.append(title);
+        ssb.setSpan(new UnderlineSpan(), 0, title.length(), 0);
+        tv_particle_title.setGravity(Gravity.CENTER);
+        tv_particle_title.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.roboto_black));
+        tv_particle_title.setTextColor(Color.BLACK);
+        tv_particle_title.setText(ssb, TextView.BufferType.SPANNABLE);
+        tv_particle_title.setTextSize((float) 24.0);
+        tv_particle_title.setLineSpacing((float) 5.0,(float) 1.0);
 
+        ssb.clear();
+        for(int i = 0; i < particle_texts.length; i++){
+            ssb.append("\t" + particle_texts[i]+"\n\n");
+        }
+        tv_particle_details.setVerticalScrollBarEnabled(true);
+        tv_particle_details.setMovementMethod(new ScrollingMovementMethod());
+
+        tv_particle_details.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.roboto_black));
+        tv_particle_details.setTextColor(Color.BLACK);
         tv_particle_details.setText(ssb, TextView.BufferType.SPANNABLE);
         tv_particle_details.setTextSize((float) 18.0);
         tv_particle_details.setLineSpacing((float) 5.0,(float) 1.0);
-
-
-
-
-       // tv_particle_details.setText(particles.get(0).getText());
 
         //Sets buttons listeners
         btn_whats_next_particle_details.setOnClickListener(new View.OnClickListener(){

@@ -40,7 +40,17 @@ public class CallActivity extends AppCompatActivity {
         Button btn_phone_call = findViewById(R.id.btn_phone_call);
         ImageButton ib_back_phone_call = findViewById(R.id.ib_back_phone_call);
 
-        tv_phone_call.setText(getResources().getString(R.string.phone_call) + " " + phone_number);
+        switch (phone_number) {
+            case Constants.PHONE_VAW:
+                tv_phone_call.setText(getResources().getString(R.string.phone_016));
+                break;
+            case Constants.PHONE_EMERGENCIES:
+                tv_phone_call.setText(getResources().getString(R.string.phone_112b));
+                break;
+            default:
+                tv_phone_call.setText(getResources().getString(R.string.phone_call) + " " + phone_number);
+                break;
+        }
 
         btn_phone_call.setText(" " + phone_number);
         btn_phone_call.setOnClickListener(new View.OnClickListener() {

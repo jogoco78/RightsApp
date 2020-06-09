@@ -36,7 +36,6 @@
         <activity
             android:name=".RightsAppActivity"
             android:configChanges="locale" />
-        <activity android:name=".Emergency112CallActivity" />
         <activity android:name=".AboutUsActivity" />
         <activity android:name=".LanguageActivity" />
     </application>

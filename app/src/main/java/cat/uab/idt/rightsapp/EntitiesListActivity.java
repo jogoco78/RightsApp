@@ -43,7 +43,6 @@ public class EntitiesListActivity extends AppCompatActivity implements RVAEntiti
     private FusedLocationProviderClient fusedLocationClient;
     private RecyclerView recyclerView;
     private RVAEntities rv_adapter;
-    //private RecyclerView.LayoutManager rv_layoutManager;
     Activity activity = this;
     ArrayList<EntityModel> entities_list;
 
@@ -61,7 +60,6 @@ public class EntitiesListActivity extends AppCompatActivity implements RVAEntiti
         //Get elements from layout
         recyclerView = findViewById(R.id.rv_entities);
         ImageButton ib_back = findViewById(R.id.ib_entities_list_back);
-        //Button btn_entities_list_back = findViewById(R.id.btn_entities_list_back);
 
         // Gets preferences file
         Context context = getApplicationContext();
@@ -97,25 +95,19 @@ public class EntitiesListActivity extends AppCompatActivity implements RVAEntiti
             }
         });
 
-        /*btn_entities_list_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });*/
     }
 
     @Override
     public void onItemClick(View view, int position){
-        //Toast.makeText(this, "You clicked " + rv_adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getApplicationContext(), EntityActivity.class);
+        /*Intent intent = new Intent(getApplicationContext(), EntityActivity.class);
         intent.putExtra(Constants.ENTITY_NAME, rv_adapter.getItem(position).getEntity_name());
         intent.putExtra(Constants.ENTITY_DESCRIPTION, rv_adapter.getItem(position).getEntity_description());
         intent.putExtra(Constants.ENTITY_ADDRESS, rv_adapter.getItem(position).getAddress());
         intent.putExtra(Constants.ENTITY_PHONE, rv_adapter.getItem(position).getPhone_number());
         intent.putExtra(Constants.ENTITY_POSITION, rv_adapter.getItem(position).getLongitude() + "," + rv_adapter.getItem(position).getLatitude());
         intent.putExtra(Constants.ENTITY_LINK, rv_adapter.getItem(position).getLink());
-        startActivity(intent);
+        intent.putExtra(Constants.ENTITY_EMAIL, rv_adapter.getItem(position).getEmail());
+        startActivity(intent);*/
     }
 
     private void getLocation() {
@@ -160,7 +152,6 @@ public class EntitiesListActivity extends AppCompatActivity implements RVAEntiti
                                     entities_list.remove(s);
                                 }
                                 entities_list = null;
-                                System.out.println("TEST QUERY SORTED: " + entities_list_sorted.size());
 
                                 //Set up the recycler view
                                 recyclerView.setHasFixedSize(true);
@@ -178,6 +169,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RVAEntiti
                                         intent.putExtra(Constants.ENTITY_PHONE, rv_adapter.getItem(position).getPhone_number());
                                         intent.putExtra(Constants.ENTITY_POSITION, rv_adapter.getItem(position).getLongitude() + "," + rv_adapter.getItem(position).getLatitude());
                                         intent.putExtra(Constants.ENTITY_LINK, rv_adapter.getItem(position).getLink());
+                                        intent.putExtra(Constants.ENTITY_EMAIL, rv_adapter.getItem(position).getEmail());
                                         startActivity(intent);
                                     }
                                 });

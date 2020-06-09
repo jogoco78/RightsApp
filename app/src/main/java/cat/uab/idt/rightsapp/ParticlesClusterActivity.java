@@ -43,7 +43,7 @@ public class ParticlesClusterActivity extends AppCompatActivity implements RVAPa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle(R.string.title_activity_subjects);
+        setTitle(R.string.title_particle_situation);
         setContentView(R.layout.activity_particles_cluster);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_particles_groups);
 
