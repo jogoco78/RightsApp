@@ -92,7 +92,7 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="language_name_english">English</string>
     <string name="language_name_portuguese">Portuguese</string>
     <string name="language_name_italian">Italian</string>
-    <string name="emergency_call_text">If you have been victim of a crime and you need assistance, make an emergency call to 112</string>
+    <string name="emergency_call_text">If you are or have recently been the victim of a crime and need urgent assistance, make an emergency call to 112</string>
     <string name="questionnaire_text">Get tailored information about your rights as crime victim through our questionnaire</string>
     <string name="navigate_text">Get information and navigate to different assistance entities</string>
     <string name="title_activity_about_us">About us</string>

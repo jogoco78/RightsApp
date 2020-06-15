@@ -86,7 +86,7 @@
     <string name="language_name_english">Inglés</string>
     <string name="language_name_portuguese">Portugués</string>
     <string name="language_name_italian">Italiano</string>
-    <string name="emergency_call_text">Si has sido víctima de un delito y necesitas asistencia, haz una llamada de emergencia al 112</string>
+    <string name="emergency_call_text">Si acabas de ser víctima de un delito o lo has sufrido hace poco y necesitas asistencia urgente, haz una llamada de emergencia al 112</string>
     <string name="questionnaire_text">Obtén información particularizada acerca de tus derechos como víctima de un delito a través de nuestro cuestionario</string>
     <string name="navigate_text">Obtén información y navega a diferentes entidades de asistencia</string>
     <string name="title_activity_about_us">Sobre nosotros</string>

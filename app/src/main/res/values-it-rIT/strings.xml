@@ -17,7 +17,7 @@
     <string name="email">Posta elettronica</string>
     <string name="emergency_112">112 Emergenze</string>
     <string name="emergency_call_112">Se si preme il pulsante in basso, si effettuerà una chiamata di emergenza al 112</string>
-    <string name="emergency_call_text">Se sei stato vittima di un crimine e hai bisogno di assistenza, effettua una chiamata di emergenza al 112</string>
+    <string name="emergency_call_text">Se sei appena stato vittima di un crimine o hai recentemente subito un crimine e hai bisogno di assistenza urgente, effettua una chiamata di emergenza al 112</string>
     <string name="explanation_title">Come usare l\'app</string>
     <string name="get_information">Ottieni informazioni</string>
     <string name="language">Lingua</string>
