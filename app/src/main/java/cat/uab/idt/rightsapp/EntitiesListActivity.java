@@ -118,6 +118,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RVAEntiti
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_PERMISSION_GET_COORDINATES);
+            finish();
 
         } else {
             fusedLocationClient.getLastLocation()
@@ -181,6 +182,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RVAEntiti
                                 //tv_lat.setText(String.valueOf(location.getLatitude()));
                                 //tv_long.setText(String.valueOf(location.getLongitude()));
                             } else {
+                                finish();
                                 //tv_lat.setText("Latitude not available");
                                 //tv_long.setText("Longitude not available");
                             }
@@ -224,6 +226,7 @@ public class EntitiesListActivity extends AppCompatActivity implements RVAEntiti
                                             //tv_lat.setText(String.valueOf(location.getLatitude()));
                                             //tv_long.setText(String.valueOf(location.getLongitude()));
                                         } else {
+                                            finish();
                                             //tv_lat.setText("Latitude not available");
                                             //tv_long.setText("Longitude not available");
                                         }
