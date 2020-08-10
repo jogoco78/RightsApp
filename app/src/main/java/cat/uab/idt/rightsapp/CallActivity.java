@@ -47,6 +47,9 @@ public class CallActivity extends AppCompatActivity {
             case Constants.PHONE_EMERGENCIES:
                 tv_phone_call.setText(getResources().getString(R.string.phone_112b));
                 break;
+            case Constants.PHONE_SIOVD:
+                tv_phone_call.setText(getResources().getString(R.string.phone_siovd));
+                break;
             default:
                 tv_phone_call.setText(getResources().getString(R.string.phone_call) + " " + phone_number);
                 break;

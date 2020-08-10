@@ -62,19 +62,20 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
 
         //Common scenarios
         dataSet.add(new WhatsNextModel(0, getResources().getString(R.string.phone_112)));
-        dataSet.add(new WhatsNextModel(1, getResources().getString(R.string.victims_association)));
-        dataSet.add(new WhatsNextModel(2, getResources().getString(R.string.police_station)));
+        dataSet.add(new WhatsNextModel(1, getResources().getString(R.string.next_siovd)));
+        dataSet.add(new WhatsNextModel(2, getResources().getString(R.string.victims_association)));
+        dataSet.add(new WhatsNextModel(3, getResources().getString(R.string.police_station)));
 
         if(main_tag == Constants.TAG_VIOLENCE_AGAINST_WOMEN){
-            dataSet.add(new WhatsNextModel(3, getResources().getString(R.string.phone_against_violence)));
+            dataSet.add(new WhatsNextModel(4, getResources().getString(R.string.phone_against_violence)));
         }
 
         if(main_tag == Constants.TAG_SEXUAL_ATTACK || side_tag == Constants.TAG_SEXUAL_ATTACK){
-            dataSet.add(new WhatsNextModel(4, getResources().getString(R.string.hospital)));
+            dataSet.add(new WhatsNextModel(5, getResources().getString(R.string.hospital)));
         }
 
         if(residence_tag != Constants.TAG_SPANISH_RESIDENT){
-            dataSet.add(new WhatsNextModel(5, getResources().getString(R.string.consulate_embassy)));
+            dataSet.add(new WhatsNextModel(6, getResources().getString(R.string.consulate_embassy)));
         }
 
         // use this setting to improve performance if you know that changes
@@ -102,6 +103,13 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
                         startActivity(intent);
                         break;
                     case 1:
+                        //SIOVD call
+                        intent = new Intent(getApplicationContext(), CallActivity.class);
+                        intent.putExtra(Constants.PHONE_NUMBER_KEY, Constants.PHONE_SIOVD);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                        break;
+                    case 2:
                         //Victims assistance office
                         intent = new Intent(getApplicationContext(), EntitiesListActivity.class);
                         intent.putExtra(Constants.SEARCH_ENTITY_CRITERIA, Integer.toString(2) +
@@ -109,7 +117,7 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
                                 "," + Integer.toString(0));
                         startActivity(intent);
                         break;
-                    case 2:
+                    case 3:
                         //Police station
                         intent = new Intent(getApplicationContext(), EntitiesListActivity.class);
                         intent.putExtra(Constants.SEARCH_ENTITY_CRITERIA, Integer.toString(1) +
@@ -117,14 +125,14 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
                                 "," + Integer.toString(0));
                         startActivity(intent);
                         break;
-                    case 3:
+                    case 4:
                         //Call phone against women abuse
                         intent = new Intent(getApplicationContext(), CallActivity.class);
                         intent.putExtra(Constants.PHONE_NUMBER_KEY, Constants.PHONE_VAW);
                         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
-                    case 4:
+                    case 5:
                         //Go to hospital
                         intent = new Intent(getApplicationContext(), EntitiesListActivity.class);
                         intent.putExtra(Constants.SEARCH_ENTITY_CRITERIA, Integer.toString(3) +
@@ -132,7 +140,7 @@ public class WhatsNextActivity extends AppCompatActivity implements RVAWhatsNext
                                 "," + Integer.toString(0));
                         startActivity(intent);
                         break;
-                    case 5:
+                    case 6:
                         //Consulate or embassy
                         intent = new Intent(getApplicationContext(), EntitiesListActivity.class);
                         intent.putExtra(Constants.SEARCH_ENTITY_CRITERIA, Integer.toString(4) +

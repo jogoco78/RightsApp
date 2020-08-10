@@ -114,6 +114,7 @@
     <!-- What's next strings -->
     <string name="phone_112">Faça uma chamada de emergência para 112</string>
     <string name="victims_association">Vá a um escritório de atendimento a vítimas de crimes para obter mais informações</string>
+    <string name="next_siovd">Ligue para o Serviço de Informação e Orientação da vítima de crime (SIOVD)</string>
     <string name="police_station">Vá a uma delegacia para registrar uma reclamação</string>
     <string name="phone_against_violence">Ligue para o telefone contra abuso</string>
     <string name="hospital">Ir a um hospital</string>
@@ -124,4 +125,6 @@
     <string name="phone_call">Se você pressionar o botão abaixo, fará uma ligação </string>
     <string name="phone_016">Serviço telefônico gratuito e profissional 24 horas por dia, 365 dias por ano, para mulheres vítimas de violência de gênero e seu ambiente.\n\nInformações sobre o que fazer em caso de abuso, recursos e direitos das vítimas em termos de emprego, serviços sociais, ajuda financeira, recursos de informação, assistência e abrigo.</string>
     <string name="phone_112b">Atendimento telefônico gratuito e profissional 24 horas por dia, 365 dias por ano, para toda a União Europeia e para qualquer tipo de emergência.\n\nPermite a localização imediata do chamador e ativa todas as agências simultaneamente, melhorando o tempo das chamadas. responda.</string>
+    <string name="phone_siovd">Atendimento telefônico profissional e gratuito de segunda a sexta-feira, das 8h00 às 22h00 Ele atende e orienta os pedidos de informações e conselhos de qualquer pessoa que se sente vítima de um crime e, se necessário, os encaminha para os Escritórios de Atenção às Vítimas de Crime.\n\nAs pessoas que acessam o serviço podem se expressar em diferentes idiomas, como: catalão, espanhol, inglês, francês, alemão e árabe</string>
+
 </resources>

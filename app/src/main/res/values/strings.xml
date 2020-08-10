@@ -136,6 +136,7 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <!-- WHAT'S NEXT TEXTS -->
     <string name="whats_next">What\'s next?</string>
     <string name="phone_112">Make an emergency call to 112</string>
+    <string name="next_siovd">Call to the Information and Orientation Service for Crime Victims (SIOVD)</string>
     <string name="victims_association">Go to a victim assistance office to receive more information</string>
     <string name="police_station">Go to a police station to file a complaint</string>
     <string name="phone_against_violence">Call the phone against women abuse</string>
@@ -146,6 +147,7 @@ UAB-IDT encourages visitors to frequently check this screen for any changes to i
     <string name="phone_call">If you press the button below you will make a call to </string>
     <string name="phone_016">Free and professional telephone service 24 hours a day, 365 days a year for women victims of gender violence and their environment.\n\nInformation on what to do in case of abuse, resources and rights of victims in terms of employment, social services, financial aid, information resources, assistance and shelter. </string>
     <string name="phone_112b">Free and professional telephone attention 24 hours a day, 365 days a year for the entire European Union and for any type of emergency.\n\nAllows the immediate location of the caller and activate all the agencies simultaneously, improving response times. </string>
+    <string name="phone_siovd">Free and professional telephone service from Monday to Friday from 8:00 a.m. to 10:00 p.m. It attends and guides the requests for information and advice of any person who feels a victim of a crime, and if necessary, refers them to the Crime Victim Support Offices.\n\nPeople who access the service can express themselves in different languages such as: Catalan, Spanish, English, French, German and Arabic.</string>
 
 
     <!-- Strings used for fragments for navigation -->

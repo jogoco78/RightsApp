@@ -129,6 +129,7 @@
     <!-- WHAT'S NEXT TEXTS -->
     <string name="whats_next">Y ahora qué</string>
     <string name="phone_112">Realiza una llamada de emergencia al 112</string>
+    <string name="next_siovd">Llama al Servicio de Información y Orientación a la víctima de delito (SIOVD)</string>
     <string name="victims_association">Acude a una oficina de atención a las víctimas de delito para recibir más información</string>
     <string name="police_station">Acude a una comisaria para poner una denuncia</string>
     <string name="phone_against_violence">Llama al teléfono contra el maltrato</string>
@@ -139,4 +140,6 @@
     <string name="phone_call">Si pulsas el botón de más abajo harás una llamada al </string>
     <string name="phone_016">Atención telefónica gratuita y profesional las 24 horas del día de los 365 días del año para mujeres víctima de violencia de género y su entorno.\n\nInformación sobre que hacer en caso de maltrato, recursos y derechos de las víctimas en materia de empleo, servicios sociales, ayudas económicas, recursos de información, de asistencia y de acogida. </string>
     <string name="phone_112b">Atención telefónica gratuita y profesional las 24 horas del día de los 365 días del año para toda la Unión Europea y para cualquier tipo de emergencia.\n\nPermite la localización inmediata de quien llama y activar todas las agencias de manera simultánea mejorando los tiempos de respuesta. </string>
+    <string name="phone_siovd">Atención telefónica gratuita y profesional de lunes a viernes de 8:00h a 22:00h. Atiende y orienta las demandas de información y asesoramiento de cualquier persona que se sienta víctima de un delito, y si es necesario, las deriva a las Oficinas de Atención a las Víctimas de Delito.\n\nLas personas que accedan al servicio se pueden expresar en diferentes lenguas tales como: catalán, castellano, inglés, francés, alemán y árabe</string>
+
 </resources>
